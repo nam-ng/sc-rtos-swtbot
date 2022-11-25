@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Swtbot_test
+Bundle-SymbolicName: swtbot_test
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: swtbot.test
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Require-Bundle: org.eclipse.ui;bundle-version="3.201.100",
+ org.eclipse.swtbot.eclipse.finder;bundle-version="4.0.0",
+ org.eclipse.swtbot.junit4_x;bundle-version="3.1.0",
+ org.eclipse.core.runtime;bundle-version="3.26.0",
+ org.junit;bundle-version="4.13.2"
