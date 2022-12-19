@@ -7,9 +7,9 @@ import swtbot_test.ProjectModel;
 import swtbot_test.ProjectParameters;
 import swtbot_test.TestUtils;
 
-public class IotPlugAndPlay implements IApplication {
-	private static final String APPLICATION = "iotPlugAndPlay";
-	private static final int APPLICATION_NUMBER = 8;
+public class UsbXMass implements IApplication {
+	private static final String APPLICATION = "usbxMass";
+	private static final int APPLICATION_NUMBER = 14;
 	private static final boolean GCCExecuted = true;
 	private static final boolean CCRXExecuted = true;
 	private List<Integer> gccExecuted = Arrays.asList(1, 1, 1, 1, 1);
@@ -17,7 +17,7 @@ public class IotPlugAndPlay implements IApplication {
 	private List<String> board = Arrays.asList("RSKRX65N-2MB", "CloudKitRX65N", "CK-RX65N", "EnvisionKitRX72N",
 			"RSKRX671");
 
-	public IotPlugAndPlay() {
+	public UsbXMass() {
 		super();
 	}
 
@@ -56,6 +56,5 @@ public class IotPlugAndPlay implements IApplication {
 		return ccrxExecuted;
 	}
 
-}
-	
+}	
 	
