@@ -8,3 +8,5 @@ Further one will migrate the automated test of SC RTOS from RCPTT to SWTBot.
 Support ewf and usbx mass storage PG and build
 
 Refactor the code to avoid duplication by using TestUtils.java, which is a utility java class
+# Update on 20/12/2022:
+Minor bug fix: Handle pop up in PG

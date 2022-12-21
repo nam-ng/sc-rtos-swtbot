@@ -81,7 +81,7 @@ public class TestUtils {
 				bot.button(ProjectParameters.BUTTON_CANCEL).click();
 			}
 			if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
-				bot.button(ProjectParameters.BUTTON_NO).click();
+				bot.button(ProjectParameters.BUTTON_OPEN_PERSPECTIVE).click();
 			}
 			if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_FIT)) {
 				bot.button(ProjectParameters.BUTTON_YES).click();
@@ -92,6 +92,9 @@ public class TestUtils {
 				bot.button(ProjectParameters.BUTTON_DOWNLOAD).click();
 				bot.button(ProjectParameters.BUTTON_ACCEPT).click();
 				bot.shell(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE).activate();
+			}
+			if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
+				bot.button(ProjectParameters.BUTTON_PROCEED).click();
 			}
 			if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_MARKETPLACE)) {
 				bot.button(ProjectParameters.BUTTON_CANCEL).click();

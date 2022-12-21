@@ -60,69 +60,69 @@ public class SampleTest {
 	}
 
 	@Test
-	public void tc_01_closeWelcome() throws Exception {
+	public void tc_011_closeWelcome() throws Exception {
 		bot.viewByTitle("Welcome").close();
 	}
 
-//	@Test
-//	public void tc_021_createAndBuildProjectsAzureBareGCC() throws Exception {
-//		application = new Bare();
-//		gccTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_022_createAndBuildProjectsAzureBareCCRX() throws Exception {
-//		application = new Bare();
-//		ccrxTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_031_createAndBuildProjectsAzureFileXGCC() throws Exception {
-//		application = new FileX();
-//		gccTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_032_createAndBuildProjectsAzureFileXCCRX() throws Exception {
-//		application = new FileX();
-//		ccrxTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_041_createAndBuildProjectsAzurePingGCC() throws Exception {
-//		application = new Ping();
-//		gccTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_042_createAndBuildProjectsAzurePingCCRX() throws Exception {
-//		application = new Ping();
-//		ccrxTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_051_createAndBuildProjectsAzureIperfGCC() throws Exception {
-//		application = new Iperf();
-//		gccTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_052_createAndBuildProjectsAzureIperfCCRX() throws Exception {
-//		application = new Iperf();
-//		ccrxTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_061_createAndBuildProjectsAzureIotSDKGCC() throws Exception {
-//		application = new IoTSdk();
-//		gccTestExecuted();
-//	}
-//
-//	@Test
-//	public void tc_062_createAndBuildProjectsAzureIotSDKCCRX() throws Exception {
-//		application = new IoTSdk();
-//		ccrxTestExecuted();
-//	}
+	@Test
+	public void tc_021_createAndBuildProjectsAzureBareGCC() throws Exception {
+		application = new Bare();
+		gccTestExecuted();
+	}
+
+	@Test
+	public void tc_022_createAndBuildProjectsAzureBareCCRX() throws Exception {
+		application = new Bare();
+		ccrxTestExecuted();
+	}
+
+	@Test
+	public void tc_031_createAndBuildProjectsAzureFileXGCC() throws Exception {
+		application = new FileX();
+		gccTestExecuted();
+	}
+
+	@Test
+	public void tc_032_createAndBuildProjectsAzureFileXCCRX() throws Exception {
+		application = new FileX();
+		ccrxTestExecuted();
+	}
+
+	@Test
+	public void tc_041_createAndBuildProjectsAzurePingGCC() throws Exception {
+		application = new Ping();
+		gccTestExecuted();
+	}
+
+	@Test
+	public void tc_042_createAndBuildProjectsAzurePingCCRX() throws Exception {
+		application = new Ping();
+		ccrxTestExecuted();
+	}
+
+	@Test
+	public void tc_051_createAndBuildProjectsAzureIperfGCC() throws Exception {
+		application = new Iperf();
+		gccTestExecuted();
+	}
+
+	@Test
+	public void tc_052_createAndBuildProjectsAzureIperfCCRX() throws Exception {
+		application = new Iperf();
+		ccrxTestExecuted();
+	}
+
+	@Test
+	public void tc_061_createAndBuildProjectsAzureIotSDKGCC() throws Exception {
+		application = new IoTSdk();
+		gccTestExecuted();
+	}
+
+	@Test
+	public void tc_062_createAndBuildProjectsAzureIotSDKCCRX() throws Exception {
+		application = new IoTSdk();
+		ccrxTestExecuted();
+	}
 
 	@Test
 	public void tc_071_createAndBuildProjectsAzureIotSDKEwfGCC() throws Exception {
