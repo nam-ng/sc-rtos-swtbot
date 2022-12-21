@@ -6,9 +6,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 import model.IApplication;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class TestUtils {
 	public static SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
