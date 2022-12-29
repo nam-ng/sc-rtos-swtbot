@@ -11,7 +11,7 @@ import model.FileX;
 import model.GuiX16;
 import model.GuiX8;
 import model.GuiXDraw2d;
-import model.IApplication;
+import model.AbstractApplication;
 import model.IoTSdk;
 import model.IoTSdkEwf;
 import model.IotPlugAndPlay;
@@ -29,7 +29,7 @@ public class SampleTest {
 	private static SWTWorkbenchBot bot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private ProjectModel projectModel = new ProjectModel();
-	IApplication application;
+	AbstractApplication application;
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -87,7 +87,7 @@ public class SampleTest {
 		application = new IoTSdkEwf();
 		executeTest();
 	}
-	
+
 	@Test
 	public void tc_08_createAndBuildProjectsAzureIotSDKPNP() throws Exception {
 		application = new IotSdkPnp();
@@ -99,7 +99,7 @@ public class SampleTest {
 		application = new IotSdkPnpEwf();
 		executeTest();
 	}
-	
+
 	@Test
 	public void tc_10_createAndBuildProjectsAzureIotPlugAndPlay() throws Exception {
 		application = new IotPlugAndPlay();

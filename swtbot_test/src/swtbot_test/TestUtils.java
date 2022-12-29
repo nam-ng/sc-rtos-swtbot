@@ -4,7 +4,7 @@ import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
-import model.IApplication;
+import model.AbstractApplication;
 
 public class TestUtils {
 	private static SWTWorkbenchBot bot = new SWTWorkbenchBot();
@@ -140,8 +140,7 @@ public class TestUtils {
 		buildProject(projectModel);
 	}
 
-	protected static void executeProject(ProjectModel projectModel, IApplication application, int sleepMilis) {
-		// TODO Auto-generated method stub
+	protected static void executeProject(ProjectModel projectModel, AbstractApplication application, int sleepMilis) {
 		for (int j = 0; j < application.getToolchain().size(); j++) {
 			if (application.getStatusToolchain().get(j) == 1) {
 				for (int i = 0; i < application.getBoard().size(); i++) {
@@ -151,7 +150,8 @@ public class TestUtils {
 						projectModel.setTargetBoard(application.getBoard().get(i));
 						projectModel.setApplication(application.getApplicationNumber());
 						projectModel.setToolchain(application.getToolchain().get(j));
-						projectModel.setProjectName(application.getApplication() + application.getToolchain().get(j) + i);
+						projectModel
+								.setProjectName(application.getApplication() + application.getToolchain().get(j) + i);
 						TestUtils.createProject(projectModel);
 						TestUtils.buildProject(projectModel);
 					}
