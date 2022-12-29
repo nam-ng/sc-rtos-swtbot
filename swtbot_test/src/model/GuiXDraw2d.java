@@ -10,13 +10,8 @@ import swtbot_test.TestUtils;
 public class GuiXDraw2d implements IApplication {
 	private static final String APPLICATION = "guixDraw2d";
 	private static final int APPLICATION_NUMBER = 12;
-<<<<<<< HEAD
 	private List<String> toolchain = Arrays.asList("GCC", "CCRX");
 	private List<Integer> statusToolchain = Arrays.asList(1,1);
-=======
-	private static final boolean GCCExecuted = true;
-	private static final boolean CCRXExecuted = true;
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 	private List<Integer> gccExecuted = Arrays.asList(1, 1);
 	private List<Integer> ccrxExecuted = Arrays.asList(1, 1);
 	private List<String> board = Arrays.asList("RSKRX65N-2MB", "EnvisionKitRX72N");
@@ -24,8 +19,7 @@ public class GuiXDraw2d implements IApplication {
 	public GuiXDraw2d() {
 		super();
 	}
-<<<<<<< HEAD
-	
+
 	@Override
 	public List<String> getToolchain() {
 		return toolchain;
@@ -34,17 +28,6 @@ public class GuiXDraw2d implements IApplication {
 	@Override
 	public List<Integer> getStatusToolchain() {
 		return statusToolchain;
-=======
-
-	@Override
-	public boolean isGccexecuted() {
-		return GCCExecuted;
-	}
-
-	@Override
-	public boolean isCcrxexecuted() {
-		return CCRXExecuted;
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 	}
 
 	@Override

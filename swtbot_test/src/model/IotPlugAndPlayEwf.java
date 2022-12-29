@@ -10,13 +10,8 @@ import swtbot_test.TestUtils;
 public class IotPlugAndPlayEwf implements IApplication {
 	private static final String APPLICATION = "iotPlugAndPlayEwf";
 	private static final int APPLICATION_NUMBER = 9;
-<<<<<<< HEAD
 	private List<String> toolchain = Arrays.asList("GCC", "CCRX");
 	private List<Integer> statusToolchain = Arrays.asList(1,0);
-=======
-	private static final boolean GCCExecuted = true;
-	private static final boolean CCRXExecuted = false;
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 	private List<Integer> gccExecuted = Arrays.asList(1);
 	private List<Integer> ccrxExecuted = Arrays.asList(1);
 	private List<String> board = Arrays.asList("CK-RX65N");
@@ -24,7 +19,6 @@ public class IotPlugAndPlayEwf implements IApplication {
 	public IotPlugAndPlayEwf() {
 		super();
 	}
-<<<<<<< HEAD
 	
 	@Override
 	public List<String> getToolchain() {
@@ -34,17 +28,6 @@ public class IotPlugAndPlayEwf implements IApplication {
 	@Override
 	public List<Integer> getStatusToolchain() {
 		return statusToolchain;
-=======
-
-	@Override
-	public boolean isGccexecuted() {
-		return GCCExecuted;
-	}
-
-	@Override
-	public boolean isCcrxexecuted() {
-		return CCRXExecuted;
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 	}
 
 	@Override

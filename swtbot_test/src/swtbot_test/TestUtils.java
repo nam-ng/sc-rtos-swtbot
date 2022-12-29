@@ -6,20 +6,10 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 import model.IApplication;
 
-<<<<<<< HEAD
-import java.util.Arrays;
-import java.util.List;
-
 public class TestUtils {
 	private static SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
 	private static void waitForProcess(int sleepMili) {
-=======
-public class TestUtils {
-	public static SWTWorkbenchBot bot = new SWTWorkbenchBot();
-
-	public static void waitForProcess(int sleepMili) {
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 		bot.sleep(sleepMili);
 		if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_INSTALL)) {
 			bot.button(ProjectParameters.BUTTON_CANCEL).click();
@@ -29,11 +19,7 @@ public class TestUtils {
 		}
 	}
 
-<<<<<<< HEAD
 	private static void deleteProject(String projectName, boolean deleteProjectContentOnDisk) {
-=======
-	public static void deleteProject(String projectName, boolean deleteProjectContentOnDisk) {
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 		waitForProcess(5000);
 		getProjectItemOnProjectExplorer(projectName).contextMenu(ProjectParameters.CONTEXT_MENU_DELETE).click();
 		if (deleteProjectContentOnDisk) {
@@ -48,11 +34,7 @@ public class TestUtils {
 		waitForProcess(5000);
 	}
 
-<<<<<<< HEAD
 	private static SWTBotTreeItem getProjectItemOnProjectExplorer(String projectName) {
-=======
-	public static SWTBotTreeItem getProjectItemOnProjectExplorer(String projectName) {
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 		getProjectExplorerView().setFocus();
 		String projectItem = projectName;
 		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
@@ -65,19 +47,11 @@ public class TestUtils {
 		return bot.tree().getTreeItem(projectItem);
 	}
 
-<<<<<<< HEAD
 	private static SWTBotView getProjectExplorerView() {
 		return bot.viewByTitle(ProjectParameters.VIEW_NAME_PROJECT_EXPLORER);
 	}
 
 	private static void createProject(ProjectModel projectModel) {
-=======
-	public static SWTBotView getProjectExplorerView() {
-		return bot.viewByTitle(ProjectParameters.VIEW_NAME_PROJECT_EXPLORER);
-	}
-
-	public static void createProject(ProjectModel projectModel) {
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 		waitForProcess(5000);
 		bot.menu(ProjectParameters.MENU_FILE).menu(ProjectParameters.MENU_NEW)
 				.menu(ProjectParameters.MENU_C_CPP_PROJECT).menu(ProjectParameters.MENU_RENESAS_RX).click();
@@ -128,11 +102,7 @@ public class TestUtils {
 
 	}
 
-<<<<<<< HEAD
 	private static void buildProject(ProjectModel projectModel) {
-=======
-	public static void buildProject(ProjectModel projectModel) {
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 		waitForProcess(5000);
 		bot.menu(ProjectParameters.MENU_WINDOW).menu(ProjectParameters.MENU_SHOW_VIEW)
 				.menu(ProjectParameters.MENU_OTHER).click();
@@ -165,16 +135,11 @@ public class TestUtils {
 		}
 	}
 
-<<<<<<< HEAD
 	protected static void createAndBuildSpecificProjectAzure(ProjectModel projectModel) {
-=======
-	public static void createAndBuildSpecificProjectAzure(ProjectModel projectModel) {
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 		createProject(projectModel);
 		buildProject(projectModel);
 	}
 
-<<<<<<< HEAD
 	protected static void executeProject(ProjectModel projectModel, IApplication application, int sleepMilis) {
 		// TODO Auto-generated method stub
 		for (int j = 0; j < application.getToolchain().size(); j++) {
@@ -195,38 +160,4 @@ public class TestUtils {
 			}
 		}
 	}
-=======
-	public static void gccExecuted(ProjectModel projectModel, IApplication application) {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < application.getBoard().size(); i++) {
-			if (application.getGccExecuted().get(i) == 1) {
-				projectModel.setRtosType(ProjectParameters.RTOSType.AZURE);
-				projectModel.setRtosVersion(ProjectParameters.RTOSVersion.NEWEST);
-				projectModel.setTargetBoard(application.getBoard().get(i));
-				projectModel.setApplication(application.getApplicationNumber());
-				projectModel.setToolchain("GCC");
-				projectModel.setProjectName(application.getApplication() + "GCC" + i);
-				TestUtils.createProject(projectModel);
-				TestUtils.buildProject(projectModel);
-			}
-		}
-	}
-
-	public static void ccrxExecuted(ProjectModel projectModel, IApplication application) {
-		// TODO Auto-generated method stub
-		for (int j = 0; j < application.getBoard().size(); j++) {
-			if (application.getCcrxExecuted().get(j) == 1) {
-				projectModel.setRtosType(ProjectParameters.RTOSType.AZURE);
-				projectModel.setRtosVersion(ProjectParameters.RTOSVersion.NEWEST);
-				projectModel.setTargetBoard(application.getBoard().get(j));
-				projectModel.setApplication(application.getApplicationNumber());
-				projectModel.setToolchain("CCRX");
-				projectModel.setProjectName(application.getApplication() + "CCRX" + j);
-				TestUtils.createProject(projectModel);
-				TestUtils.buildProject(projectModel);
-			}
-		}
-	}
-
->>>>>>> dbe78b6994fcf864c2352d408ec9096ce2c1f3b3
 }
