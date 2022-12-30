@@ -8,46 +8,55 @@ public class ProjectModel {
 	private String rtosVersion;
 	private int application;
 
-	public String getProjectName() {
+	protected String getProjectName() {
 		return projectName;
 	}
-	public void setProjectName(String projectName) {
+
+	protected void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	public String getTargetBoard() {
+
+	protected String getTargetBoard() {
 		return targetBoard;
 	}
-	public void setTargetBoard(String targetBoard) {
+
+	protected void setTargetBoard(String targetBoard) {
 		this.targetBoard = targetBoard;
 	}
-	public String getRtosType() {
+
+	protected String getRtosType() {
 		return rtosType;
 	}
-	public void setRtosType(String rtosType) {
+
+	protected void setRtosType(String rtosType) {
 		this.rtosType = rtosType;
 	}
-	public String getRtosVersion() {
+
+	protected String getRtosVersion() {
 		return rtosVersion;
 	}
-	public void setRtosVersion(String rtosVersion) {
+
+	protected void setRtosVersion(String rtosVersion) {
 		this.rtosVersion = rtosVersion;
 	}
-	
-	public String getToolchain() {
+
+	protected String getToolchain() {
 		return toolchain;
 	}
-	public int getApplication() {
+
+	protected int getApplication() {
 		return application;
 	}
-	public void setApplication(int application) {
+
+	protected void setApplication(int application) {
 		this.application = application;
 	}
-	public void setToolchain(String toolchain) {
+
+	protected void setToolchain(String toolchain) {
 		this.toolchain = toolchain;
 	}
-	public ProjectModel() {
+
+	protected ProjectModel() {
 		super();
 	}
-	
-
 }

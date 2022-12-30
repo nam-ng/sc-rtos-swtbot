@@ -11,7 +11,7 @@ import model.FileX;
 import model.GuiX16;
 import model.GuiX8;
 import model.GuiXDraw2d;
-import model.IApplication;
+import model.AbstractApplication;
 import model.IoTSdk;
 import model.IoTSdkEwf;
 import model.IotPlugAndPlay;
@@ -29,7 +29,7 @@ public class SampleTest {
 	private static SWTWorkbenchBot bot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private ProjectModel projectModel = new ProjectModel();
-	IApplication application;
+	AbstractApplication application;
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -43,218 +43,113 @@ public class SampleTest {
 				"project" + projectModelSpecific.getApplication() + projectModelSpecific.getToolchain() + "100");
 	}
 
-	public void executeGCCProject() {
-		if (application.isGccexecuted()) {
-			TestUtils.gccExecuted(projectModel, application);
-			bot.sleep(60000);
-		}
-	}
-
-	public void executeRXCProject() {
-		if (application.isCcrxexecuted()) {
-			TestUtils.ccrxExecuted(projectModel, application);
-			bot.sleep(60000);
-		}
+	private void executeTest() {
+		TestUtils.executeProject(projectModel, application, 60000);
 	}
 
 	@Test
-	public void tc_011_closeWelcome() throws Exception {
+	public void tc_01_closeWelcome() throws Exception {
 		bot.viewByTitle("Welcome").close();
 	}
 
 	@Test
-	public void tc_021_createAndBuildProjectsAzureBareGCC() throws Exception {
+	public void tc_02_createAndBuildProjectsAzureBare() throws Exception {
 		application = new Bare();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_022_createAndBuildProjectsAzureBareCCRX() throws Exception {
-		application = new Bare();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_031_createAndBuildProjectsAzureFileXGCC() throws Exception {
+	public void tc_03_createAndBuildProjectsAzureFileX() throws Exception {
 		application = new FileX();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_032_createAndBuildProjectsAzureFileXCCRX() throws Exception {
-		application = new FileX();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_041_createAndBuildProjectsAzurePingGCC() throws Exception {
+	public void tc_04_createAndBuildProjectsAzurePing() throws Exception {
 		application = new Ping();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_042_createAndBuildProjectsAzurePingCCRX() throws Exception {
-		application = new Ping();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_051_createAndBuildProjectsAzureIperfGCC() throws Exception {
+	public void tc_05_createAndBuildProjectsAzureIperf() throws Exception {
 		application = new Iperf();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_052_createAndBuildProjectsAzureIperfCCRX() throws Exception {
-		application = new Iperf();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_061_createAndBuildProjectsAzureIotSDKGCC() throws Exception {
+	public void tc_06_createAndBuildProjectsAzureIotSDK() throws Exception {
 		application = new IoTSdk();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_062_createAndBuildProjectsAzureIotSDKCCRX() throws Exception {
-		application = new IoTSdk();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_071_createAndBuildProjectsAzureIotSDKEwfGCC() throws Exception {
+	public void tc_07_createAndBuildProjectsAzureIotSDKEwf() throws Exception {
 		application = new IoTSdkEwf();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_072_createAndBuildProjectsAzureIotSDKEwfCCRX() throws Exception {
-		application = new IoTSdkEwf();
-		executeRXCProject();
-	}
-	@Test
-	public void tc_081_createAndBuildProjectsAzureIotSDKPNPGCC() throws Exception {
+	public void tc_08_createAndBuildProjectsAzureIotSDKPNP() throws Exception {
 		application = new IotSdkPnp();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_082_createAndBuildProjectsAzureIotSDKPNPCCRX() throws Exception {
-		application = new IotSdkPnp();
-		executeRXCProject();
-	}
-	
-	@Test
-	public void tc_091_createAndBuildProjectsAzureIotSDKPNPEwfGCC() throws Exception {
+	public void tc_09_createAndBuildProjectsAzureIotSDKPNPEwf() throws Exception {
 		application = new IotSdkPnpEwf();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_092_createAndBuildProjectsAzureIotSDKPNPEwfCCRX() throws Exception {
-		application = new IotSdkPnpEwf();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_101_createAndBuildProjectsAzureIotPlugAndPlayGCC() throws Exception {
+	public void tc_10_createAndBuildProjectsAzureIotPlugAndPlay() throws Exception {
 		application = new IotPlugAndPlay();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_102_createAndBuildProjectsAzureIotPlugAndPlayCCRX() throws Exception {
-		application = new IotPlugAndPlay();
-		executeRXCProject();
-	}
-	
-	@Test
-	public void tc_111_createAndBuildProjectsAzureIotPlugAndPlayEwfGCC() throws Exception {
+	public void tc_11_createAndBuildProjectsAzureIotPlugAndPlayEwf() throws Exception {
 		application = new IotPlugAndPlayEwf();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_112_createAndBuildProjectsAzureIotPlugAndPlayEwfCCRX() throws Exception {
-		application = new IotPlugAndPlayEwf();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_121_createAndBuildProjectsAzureGuix8bppGCC() throws Exception {
+	public void tc_12_createAndBuildProjectsAzureGuix8bpp() throws Exception {
 		application = new GuiX8();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_122_createAndBuildProjectsAzureGuix8bppCCRX() throws Exception {
-		application = new GuiX8();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_131_createAndBuildProjectsAzureGuix16bppGCC() throws Exception {
+	public void tc_13_createAndBuildProjectsAzureGuix16bpp() throws Exception {
 		application = new GuiX16();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_132_createAndBuildProjectsAzureGuix16bppCCRX() throws Exception {
-		application = new GuiX16();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_141_createAndBuildProjectsAzureGuixDraw2dGCC() throws Exception {
+	public void tc_14_createAndBuildProjectsAzureGuixDraw2d() throws Exception {
 		application = new GuiXDraw2d();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_142_createAndBuildProjectsAzureGuixDraw2dCCRX() throws Exception {
-		application = new GuiXDraw2d();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_151_createAndBuildProjectsUsbxGCC() throws Exception {
+	public void tc_15_createAndBuildProjectsUsbx() throws Exception {
 		application = new UsbX();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_152_createAndBuildProjectsUsbxCCRX() throws Exception {
-		application = new UsbX();
-		executeRXCProject();
-	}
-	
-	@Test
-	public void tc_161_createAndBuildProjectsUsbxMassGCC() throws Exception {
+	public void tc_16_createAndBuildProjectsUsbxMass() throws Exception {
 		application = new UsbXMass();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_162_createAndBuildProjectsUsbxMassCCRX() throws Exception {
-		application = new UsbXMass();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_171_createAndBuildProjectsAzureLowPowerGCC() throws Exception {
+	public void tc_17_createAndBuildProjectsAzureLowPower() throws Exception {
 		application = new LowPower();
-		executeGCCProject();
+		executeTest();
 	}
 
 	@Test
-	public void tc_172_createAndBuildProjectsAzureLowPowerCCRX() throws Exception {
-		application = new LowPower();
-		executeRXCProject();
-	}
-
-	@Test
-	public void tc_181_createAndBuildSpecificProjectAzure() throws Exception {
+	public void tc_18_createAndBuildSpecificProjectAzure() throws Exception {
 		TestUtils.createAndBuildSpecificProjectAzure(projectModelSpecific);
 		bot.sleep(5000);
 	}
