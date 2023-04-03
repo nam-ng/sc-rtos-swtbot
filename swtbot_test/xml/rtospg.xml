@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rtospg>
+	<RTOS id="AzureRTOS">
+		<version id="6.2.1_rel-rx-1.0.0" skipapp="false">
+			<application id="bare" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>TargetBoardRX130</board>
+					<board>RSKRX140</board>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX660</board>
+					<board>RSKRX66T</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+					<board custom="true">R5F5651EDxFC</board>
+				</target>
+			</application>
+			<application id="ramdisk" order="1">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>TargetBoardRX130</board>
+					<board>RSKRX140</board>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX660</board>
+					<board>RSKRX66T</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+					<board custom="true">R5F5651EDxFC</board>
+				</target>
+			</application>
+			<application id="ping" order="2">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="iperf" order="3">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CK-RX65N</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="iot_sdk" order="4">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="iot_sdk_ewf" order="5">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>CK-RX65N</board>
+				</target>
+			</application>
+			<application id="iot_sdk_pnp" order="6">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="iot_sdk_pnp_ewf" order="7">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>CK-RX65N</board>
+				</target>
+			</application>
+			<application id="temp_pnp" order="8">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="temp_pnp_ewf" order="9">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>CK-RX65N</board>
+				</target>
+			</application>
+			<application id="guix_8bpp" order="10">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="guix_16bpp" order="11">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="guix_16bpp_draw" order="12">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="usbx_cdc" order="13">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+				</target>
+			</application>
+			<application id="usbx_hmsc" order="14">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="low_power" order="15">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>TargetBoardRX130</board>
+					<board>RSKRX140</board>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX660</board>
+					<board>RSKRX66T</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+					<board custom="true">R5F5651EDxFC</board>
+				</target>
+			</application>
+			<application id="iot_adu" order="16">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+			<application id="bootloader" order="16">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+				</target>
+			</application>
+		</version>
+	</RTOS>
+	<RTOS id="FreeRTOSKernel">
+		<version id="10.4.3-rx-1.0.5" skipapp="true">
+			<application id="bare" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>TargetBoardRX130</board>
+					<board>RSKRX140</board>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX660</board>
+					<board>RSKRX66T</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+					<device>R5F5651EDxFC</device>
+				</target>
+			</application>
+		</version>
+	</RTOS>
+</rtospg>

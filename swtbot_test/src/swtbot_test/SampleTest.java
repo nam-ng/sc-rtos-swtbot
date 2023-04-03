@@ -1,156 +1,129 @@
 package swtbot_test;
 
+import java.io.File;
+
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import model.Bare;
-import model.FileX;
-import model.GuiX16;
-import model.GuiX8;
-import model.GuiXDraw2d;
-import model.AbstractApplication;
-import model.IoTSdk;
-import model.IoTSdkEwf;
-import model.IotPlugAndPlay;
-import model.IotPlugAndPlayEwf;
-import model.IotSdkPnp;
-import model.IotSdkPnpEwf;
-import model.Iperf;
-import model.LowPower;
-import model.Ping;
-import model.UsbX;
-import model.UsbXMass;
+import common.LogUtil;
+import model.RTOSManager;
+import parameters.ProjectParameters.RTOSApplication;
+import parameters.ProjectParameters.RTOSType;
+import parameters.ProjectParameters.RTOSVersion;
+import platform.PlatformModel;
+import utilities.BuildUtility;
+import utilities.PGUtility;
+import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SampleTest {
 	private static SWTWorkbenchBot bot;
-	private static ProjectModel projectModelSpecific = new ProjectModel();
-	private ProjectModel projectModel = new ProjectModel();
-	AbstractApplication application;
+	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
+	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		bot = new SWTWorkbenchBot();
-		projectModelSpecific.setRtosType(ProjectParameters.RTOSType.AZURE);
-		projectModelSpecific.setRtosVersion(ProjectParameters.RTOSVersion.NEWEST);
-		projectModelSpecific.setTargetBoard("RSKRX65N-2MB");
-		projectModelSpecific.setApplication(0);
-		projectModelSpecific.setToolchain("GCC");
-		projectModelSpecific.setProjectName(
-				"project" + projectModelSpecific.getApplication() + projectModelSpecific.getToolchain() + "100");
-	}
-
-	private void executeTest() {
-		TestUtils.executeProject(projectModel, application, 60000);
+		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
+		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 	}
 
 	@Test
-	public void tc_01_closeWelcome() throws Exception {
+	public void TC_011_closeWelcome() throws Exception {
 		bot.viewByTitle("Welcome").close();
 	}
 
 	@Test
-	public void tc_02_createAndBuildProjectsAzureBare() throws Exception {
-		application = new Bare();
-		executeTest();
+	public void TC_021_PGAzure_Bare() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_BARE);
 	}
 
 	@Test
-	public void tc_03_createAndBuildProjectsAzureFileX() throws Exception {
-		application = new FileX();
-		executeTest();
+	public void TC_031_PGAzure_Ram() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_RAM);
 	}
 
 	@Test
-	public void tc_04_createAndBuildProjectsAzurePing() throws Exception {
-		application = new Ping();
-		executeTest();
+	public void TC_041_PGAzure_Ping() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_PING);
 	}
 
 	@Test
-	public void tc_05_createAndBuildProjectsAzureIperf() throws Exception {
-		application = new Iperf();
-		executeTest();
+	public void TC_051_PGAzure_Iperf() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_IPERF);
 	}
 
 	@Test
-	public void tc_06_createAndBuildProjectsAzureIotSDK() throws Exception {
-		application = new IoTSdk();
-		executeTest();
+	public void TC_061_PGAzure_Iot_Sdk() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_IOT_SDK);
 	}
 
 	@Test
-	public void tc_07_createAndBuildProjectsAzureIotSDKEwf() throws Exception {
-		application = new IoTSdkEwf();
-		executeTest();
+	public void TC_071_PGAzure_Iot_Sdk_Ewf() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_IOT_SDK_EWF);
 	}
 
 	@Test
-	public void tc_08_createAndBuildProjectsAzureIotSDKPNP() throws Exception {
-		application = new IotSdkPnp();
-		executeTest();
+	public void TC_081_PGAzure_Iot_Pnp() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_IOT_PNP);
 	}
 
 	@Test
-	public void tc_09_createAndBuildProjectsAzureIotSDKPNPEwf() throws Exception {
-		application = new IotSdkPnpEwf();
-		executeTest();
+	public void TC_091_PGAzure_Iot_Pnp_Ewf() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_IOT_PNP_EWF);
 	}
 
 	@Test
-	public void tc_10_createAndBuildProjectsAzureIotPlugAndPlay() throws Exception {
-		application = new IotPlugAndPlay();
-		executeTest();
+	public void TC_101_PGAzure_Temp_Pnp() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_TEMP_PNP);
 	}
 
 	@Test
-	public void tc_11_createAndBuildProjectsAzureIotPlugAndPlayEwf() throws Exception {
-		application = new IotPlugAndPlayEwf();
-		executeTest();
+	public void TC_112_PGAzure_Temp_Pnp_Ewf() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_TEMP_PNP_EWF);
 	}
 
 	@Test
-	public void tc_12_createAndBuildProjectsAzureGuix8bpp() throws Exception {
-		application = new GuiX8();
-		executeTest();
+	public void TC_122_PGAzure_Guix_8bpp() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_GUIX_8BPP);
 	}
 
 	@Test
-	public void tc_13_createAndBuildProjectsAzureGuix16bpp() throws Exception {
-		application = new GuiX16();
-		executeTest();
+	public void TC_131_PGAzure_Guix_16bpp() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_GUIX_16BPP);
 	}
 
 	@Test
-	public void tc_14_createAndBuildProjectsAzureGuixDraw2d() throws Exception {
-		application = new GuiXDraw2d();
-		executeTest();
+	public void TC_141_PGAzure_Guix_16bpp_Draw() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_GUIX_16BPP_DRAW);
 	}
 
 	@Test
-	public void tc_15_createAndBuildProjectsUsbx() throws Exception {
-		application = new UsbX();
-		executeTest();
+	public void TC_152_PGAzure_Usbx_CDC() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_USBX_CDC);
+	}
+	
+	@Test
+	public void TC_161_PGAzure_Usbx_HMSC() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_USBX_HMSC);
 	}
 
 	@Test
-	public void tc_16_createAndBuildProjectsUsbxMass() throws Exception {
-		application = new UsbXMass();
-		executeTest();
+	public void TC_171_PGAzure_Low_Power() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_LOW_POWER);
 	}
 
 	@Test
-	public void tc_17_createAndBuildProjectsAzureLowPower() throws Exception {
-		application = new LowPower();
-		executeTest();
+	public void TC_181_PG_Bootloader() throws Exception {
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_BOOTLOADER);
 	}
 
 	@Test
-	public void tc_18_createAndBuildSpecificProjectAzure() throws Exception {
-		TestUtils.createAndBuildSpecificProjectAzure(projectModelSpecific);
-		bot.sleep(5000);
+	public void TC_191_BuildAll() throws Exception {
+		BuildUtility.buildAll();
 	}
+
 }
