@@ -35,7 +35,7 @@ public class PGUtility extends Utility {
 		}
 	}
 
-	private static Collection<ProjectModel> prepareProjectModel(String rtosType, String versionId, String appId) {
+	public static Collection<ProjectModel> prepareProjectModel(String rtosType, String versionId, String appId) {
 		Collection<ProjectModel> list = new ArrayList<>();
 		RTOSVersion version = RTOSManager.getVersionById(rtosType, versionId);
 		if (version == null) {
@@ -103,11 +103,9 @@ public class PGUtility extends Utility {
 		}
 
 		// set Configurations
-		if (model.isUseHardwareDebugConfiguration()) {
-			bot.checkBox(0).click();
-		} else {
+		if (!model.isUseHardwareDebugConfiguration()) {
 			bot.checkBox(0).deselect();
-		}
+		} 
 		if (model.isUseDebugConfiguration()) {
 			bot.checkBox(1).click();
 		} else {

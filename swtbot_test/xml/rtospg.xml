@@ -2,6 +2,28 @@
 <rtospg>
 	<RTOS id="AzureRTOS">
 		<version id="6.2.1_rel-rx-1.0.0" skipapp="false">
+			<application id="addAzureModuleAndGenCode" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+				</target>
+			</application>
+			<application id="changeRTOSVersion" order="13">
+				<projectconfiguration>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>CCRX</toolchain>
+					<board>CK-RX65N</board>
+				</target>
+			</application>
 			<application id="bare" order="0">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>

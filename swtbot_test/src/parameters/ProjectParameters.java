@@ -1,5 +1,7 @@
 package parameters;
 
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+
 public class ProjectParameters {
 	public static final String OPEN_ASSOCIATED_PERSPECTIVE = "Open Associated Perspective?";
 	public static final String OPEN_PERSPECTIVE = "Open Perspective";
@@ -21,6 +23,7 @@ public class ProjectParameters {
 	public static final String BUILD_FAILED = "Build Failed";
 	public static final String CHECKBOX_DELETE_PROJECT_CONTENTS_ON_DISK = "Delete project contents on disk (cannot be undone)";
 	public static final String CODE_GENERATING = "Code Generating";
+	public static final String WINDOW_CHANGE_VERSION = "Change Version";
 	
 
 	public class RTOSType {
@@ -38,6 +41,7 @@ public class ProjectParameters {
 	public class RTOSVersion {
 		public static final String Azure_6_2_1 = "6.2.1_rel-rx-1.0.0";
 		public static final String Azure_6_2_0 = "6.2.0_rel-rx-1.0.0";
+		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
 	}
 
 	public class RTOSApplication {

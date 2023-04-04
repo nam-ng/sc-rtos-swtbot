@@ -135,7 +135,7 @@ public class ProjectModel {
 	}
 
 	public void setApplicationOrder(int order) {
-		
+		this.applicationOrder=order;
 	}
 
 	public void setToolchain(String toolchain) {
