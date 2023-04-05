@@ -52,30 +52,16 @@ public class AddAzureModuleAndGenerateCode{
 	
 	@Test
 	public void tc_02_AddComponentFilex() throws Exception{
-		Utility.getProjectExplorerView().setFocus();
-		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]").expand();
-		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]").getNode(projectModelSpecific.getProjectName()+".scfg").doubleClick();
-		SWTBotEditor scfgEditor = bot.editorByTitle(projectModelSpecific.getProjectName()+".scfg");
-		scfgEditor.setFocus();
-		bot.cTabItem("Components").activate();
-		bot.toolbarButtonWithTooltip("Add component").click();
-		bot.shell("New Component").setFocus();
-		bot.textWithLabel("Filter").setText("filex");
-		bot.table().select(0);
-		bot.button(ProjectParameters.ButtonAction.BUTTON_FINISH).click();
-		bot.toolbarButton(ProjectParameters.ButtonAction.BUTTON_GENERATE_CODE).click();
-		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
-			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
-		}
-		bot.sleep(15000);
+		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.addComponentAndGenerate("filex");
 		Utility.getProjectExplorerView().setFocus();
 		SWTBotTreeItem project= bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]");
-		project.getNode("libs").expand();
-		project.getNode("libs").getNode("filex").expand();
-		SWTBotTreeItem[] items = project.getNode("libs").getNode("filex").getItems();
+		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
+		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.FILEX).expand();
+		SWTBotTreeItem[] items = project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.FILEX).getItems();
 		boolean isFileExist = false;
 		for(SWTBotTreeItem item: items) {
-			if(item.getText().contains("fx_user.h")) {
+			if(item.getText().contains(ProjectParameters.FolderAndFile.FILE_FX_USER_H)) {
 				isFileExist = true;
 			}
 		}
@@ -85,27 +71,18 @@ public class AddAzureModuleAndGenerateCode{
 	}
 	@Test
 	public void tc_03_AddComponentNetxduo() throws Exception{
-		SWTBotEditor scfgEditor = bot.editorByTitle(projectModelSpecific.getProjectName()+".scfg");
-		scfgEditor.setFocus();
-		bot.cTabItem("Components").activate();
-		bot.toolbarButtonWithTooltip("Add component").click();
-		bot.shell("New Component").setFocus();
-		bot.textWithLabel("Filter").setText("netx");
-		bot.table().select(0);
-		bot.button(ProjectParameters.ButtonAction.BUTTON_FINISH).click();
-		bot.toolbarButton(ProjectParameters.ButtonAction.BUTTON_GENERATE_CODE).click();
-		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
-			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
-		}
-		bot.sleep(15000);
+		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
+		Utility.addComponentAndGenerate("netx");
 		Utility.getProjectExplorerView().setFocus();
-		SWTBotTreeItem project= bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]");
-		project.getNode("libs").expand();
-		project.getNode("libs").getNode("netxduo").expand();
-		SWTBotTreeItem[] items = project.getNode("libs").getNode("netxduo").getItems();
+		SWTBotTreeItem project = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]");
+		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
+		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.NETXDUO)
+				.expand();
+		SWTBotTreeItem[] items = project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
+				.getNode(ProjectParameters.RTOSComponent.NETXDUO).getItems();
 		boolean isFileExist = false;
-		for(SWTBotTreeItem item: items) {
-			if(item.getText().contains("nx_user.h")) {
+		for (SWTBotTreeItem item : items) {
+			if (item.getText().contains(ProjectParameters.FolderAndFile.FILE_NX_USER_H)) {
 				isFileExist = true;
 			}
 		}
@@ -115,29 +92,28 @@ public class AddAzureModuleAndGenerateCode{
 	}
 	@Test
 	public void tc_04_AddComponentNetxduoAddons() throws Exception{
-		SWTBotEditor scfgEditor = bot.editorByTitle(projectModelSpecific.getProjectName()+".scfg");
-		scfgEditor.setFocus();
-		bot.cTabItem("Components").activate();
-		bot.toolbarButtonWithTooltip("Add component").click();
-		bot.shell("New Component").setFocus();
-		bot.textWithLabel("Filter").setText("netx");
-		bot.table().select(1);
-		bot.button(ProjectParameters.ButtonAction.BUTTON_FINISH).click();
-		bot.toolbarButton(ProjectParameters.ButtonAction.BUTTON_GENERATE_CODE).click();
-		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
-			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
-		}
-		bot.sleep(15000);
+		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
+		;
+		Utility.addComponentAndGenerate("netx duo addons");
 		Utility.getProjectExplorerView().setFocus();
-		SWTBotTreeItem project= bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]");
-		project.getNode("libs").expand();
-		project.getNode("libs").getNode("netxduo_addons").expand();
-		project.getNode("libs").getNode("netxduo_addons").getNode("addons").expand();
-		project.getNode("libs").getNode("netxduo_addons").getNode("addons").getNode("dhcp").expand();
-		SWTBotTreeItem[] items = project.getNode("libs").getNode("netxduo_addons").getNode("addons").getNode("dhcp").getItems();
+		SWTBotTreeItem project = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]");
+		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
+		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
+				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS).expand();
+		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
+				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_ADDONS).expand();
+		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
+				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_ADDONS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_DHCP).expand();
+		SWTBotTreeItem[] items = project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
+				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_ADDONS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_DHCP).getItems();
 		boolean isFileExist = false;
-		for(SWTBotTreeItem item: items) {
-			if(item.getText().contains("nxd_dhcp_client.h")) {
+		for (SWTBotTreeItem item : items) {
+			if (item.getText().contains(ProjectParameters.FolderAndFile.FILE_NXD_DHCP_CLIENT_H)) {
 				isFileExist = true;
 			}
 		}

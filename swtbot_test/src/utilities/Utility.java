@@ -62,13 +62,7 @@ public class Utility {
 
 	public static void projectExplorerSelectProject(ProjectModel model) {
 		// open project explorer
-		bot.menu(MenuName.MENU_WINDOW).menu(MenuName.MENU_SHOW_VIEW).menu(MenuName.MENU_OTHER).click();
-		bot.text().setText(ProjectParameters.WINDOW_PROJECT_EXPLORER);
-		SWTBotTreeItem treeItem = bot.tree().getTreeItem("General");
-		bot.waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.treeItemHasNode(treeItem,
-				ProjectParameters.WINDOW_PROJECT_EXPLORER));
-		treeItem.getNode(ProjectParameters.WINDOW_PROJECT_EXPLORER).select();
-		bot.button(ButtonAction.BUTTON_OPEN).click();
+		openProjectExplorer();
 		bot.sleep(5000);
 		// select project
 		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
@@ -123,5 +117,38 @@ public class Utility {
 			return RTOSDisplay.FREERTOSKERNEL;
 		}
 		return "";
+	}
+	
+	public static void openSCFGEditor(ProjectModel projectModel) {
+		Utility.getProjectExplorerView().setFocus();
+		bot.tree().getTreeItem(projectModel.getProjectName() + " [HardwareDebug]").expand();
+		bot.tree().getTreeItem(projectModel.getProjectName() + " [HardwareDebug]").getNode(projectModel.getProjectName()+".scfg").doubleClick();
+		SWTBotEditor scfgEditor = bot.editorByTitle(projectModel.getProjectName()+".scfg");
+		scfgEditor.setFocus();
+		bot.cTabItem(ProjectParameters.SCFG_COMPONENT_TAB).activate();
+	}
+	
+	public static void addComponentAndGenerate(String componentName) {
+		bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_ADD_COMPONENT).click();
+		bot.shell(ProjectParameters.WINDOW_NEW_COMPONENT).setFocus();
+		bot.textWithLabel(ProjectParameters.LabelName.LABEL_FILTER).setText(componentName);
+		bot.table().select(0);
+		bot.button(ProjectParameters.ButtonAction.BUTTON_FINISH).click();
+		bot.toolbarButton(ProjectParameters.ButtonAction.BUTTON_GENERATE_CODE).click();
+		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
+			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
+		}
+		bot.sleep(15000);
+	}
+	
+	public static void openProjectExplorer() {
+		bot.menu(ProjectParameters.MenuName.MENU_WINDOW).menu(ProjectParameters.MenuName.MENU_SHOW_VIEW)
+				.menu(ProjectParameters.MenuName.MENU_OTHER).click();
+		bot.text().setText(ProjectParameters.WINDOW_PROJECT_EXPLORER);
+		SWTBotTreeItem treeItem = bot.tree().getTreeItem("General");
+		bot.waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.treeItemHasNode(treeItem,
+				ProjectParameters.WINDOW_PROJECT_EXPLORER));
+		treeItem.getNode(ProjectParameters.WINDOW_PROJECT_EXPLORER).select();
+		bot.button(ProjectParameters.ButtonAction.BUTTON_OPEN).click();
 	}
 }

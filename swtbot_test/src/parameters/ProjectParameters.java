@@ -18,12 +18,14 @@ public class ProjectParameters {
 	public static final String WINDOW_INSTALL = "Install";
 	public static final String WINDOW_BOARD_DATA = "Board Data File Update";
 	public static final String WINDOW_FIT = "RX Driver Package Download";
+	public static final String WINDOW_NEW_COMPONENT = "New Component";
 	public static final String BUILD_SUCCESSFULLY = "Build Finished. 0 errors";
 	public static final String BUILD_FINISH = "Build Finished";
 	public static final String BUILD_FAILED = "Build Failed";
 	public static final String CHECKBOX_DELETE_PROJECT_CONTENTS_ON_DISK = "Delete project contents on disk (cannot be undone)";
 	public static final String CODE_GENERATING = "Code Generating";
 	public static final String WINDOW_CHANGE_VERSION = "Change Version";
+	public static final String SCFG_COMPONENT_TAB = "Components";
 	
 
 	public class RTOSType {
@@ -100,6 +102,8 @@ public class ProjectParameters {
 		public static final String BUTTON_SELECT_ALL = "Select All";
 		public static final String BUTTON_GENERATE_CODE = "Generate Code";
 		public static final String BUTTON_PROCEED = "Proceed";
+		public static final String BUTTON_ADD_COMPONENT = "Add component";
+		public static final String BUTTON_REMOVE_COMPONENT = "Remove component";
 	}
 
 	public class LabelName {
@@ -108,6 +112,8 @@ public class ProjectParameters {
 		public static final String LABEL_RTOS_VERSION = "&RTOS Version:";
 		public static final String LABEL_TARGET_BOARD = "&Target Board:";
 		public static final String LABEL_TARGET_DEVICE = "&Target Device:";
+		public static final String LABEL_FILTER = "Filter";
+		public static final String LABEL_AVAILABLE_VERSION = "&Available versions:";
 	}
 
 	public class MenuName {
@@ -122,5 +128,24 @@ public class ProjectParameters {
 		public static final String MENU_NEW = "New";
 		public static final String MENU_C_CPP_PROJECT = "Renesas C/C++ Project";
 		public static final String MENU_RENESAS_RX = "Renesas RX";
+		public static final String MENU_CHANGE_VERSION= "Change version...";
+	}
+	
+	public class FolderAndFile {
+		public static final String FOLDER_RTOS = "RTOS";
+		public static final String FOLDER_RTOS_LIBRARY = "RTOS Library";
+		public static final String FOLDER_DHCP = "dhcp";
+		public static final String FOLDER_LIBS = "libs";
+		public static final String FOLDER_ADDONS = "addons";
+		public static final String FILE_FX_USER_H = "fx_user.h";
+		public static final String FILE_NX_USER_H = "nx_user.h";
+		public static final String FILE_NXD_DHCP_CLIENT_H = "nxd_dhcp_client.h";
+	}
+	
+	public class RTOSComponent {
+		public static final String FILEX = "filex";
+		public static final String NETXDUO = "netxduo";
+		public static final String NETXDUO_ADDONS = "netxduo_addons";
+		public static final String USBX = "usbx";
 	}
 }

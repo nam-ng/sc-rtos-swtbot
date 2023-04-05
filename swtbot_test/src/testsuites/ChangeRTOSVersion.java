@@ -53,17 +53,11 @@ public class ChangeRTOSVersion {
 	
 	@Test
 	public void tc_02_ChangeRTOSVersion() throws Exception{
-		Utility.getProjectExplorerView().setFocus();
-		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]").expand();
-		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]").getNode(projectModelSpecific.getProjectName()+".scfg").doubleClick();
-		SWTBotEditor scfgEditor = bot.editorByTitle(projectModelSpecific.getProjectName()+".scfg");
-		scfgEditor.setFocus();
-		bot.cTabItem("Components").activate();
-		scfgEditor.setFocus();
+		Utility.openSCFGEditor(projectModelSpecific);
 		Utility.getProjectExplorerView().close();
-		bot.text().setText("usbx");
-		bot.tree().getTreeItem("RTOS").getNode("RTOS Library").getNode("usbx").contextMenu("Change version...").click();
-		bot.comboBoxWithLabel("&Available versions:").setSelection(ProjectParameters.RTOSVersion.Azure_6_1_6);
+		bot.text().setText(ProjectParameters.RTOSComponent.USBX);
+		bot.tree().getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY).getNode(ProjectParameters.RTOSComponent.USBX).contextMenu(ProjectParameters.MenuName.MENU_CHANGE_VERSION).click();
+		bot.comboBoxWithLabel(ProjectParameters.LabelName.LABEL_AVAILABLE_VERSION).setSelection(ProjectParameters.RTOSVersion.Azure_6_1_6);
 		bot.button(ProjectParameters.ButtonAction.BUTTON_NEXT).click();
 		SWTBotTreeItem[] allItems= bot.tree().getAllItems();
 		boolean isUsbXShowInTable = false;
@@ -82,26 +76,19 @@ public class ChangeRTOSVersion {
 		bot.sleep(15000);
 		boolean isUsbXInComponentTree = false;
 		bot.text().setText("");
-		bot.tree().getTreeItem("RTOS").expand();
-		List<String> RTOSFolder = bot.tree().getTreeItem("RTOS").getNodes();
+		bot.tree().getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).expand();
+		List<String> RTOSFolder = bot.tree().getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).getNodes();
 		for(String folder:RTOSFolder) {
-			if (folder.contains("RTOS Library")) {
-				SWTBotTreeItem[] componentItems = bot.tree().getTreeItem("RTOS").getNode("RTOS Library").getItems();
+			if (folder.contains(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)) {
+				SWTBotTreeItem[] componentItems = bot.tree().getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY).getItems();
 				for (SWTBotTreeItem currentItem: componentItems) {
-					if (currentItem.getText().contains("usbx")) {
+					if (currentItem.getText().contains(ProjectParameters.RTOSComponent.USBX)) {
 						isUsbXInComponentTree = true;
 					}
 				}
 			}
 		}
-		bot.menu(ProjectParameters.MenuName.MENU_WINDOW).menu(ProjectParameters.MenuName.MENU_SHOW_VIEW)
-				.menu(ProjectParameters.MenuName.MENU_OTHER).click();
-		bot.text().setText(ProjectParameters.WINDOW_PROJECT_EXPLORER);
-		SWTBotTreeItem treeItem = bot.tree().getTreeItem("General");
-		bot.waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.treeItemHasNode(treeItem,
-				ProjectParameters.WINDOW_PROJECT_EXPLORER));
-		treeItem.getNode(ProjectParameters.WINDOW_PROJECT_EXPLORER).select();
-		bot.button(ProjectParameters.ButtonAction.BUTTON_OPEN).click();
+		Utility.openProjectExplorer();
 		if (!isUsbXShowInTable || isUsbXInComponentTree) {
 			assertFalse(true);
 		}
