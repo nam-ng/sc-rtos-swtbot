@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<platform>
+	<!-- platform database -->
+	<family id="RX">
+		<board>TargetBoardRX130</board>
+		<board>RSKRX140</board>
+		<board>RSKRX65N-2MB</board>
+		<board>RSKRX65N-2MB(TSIP)</board>
+		<board>CloudKitRX65N</board>
+		<board>CK-RX65N</board>
+		<board>RSKRX66T</board>
+		<board>RSKRX660</board>
+		<board>RSKRX671</board>
+		<board>EnvisionKitRX72N</board>
+		<board custom="true">
+			<group id="RX65N">
+				<device>R5F565NEHxFC</device>
+				<device>R5F565NEHxFC_DUAL</device>
+				<device>R5F565NEDxFC</device>
+				<device>R5F565NEDxFC_DUAL</device>
+				<device>R5F565NEHxBG</device>
+				<device>R5F565NEHxBG_DUAL</device>
+			</group>
+			<group id="RX651">
+				<device>R5F5651EDxFC</device>
+				<device>R5F5651EDxFC_DUAL</device>
+				<device>R5F5651EHxBG</device>
+				<device>R5F5651EHxBG_DUAL</device>
+				<device>R5F5651EHxFC</device>
+				<device>R5F5651EHxFC_DUAL</device>
+			</group>
+			<group id="RX72N">
+				<device>R5F572NNDxFC</device>
+				<device>R5F572NNDxFC_DUAL</device>
+				<device>R5F572NNHxBG</device>
+				<device>R5F572NNHxBG_DUAL</device>
+				<device>R5F572NNHxFC</device>
+				<device>R5F572NNHxFC_DUAL</device>
+			</group>
+		</board>
+	</family>
+	<family id="RZ">
+		<customboard>
+		</customboard>
+	</family>
+</platform>
