@@ -2,6 +2,8 @@ package utilities;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -12,6 +14,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.osgi.framework.Bundle;
 
+import model.AbstractNode;
 import model.ProjectModel;
 import parameters.ProjectParameters;
 import parameters.ProjectParameters.ButtonAction;
@@ -52,8 +55,7 @@ public class Utility {
 		String projectItem = projectName;
 		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
 		for (SWTBotTreeItem item : allItems) {
-			if (item.getText().contentEquals(projectName)
-					|| item.getText().contentEquals(projectName + " [" + "HardwareDebug" + "]")) {
+			if (item.getText().contains(projectName)) {
 				projectItem = item.getText();
 			}
 		}
@@ -66,11 +68,10 @@ public class Utility {
 		bot.sleep(5000);
 		// select project
 		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
-		String buildType = model.getActiveBuildConfiguration();
 		String projectName = model.getProjectName();
 		for (SWTBotTreeItem item : allItems) {
 			String itemName = item.getText();
-			if (itemName.contains(projectName + " [" + buildType + "]")) {
+			if (itemName.contains(projectName)) {
 				projectName = itemName;
 				break;
 			}
@@ -150,5 +151,25 @@ public class Utility {
 				ProjectParameters.WINDOW_PROJECT_EXPLORER));
 		treeItem.getNode(ProjectParameters.WINDOW_PROJECT_EXPLORER).select();
 		bot.button(ProjectParameters.ButtonAction.BUTTON_OPEN).click();
+	}
+
+	public static <T> Collection<T> filterXMLData(Collection<T> model, String selectedToolchain, String selectedBoard) {
+		Collection<T> filtered = new ArrayList<>();
+
+		for (T node : model) {
+			if (node instanceof AbstractNode) {
+				AbstractNode nodeModel = (AbstractNode) node;
+				if (isSupport(nodeModel.getToolchains(), nodeModel.getBoards(), selectedToolchain, selectedBoard)) {
+					filtered.add(node);
+				}
+			}
+		}
+		return filtered;
+	}
+
+	private static boolean isSupport(Collection<String> toolchains, Collection<String> boards, String selectedToolchain, String selectedBoard) {
+		boolean toolchainCondition = (toolchains.isEmpty() || toolchains.contains(selectedToolchain));
+		boolean boardCondition = (boards.isEmpty() || boards.contains(selectedBoard));
+		return toolchainCondition && boardCondition;
 	}
 }

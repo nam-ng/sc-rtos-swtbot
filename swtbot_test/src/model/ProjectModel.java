@@ -7,9 +7,11 @@ import java.util.Map.Entry;
 import parameters.ProjectParameters.BuildType;
 
 public class ProjectModel {
+	private String language;
 	private String familyName;
 	private String projectName;
 	private String toolchain;
+	private String toolchainVersion;
 	private String board;
 	private String rtosType;
 	private String rtosVersion;
@@ -32,7 +34,7 @@ public class ProjectModel {
 		}
 		for (Entry<String, Boolean> entry : buildType.entrySet()) {
 			if (entry.getKey().equalsIgnoreCase(BuildType.HARDWARE)) {
-				return entry.getValue();
+				return true;
 			}
 		}
 		return false;
@@ -44,7 +46,7 @@ public class ProjectModel {
 		}
 		for (Entry<String, Boolean> entry : buildType.entrySet()) {
 			if (entry.getKey().equalsIgnoreCase(BuildType.DEBUG)) {
-				return entry.getValue();
+				return true;
 			}
 		}
 		return false;
@@ -56,7 +58,7 @@ public class ProjectModel {
 		}
 		for (Entry<String, Boolean> entry : buildType.entrySet()) {
 			if (entry.getKey().equalsIgnoreCase(BuildType.RELEASE)) {
-				return entry.getValue();
+				return true;
 			}
 		}
 		return false;
@@ -122,6 +124,17 @@ public class ProjectModel {
 		return toolchain;
 	}
 
+	public void setToolchain(String toolchain) {
+		this.toolchain = toolchain;
+	}
+
+	public String getToolchainVersion() {
+		return toolchainVersion;
+	}
+
+	public void setToolchainVersion(String version) {
+		toolchainVersion = version;
+	}
 	public String getApplication() {
 		return rtosApplication;
 	}
@@ -135,12 +148,9 @@ public class ProjectModel {
 	}
 
 	public void setApplicationOrder(int order) {
-		this.applicationOrder=order;
+		applicationOrder = order;
 	}
 
-	public void setToolchain(String toolchain) {
-		this.toolchain = toolchain;
-	}
 
 	public void setSkipApplication(boolean skipApp) {
 		skipApplication = skipApp;
@@ -148,6 +158,14 @@ public class ProjectModel {
 
 	public boolean isSkipApplication() {
 		return skipApplication;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 }

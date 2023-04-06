@@ -91,4 +91,21 @@ public class RTOSManager {
 		}
 		return version.getApplicationById(appId);
 	}
+
+	public static Application getApplication(String rtosType, String versionId, String appId, String toolchain, String board) {
+		RTOSVersion version = getVersionById(rtosType, versionId);
+		if (version == null) {
+			return null;
+		}
+		Application app = version.getApplicationById(appId);
+		if (app == null) {
+			return null;
+		}
+		for (Target target : app.getTargets()) {
+			if (target.getSupportedToolchainNames().contains(toolchain) && target.getSupportedBoardNames().contains(board)) {
+				return app;
+			}
+		}
+		return null;
+	}
 }

@@ -69,6 +69,8 @@ public class ProjectParameters {
 
 	public class TargetBoard {
 		public static final String CUSTOM = "Custom";
+		public static final String BOARD_RSK_RX65N_2MB = "RSKRX65N-2MB";
+		public static final String BOARD_CK_RX65N = "CK-RX65N";
 	}
 
 	public class ToolchainType {
@@ -108,6 +110,7 @@ public class ProjectParameters {
 
 	public class LabelName {
 		public static final String LABEL_PROJECT_NAME = "&Project name:";
+		public static final String LABEL_TOOLCHAIN_VERSION = "&Toolchain Version:";
 		public static final String LABEL_RTOS = "&RTOS:";
 		public static final String LABEL_RTOS_VERSION = "&RTOS Version:";
 		public static final String LABEL_TARGET_BOARD = "&Target Board:";

@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class ProjectConfiguration {
+public class ProjectConfiguration extends AbstractNode {
 	private Collection<Config> configs = new ArrayList<>();
 
 	public ProjectConfiguration(Element element) {
@@ -19,6 +19,8 @@ public class ProjectConfiguration {
 				String name = childElement.getTagName();
 				if ("config".equalsIgnoreCase(name)) {
 					configs.add(new Config(childElement));
+				} else {
+					parseFilter(name, childElement);
 				}
 			}
 		}

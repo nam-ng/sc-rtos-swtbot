@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Target {
-	private Collection<String> toolchains = new ArrayList<>();
+	private Collection<Toolchain> toolchains = new ArrayList<>();
 	private Collection<Board> boards = new ArrayList<>();
 
 	public Target(Element element) {
@@ -19,7 +19,7 @@ public class Target {
 				Element childElement = (Element) childNode;
 				String name = childElement.getTagName();
 				if ("toolchain".equalsIgnoreCase(name)) {
-					toolchains.add(childElement.getTextContent());
+					toolchains.add(new Toolchain(childElement));
 				} else if ("board".equalsIgnoreCase(name)) {
 					boards.add(new Board(childElement));
 				}
@@ -27,7 +27,7 @@ public class Target {
 		}
 	}
 
-	public Collection<String> getSupportedToolchains() {
+	public Collection<Toolchain> getSupportedToolchains() {
 		return toolchains;
 	}
 
@@ -35,4 +35,19 @@ public class Target {
 		return boards;
 	}
 
+	public Collection<String> getSupportedToolchainNames() {
+		Collection<String> names = new ArrayList<>();
+		for (Toolchain item : toolchains) {
+			names.add(item.getName());
+		}
+		return names;
+	}
+
+	public Collection<String> getSupportedBoardNames() {
+		Collection<String> names = new ArrayList<>();
+		for (Board item : boards) {
+			names.add(item.getBoard());
+		}
+		return names;
+	}
 }
