@@ -1,12 +1,16 @@
 package utilities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.keyboard.Keystrokes;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
-import model.ProjectModel;
 import common.Constants;
+import model.ProjectModel;
 import parameters.CommonParameters;
 import parameters.ProjectParameters;
 import parameters.ProjectParameters.BuildType;
@@ -16,40 +20,65 @@ import parameters.ProjectParameters.MenuName;
 public class BuildUtility extends Utility {
 
 	public static void setBuildConfiguration(ProjectModel model) {
-		bot.sleep(5000);
+		bot.sleep(2000);
 		Utility.projectExplorerSelectProject(model);
 		String buildType = model.getActiveBuildConfiguration();
+		SWTBotTreeItem projectItem = Utility.getProjectItemOnProjectExplorer(model.getProjectName()); 
+		List<String> menus = new ArrayList<>();
+		menus = bot.tree().getTreeItem(projectItem.getText()).contextMenu(CommonParameters.ContextMenuBuildConfigurations)
+				.menu(CommonParameters.MenuSetActive).menuItems();
 		if (Constants.GCC_TOOLCHAIN.equalsIgnoreCase(model.getToolchain())) {
 			if (buildType.equalsIgnoreCase(BuildType.RELEASE)) {
-				bot.tree().getTreeItem(model.getProjectName() + " [" + buildType + "]")
-						.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
-						.menu(CommonParameters.MenuSetActive).menu(CommonParameters.GCCMenuActiveRelease).click();
+				for (String item : menus) {
+					if (item.matches("^\\d+\s*Release$")) {
+						bot.tree().getTreeItem(projectItem.getText())
+								.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
+								.menu(CommonParameters.MenuSetActive).menu(item).click();
+					}
+				}
 			} else if (buildType.equalsIgnoreCase(BuildType.HARDWARE)) {
-				bot.tree().getTreeItem(model.getProjectName() + " [" + buildType + "]")
-						.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
-						.menu(CommonParameters.MenuSetActive).menu(CommonParameters.GCCMenuActiveHardwareDebug).click();
+				for (String item : menus) {
+					if (item.matches("^\\d+\s*HardwareDebug$")) {
+						bot.tree().getTreeItem(projectItem.getText())
+								.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
+								.menu(CommonParameters.MenuSetActive).menu(item).click();
+					}
+				}
 			} else {
-				bot.tree().getTreeItem(model.getProjectName() + " [" + buildType + "]")
-						.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
-						.menu(CommonParameters.MenuSetActive).menu(CommonParameters.GCCMenuActiveDebug).click();
+				for (String item : menus) {
+					if (item.matches("^\\d+\s*Debug$")) {
+						bot.tree().getTreeItem(projectItem.getText())
+								.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
+								.menu(CommonParameters.MenuSetActive).menu(item).click();
+					}
+				}
 			}
 		} else if (Constants.CCRX_TOOLCHAIN.equalsIgnoreCase(model.getToolchain())) {
 			if (buildType.equalsIgnoreCase(BuildType.RELEASE)) {
-				bot.tree().getTreeItem(model.getProjectName() + " [" + buildType + "]")
-						.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
-						.menu(CommonParameters.MenuSetActive).menu(CommonParameters.CCRXMenuActiveRelease).click();
+				for (String item : menus) {
+					if (item.matches("^\\d+\s*Release[^\n]+$")) {
+						bot.tree().setFocus();
+						bot.tree().getTreeItem(projectItem.getText()).contextMenu(CommonParameters.ContextMenuBuildConfigurations)
+								.menu(CommonParameters.MenuSetActive).menu(item).click();
+					}
+				}
 			} else if (buildType.equalsIgnoreCase(BuildType.HARDWARE)) {
-				bot.tree().getTreeItem(model.getProjectName() + " [" + buildType + "]")
-						.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
-						.menu(CommonParameters.MenuSetActive).menu(CommonParameters.CCRXMenuActiveHardwareDebug)
-						.click();
+				for (String item : menus) {
+					if (item.matches("^\\d+\s*HardwareDebug[^\n]+$")) {
+						bot.tree().getTreeItem(projectItem.getText()).contextMenu(CommonParameters.ContextMenuBuildConfigurations)
+								.menu(CommonParameters.MenuSetActive).menu(item).click();
+					}
+				}
 			} else {
-				bot.tree().getTreeItem(model.getProjectName() + " [" + buildType + "]")
-						.contextMenu(CommonParameters.ContextMenuBuildConfigurations)
-						.menu(CommonParameters.MenuSetActive).menu(CommonParameters.CCRXMenuActiveDebug).click();
+				for (String item : menus) {
+					if (item.matches("^\\d+\s*Debug[^\n]+$")) {
+						bot.tree().getTreeItem(projectItem.getText()).contextMenu(CommonParameters.ContextMenuBuildConfigurations)
+								.menu(CommonParameters.MenuSetActive).menu(item).click();
+					}
+				}
 			}
 		}
-		bot.sleep(5000);
+		bot.sleep(2000);
 	}
 
 	public static void buildProject(ProjectModel model) {

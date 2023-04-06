@@ -12,7 +12,8 @@ import common.LogUtil;
 public class Application {
 	private String appId;
 	private int appOrder;
-	private ProjectConfiguration configuration;
+	private Collection<Language> languages = new ArrayList<>();
+	private Collection<ProjectConfiguration> configuration = new ArrayList<>();
 	private Collection<Target> targets = new ArrayList<>();
 
 	public Application(Element element) {
@@ -24,9 +25,11 @@ public class Application {
 				Element childElement = (Element) childNode;
 				String name = childElement.getTagName();
 				if ("projectconfiguration".equalsIgnoreCase(name)) {
-					setProjectConfiguration(new ProjectConfiguration(childElement));
+					addProjectConfiguration(new ProjectConfiguration(childElement));
 				} else if ("target".equalsIgnoreCase(name)) {
 					addTarget(new Target(childElement));
+				} else if ("language".equalsIgnoreCase(name)) {
+					addLanguage(new Language(childElement));
 				}
 			}
 		}
@@ -50,12 +53,12 @@ public class Application {
 		}
 	}
 
-	public ProjectConfiguration getProjectConfiguration() {
+	public Collection<ProjectConfiguration> getProjectConfiguration() {
 		return configuration;
 	}
 
-	private void setProjectConfiguration(ProjectConfiguration config) {
-		configuration = config;
+	private void addProjectConfiguration(ProjectConfiguration config) {
+		configuration.add(config);
 	}
 
 	public Collection<Target> getTargets() {
@@ -64,6 +67,14 @@ public class Application {
 
 	private void addTarget(Target target) {
 		targets.add(target);
+	}
+
+	public Collection<Language> getLanguages() {
+		return languages;
+	}
+
+	private void addLanguage(Language item) {
+		languages.add(item);
 	}
 
 }

@@ -8,6 +8,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import common.Constants;
 import common.LogUtil;
 import model.RTOSManager;
 import parameters.ProjectParameters.RTOSApplication;
@@ -21,14 +22,13 @@ import utilities.Utility;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SampleTest {
 	private static SWTWorkbenchBot bot;
-	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
-	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
+	
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		bot = new SWTWorkbenchBot();
-		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
-		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
+		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.PLATFORM_XML_FILE)));
+		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.RTOS_PG_XML_FILE)));
 	}
 
 	@Test
