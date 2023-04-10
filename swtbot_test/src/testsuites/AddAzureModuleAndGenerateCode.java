@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
+import common.Constants;
 import common.LogUtil;
 import utilities.PGUtility;
 import utilities.Utility;
@@ -20,8 +21,10 @@ import utilities.Utility;
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
+import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
+import parameters.ProjectParameters.TargetBoard;
 import platform.PlatformModel;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -36,17 +39,12 @@ public class AddAzureModuleAndGenerateCode{
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		Collection<ProjectModel> list = PGUtility.prepareProjectModel(RTOSType.AZURE, RTOSVersion.Azure_6_2_1,"addAzureModuleAndGenCode");
-		if(list.size()==1) {
-			for(ProjectModel model:list) {
-				projectModelSpecific=model;
-			}
-		}
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 	}
 	
 	@Test
 	public void tc_01_CreateThreadxProject() throws Exception{
-		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1,"addAzureModuleAndGenCode");
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 		
 	}
 	
@@ -55,7 +53,7 @@ public class AddAzureModuleAndGenerateCode{
 		Utility.openSCFGEditor(projectModelSpecific);
 		Utility.addComponentAndGenerate("filex");
 		Utility.getProjectExplorerView().setFocus();
-		SWTBotTreeItem project= bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]");
+		SWTBotTreeItem project= bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " ["+ projectModelSpecific.getActiveBuildConfiguration() +"]");
 		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
 		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.FILEX).expand();
 		SWTBotTreeItem[] items = project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.FILEX).getItems();
@@ -74,7 +72,7 @@ public class AddAzureModuleAndGenerateCode{
 		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
 		Utility.addComponentAndGenerate("netx");
 		Utility.getProjectExplorerView().setFocus();
-		SWTBotTreeItem project = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]");
+		SWTBotTreeItem project = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " ["+ projectModelSpecific.getActiveBuildConfiguration() +"]");
 		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
 		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.NETXDUO)
 				.expand();
@@ -96,7 +94,7 @@ public class AddAzureModuleAndGenerateCode{
 		;
 		Utility.addComponentAndGenerate("netx duo addons");
 		Utility.getProjectExplorerView().setFocus();
-		SWTBotTreeItem project = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [HardwareDebug]");
+		SWTBotTreeItem project = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " ["+ projectModelSpecific.getActiveBuildConfiguration() +"]");
 		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
 		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
 				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS).expand();

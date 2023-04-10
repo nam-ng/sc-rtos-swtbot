@@ -26,6 +26,8 @@ public class ProjectParameters {
 	public static final String CODE_GENERATING = "Code Generating";
 	public static final String WINDOW_CHANGE_VERSION = "Change Version";
 	public static final String SCFG_COMPONENT_TAB = "Components";
+	public static final String GENERAL = "General";
+	public static final CharSequence WINDOW_QUESTION = "Question";
 	
 
 	public class RTOSType {

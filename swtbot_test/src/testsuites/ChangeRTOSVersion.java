@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
+import common.Constants;
 import common.LogUtil;
 import utilities.PGUtility;
 import utilities.Utility;
@@ -21,8 +22,10 @@ import utilities.Utility;
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
+import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
+import parameters.ProjectParameters.TargetBoard;
 import platform.PlatformModel;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -37,18 +40,12 @@ public class ChangeRTOSVersion {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		Collection<ProjectModel> list = PGUtility.prepareProjectModel(RTOSType.AZURE, RTOSVersion.Azure_6_2_1,"changeRTOSVersion");
-		if(list.size()==1) {
-			for(ProjectModel model:list) {
-				projectModelSpecific=model;
-			}
-		}
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_USBX_CDC, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	
 	@Test
 	public void tc_01_CreateUsbxProject() throws Exception{
-		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1,"changeRTOSVersion");
-		
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_USBX_CDC, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	
 	@Test
@@ -61,8 +58,8 @@ public class ChangeRTOSVersion {
 		bot.button(ProjectParameters.ButtonAction.BUTTON_NEXT).click();
 		SWTBotTreeItem[] allItems= bot.tree().getAllItems();
 		boolean isUsbXShowInTable = false;
-		for(SWTBotTreeItem item:allItems) {
-			if (item.getText().contains("usbx configurations")) {
+		for (SWTBotTreeItem item : allItems) {
+			if (item.cell(0).contains("usbx configurations") && item.cell(1).contains("Removed")) {
 				isUsbXShowInTable = true;
 			}
 		}
@@ -73,7 +70,7 @@ public class ChangeRTOSVersion {
 		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
 			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
 		}
-		bot.sleep(15000);
+		bot.sleep(20000);
 		boolean isUsbXInComponentTree = false;
 		bot.text().setText("");
 		bot.tree().getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).expand();
