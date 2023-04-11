@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
@@ -28,7 +29,7 @@ import parameters.ProjectParameters.TargetBoard;
 import platform.PlatformModel;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AddAzureModuleAndGenerateCode{
+public class RemoveAzureModuleAndGenerateCode{
 	private static SWTWorkbenchBot bot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
@@ -78,4 +79,39 @@ public class AddAzureModuleAndGenerateCode{
 			assertFalse(true);
 		}
 	}
+	@Test
+	public void tc_05_RemoveComponentFilex() throws Exception{
+		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
+		Utility.removeComponent(ProjectParameters.RTOSComponent.FILEX);
+		Utility.clickGenerateCode();
+		boolean isFileXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.FILEX);
+		if (isFileXInComponentTree) {
+			assertFalse(true);
+		}
+	}
+	
+	@Test
+	public void tc_06_RemoveComponentNetxduoAddons() throws Exception{
+		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
+		Utility.removeComponent(ProjectParameters.RTOSComponent.NETXDUO_ADDONS);
+		Utility.clickGenerateCode();
+		boolean isAddonsInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO_ADDONS);
+		if (isAddonsInComponentTree) {
+			assertFalse(true);
+		}
+	}
+	
+	@Test
+	public void tc_07_RemoveComponentNetxduo() throws Exception{
+		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
+		Utility.removeComponent(ProjectParameters.RTOSComponent.NETXDUO);
+		Utility.clickGenerateCode();
+		boolean isNetXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO);
+		if (isNetXInComponentTree) {
+			assertFalse(true);
+		}
+	}
+	
+	
+	
 }
