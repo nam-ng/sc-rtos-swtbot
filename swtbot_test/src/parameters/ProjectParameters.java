@@ -119,6 +119,7 @@ public class ProjectParameters {
 		public static final String LABEL_TARGET_DEVICE = "&Target Device:";
 		public static final String LABEL_FILTER = "Filter";
 		public static final String LABEL_AVAILABLE_VERSION = "&Available versions:";
+		public static final String LABEL_CURRENT_VERSION = "&Current version:";
 	}
 
 	public class MenuName {
@@ -145,6 +146,8 @@ public class ProjectParameters {
 		public static final String FILE_FX_USER_H = "fx_user.h";
 		public static final String FILE_NX_USER_H = "nx_user.h";
 		public static final String FILE_NXD_DHCP_CLIENT_H = "nxd_dhcp_client.h";
+		public static final String FOLDER_RTOS_KERNEL = "RTOS Kernel";
+		public static final String FOLDER_RTOS_OBJECT = "RTOS Object";
 	}
 	
 	public class RTOSComponent {
@@ -152,5 +155,7 @@ public class ProjectParameters {
 		public static final String NETXDUO = "netxduo";
 		public static final String NETXDUO_ADDONS = "netxduo_addons";
 		public static final String USBX = "usbx";
+		public static final String THREADX = "threadx";
+		public static final String AZURERTOS_OBJECT = "azurertos_object";
 	}
 }

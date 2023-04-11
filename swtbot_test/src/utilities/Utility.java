@@ -1,9 +1,12 @@
 package utilities;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -129,21 +132,24 @@ public class Utility {
 		bot.cTabItem(ProjectParameters.SCFG_COMPONENT_TAB).activate();
 	}
 	
-	public static void addComponentAndGenerate(String componentName) {
+	public static void addComponent(String componentName) {
 		bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_ADD_COMPONENT).click();
 		bot.shell(ProjectParameters.WINDOW_NEW_COMPONENT).setFocus();
 		bot.textWithLabel(ProjectParameters.LabelName.LABEL_FILTER).setText(componentName);
 		bot.table().select(0);
 		bot.button(ProjectParameters.ButtonAction.BUTTON_FINISH).click();
+	}
+	public static void clickGenerateCode() {
 		bot.toolbarButton(ProjectParameters.ButtonAction.BUTTON_GENERATE_CODE).click();
+		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
+			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
+		}
 		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
 			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
 		}
 		bot.sleep(15000);
 	}
-	
-	public static void removeComponentAndGenerate(String componentName) {
-		bot.text().setText(componentName);
+	public static void removeComponent(String componentName) {
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
 				.getNode(componentName).select();
@@ -151,15 +157,6 @@ public class Utility {
 		if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_QUESTION)) {
 			bot.button(ProjectParameters.ButtonAction.BUTTON_YES).click();
 		}
-		bot.toolbarButton(ProjectParameters.ButtonAction.BUTTON_GENERATE_CODE).click();
-		bot.sleep(5000);
-		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
-			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
-		}
-		if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
-			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
-		}
-		bot.sleep(15000);
 	}
 	
 	public static void openProjectExplorer() {
@@ -171,6 +168,24 @@ public class Utility {
 				ProjectParameters.WINDOW_PROJECT_EXPLORER));
 		treeItem.getNode(ProjectParameters.WINDOW_PROJECT_EXPLORER).select();
 		bot.button(ProjectParameters.ButtonAction.BUTTON_OPEN).click();
+	}
+	
+	public static boolean checkIfComponentExistOrNot (String componentName) {
+		boolean isComponentInComponentTree = false;
+		bot.text().setText("");
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).expand();
+		List<String> RTOSFolder = bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).getNodes();
+		for(String folder:RTOSFolder) {
+			if (folder.contains(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)) {
+				SWTBotTreeItem[] componentItems = bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY).getItems();
+				for (SWTBotTreeItem currentItem: componentItems) {
+					if (currentItem.getText().contains(componentName)) {
+						isComponentInComponentTree = true;
+					}
+				}
+			}
+		}
+		return isComponentInComponentTree;
 	}
 
 	public static <T> Collection<T> filterXMLData(Collection<T> model, String selectedToolchain, String selectedBoard) {

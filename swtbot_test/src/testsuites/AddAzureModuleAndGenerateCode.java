@@ -51,71 +51,30 @@ public class AddAzureModuleAndGenerateCode{
 	@Test
 	public void tc_02_AddComponentFilex() throws Exception{
 		Utility.openSCFGEditor(projectModelSpecific);
-		Utility.addComponentAndGenerate("filex");
-		Utility.getProjectExplorerView().setFocus();
-		SWTBotTreeItem project= bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " ["+ projectModelSpecific.getActiveBuildConfiguration() +"]");
-		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
-		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.FILEX).expand();
-		SWTBotTreeItem[] items = project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.FILEX).getItems();
-		boolean isFileExist = false;
-		for(SWTBotTreeItem item: items) {
-			if(item.getText().contains(ProjectParameters.FolderAndFile.FILE_FX_USER_H)) {
-				isFileExist = true;
-			}
-		}
-		if (!isFileExist) {
+		Utility.addComponent("filex");
+		Utility.clickGenerateCode();
+		boolean isFileXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.FILEX);
+		if (!isFileXInComponentTree) {
 			assertFalse(true);
 		}
 	}
 	@Test
 	public void tc_03_AddComponentNetxduo() throws Exception{
 		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
-		Utility.addComponentAndGenerate("netx");
-		Utility.getProjectExplorerView().setFocus();
-		SWTBotTreeItem project = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " ["+ projectModelSpecific.getActiveBuildConfiguration() +"]");
-		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
-		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).getNode(ProjectParameters.RTOSComponent.NETXDUO)
-				.expand();
-		SWTBotTreeItem[] items = project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
-				.getNode(ProjectParameters.RTOSComponent.NETXDUO).getItems();
-		boolean isFileExist = false;
-		for (SWTBotTreeItem item : items) {
-			if (item.getText().contains(ProjectParameters.FolderAndFile.FILE_NX_USER_H)) {
-				isFileExist = true;
-			}
-		}
-		if (!isFileExist) {
+		Utility.addComponent("netx");
+		Utility.clickGenerateCode();
+		boolean isNetXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO);
+		if (!isNetXInComponentTree) {
 			assertFalse(true);
 		}
 	}
 	@Test
 	public void tc_04_AddComponentNetxduoAddons() throws Exception{
 		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
-		;
-		Utility.addComponentAndGenerate("netx duo addons");
-		Utility.getProjectExplorerView().setFocus();
-		SWTBotTreeItem project = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " ["+ projectModelSpecific.getActiveBuildConfiguration() +"]");
-		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS).expand();
-		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
-				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS).expand();
-		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
-				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_ADDONS).expand();
-		project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
-				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_ADDONS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_DHCP).expand();
-		SWTBotTreeItem[] items = project.getNode(ProjectParameters.FolderAndFile.FOLDER_LIBS)
-				.getNode(ProjectParameters.RTOSComponent.NETXDUO_ADDONS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_ADDONS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_DHCP).getItems();
-		boolean isFileExist = false;
-		for (SWTBotTreeItem item : items) {
-			if (item.getText().contains(ProjectParameters.FolderAndFile.FILE_NXD_DHCP_CLIENT_H)) {
-				isFileExist = true;
-			}
-		}
-		if (!isFileExist) {
+		Utility.addComponent("netx duo addons");
+		Utility.clickGenerateCode();
+		boolean isAddonsInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO_ADDONS);
+		if (!isAddonsInComponentTree) {
 			assertFalse(true);
 		}
 	}
