@@ -15,6 +15,7 @@ public class Application {
 	private Collection<Language> languages = new ArrayList<>();
 	private Collection<ProjectConfiguration> configuration = new ArrayList<>();
 	private Collection<Target> targets = new ArrayList<>();
+	private Collection<RXCLinkerFile> linkerFiles = new ArrayList<>();
 
 	public Application(Element element) {
 		parseAttribute(element);
@@ -30,6 +31,8 @@ public class Application {
 					addTarget(new Target(childElement));
 				} else if ("language".equalsIgnoreCase(name)) {
 					addLanguage(new Language(childElement));
+				} else if ("rxclinkerfile".equalsIgnoreCase(name)) {
+					addLinkerFile(new RXCLinkerFile(childElement));
 				}
 			}
 		}
@@ -77,4 +80,11 @@ public class Application {
 		languages.add(item);
 	}
 
+	private void addLinkerFile(RXCLinkerFile file) {
+		linkerFiles.add(file);
+	}
+
+	public Collection<RXCLinkerFile> getLinkerFiles() {
+		return linkerFiles;
+	}
 }

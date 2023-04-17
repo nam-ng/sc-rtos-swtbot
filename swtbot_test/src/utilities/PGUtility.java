@@ -19,6 +19,7 @@ import model.ProjectConfiguration;
 import model.ProjectModel;
 import model.RTOSManager;
 import model.RTOSVersion;
+import model.RXCLinkerFile;
 import model.Target;
 import model.Toolchain;
 import parameters.ProjectParameters;
@@ -53,6 +54,9 @@ public class PGUtility extends Utility {
 					Utility.changeBoard(model, "", "", true, false);
 					if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
 						Utility.updateGCCLinkerScriptFile(model);
+					} else if (model.getToolchain().equals(ToolchainType.CCRX_TOOLCHAIN)
+							&& !model.getRXCLinkerFile().isEmpty()) {
+						Utility.updateRXCLinkerSection(model, model.getRXCLinkerFile());
 					}
 				}
 				Utility.getProjectTreeItem(model).collapse();
@@ -77,6 +81,9 @@ public class PGUtility extends Utility {
 				Utility.changeBoard(model, "", "", true, false);
 				if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
 					Utility.updateGCCLinkerScriptFile(model);
+				} else if (model.getToolchain().equals(ToolchainType.CCRX_TOOLCHAIN)
+						&& !model.getRXCLinkerFile().isEmpty()) {
+					Utility.updateRXCLinkerSection(model, model.getRXCLinkerFile());
 				}
 			}
 			Utility.getProjectTreeItem(model).collapse();
@@ -121,6 +128,7 @@ public class PGUtility extends Utility {
 							model.setBuildType(config.getId(), config.isActive());
 						}
 					}
+					model.setRXCLinkerFile(getRXCLinkerFile(app.getLinkerFiles(), toolchain.getName(), board.getBoard()));
 					list.add(model);
 				}
 			}
@@ -159,6 +167,7 @@ public class PGUtility extends Utility {
 				model.setBuildType(config.getId(), config.isActive());
 			}
 		}
+		model.setRXCLinkerFile(getRXCLinkerFile(app.getLinkerFiles(), toolchain, board));
 		return model;
 	}
 
@@ -277,5 +286,14 @@ public class PGUtility extends Utility {
 			// return project in format: <group><device_name_from_index_7>
 			return PlatformModel.getGroupNameById(board) + board.substring(7);
 		}
+	}
+
+	private static String getRXCLinkerFile(Collection<RXCLinkerFile> model,
+			String selectedToolchain, String selectedBoard) {
+		Collection<RXCLinkerFile> filtered = Utility.filterXMLData(model, selectedToolchain, selectedBoard);
+		if (filtered.isEmpty()) {
+			return "";
+		}
+		return filtered.stream().findFirst().get().getLinkerPath();
 	}
 }

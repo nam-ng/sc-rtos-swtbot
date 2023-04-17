@@ -279,8 +279,30 @@
 					<board>RSKRX671</board>
 					<board>EnvisionKitRX72N</board>
 				</target>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CK-RX65N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F565NE_ether.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>CloudKitRX65N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F565NE_wifi.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX671</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F5671E.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>EnvisionKitRX72N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F572NN.xmi.fragment</path>
+				</rxclinkerfile>
 			</application>
-			<application id="bootloader" order="16">
+			<application id="bootloader" order="17">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -296,6 +318,24 @@
 					<board>RSKRX671</board>
 					<board>EnvisionKitRX72N</board>
 				</target>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F565NE.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX671</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F5671E.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>EnvisionKitRX72N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F572NN.xmi.fragment</path>
+				</rxclinkerfile>
 			</application>
 		</version>
 	</RTOS>

@@ -326,4 +326,70 @@ public class Utility {
 		reBot.button(ButtonAction.BUTTON_OK).click();
 		reBot.waitUntil(Conditions.shellCloses(reShell));
 	}
+
+	public static void updateRXCLinkerSection(ProjectModel model, String rxcLinkerFile) {
+		SWTBotTreeItem projectItem = Utility.getProjectTreeItem(model);
+		projectItem.select();
+
+		// open project setting dialog
+		projectItem.contextMenu("C/C++ Project Settings").click();
+		String settingDiaTitle = "Properties for " + model.getProjectName();
+		bot.waitUntil(Conditions.shellIsActive(settingDiaTitle));
+		SWTBotShell dialog = bot.shell(settingDiaTitle);
+		dialog.setFocus();
+		SWTBot dialogBot = dialog.bot();
+		dialogBot.cTabItem("Tool Settings").activate();
+
+		// check Linker/Section/Symbol file option
+		dialogBot.treeWithLabel("Settings").getTreeItem("Linker").getNode("Section").getNode("Symbol file").click();
+		dialogBot.toolbarButtonWithTooltip("Add...", 2).click();
+		// TODO: handle dialog
+		dialogBot.waitUntil(Conditions.shellIsActive("Enter Value"));
+		SWTBotShell mapDialog = dialogBot.shell("Enter Value");
+		SWTBot mapBot = mapDialog.bot();
+		mapBot.text().setText("PFRAM2=RPFRAM2");
+		mapBot.button(ButtonAction.BUTTON_OK).click();
+		dialogBot.waitUntil(Conditions.shellCloses(mapDialog));
+		dialogBot.toolbarButtonWithTooltip("Move Down", 2).click();
+		dialogBot.toolbarButtonWithTooltip("Move Down", 2).click();
+
+		// handle Rebuild index dialog
+		dialogBot.button("Apply").click();
+		dialogBot.waitUntil(Conditions.shellIsActive("Settings"));
+		SWTBotShell rebuildDialog = dialogBot.shell("Settings");
+		SWTBot rebuildBot = rebuildDialog.bot();
+		rebuildBot.button("Rebuild Index").click();
+		dialogBot.waitUntil(Conditions.shellCloses(rebuildDialog));
+
+		// handle Section viewer dialog
+		dialogBot.treeWithLabel("Settings").getTreeItem("Linker").getNode("Section").click();
+		dialogBot.button("...").click();
+		dialogBot.sleep(2000);// wait for dialog section edition
+		SWTBotShell sectionShell = dialogBot.activeShell();
+		sectionShell.setFocus();
+		SWTBot sectionBot = sectionShell.bot();
+
+		// checkbox
+		Path linkerPath = new Path(rxcLinkerFile);
+		sectionBot.checkBox("Override Linker Script").click();
+		sectionBot.text().setText(linkerPath.toOSString());
+		sectionBot.button("Re-Apply").click();
+		// Re-Apply dialog
+		sectionBot.waitUntil(Conditions.shellIsActive("Re-Apply"));
+		SWTBotShell reApplyShell = sectionBot.shell("Re-Apply");
+		SWTBot reApplyBot = reApplyShell.bot();
+		reApplyBot.button("OK").click();
+		sectionBot.waitUntil(Conditions.shellCloses(reApplyShell));
+
+		sectionBot.button("OK").click();
+		dialogBot.sleep(2000);
+
+		// handle Rebuild index dialog
+		dialogBot.button("Apply and Close").click();
+		dialogBot.waitUntil(Conditions.shellIsActive("Settings"));
+		SWTBotShell reDialog = dialogBot.shell("Settings");
+		SWTBot reBot = reDialog.bot();
+		reBot.button("Rebuild Index").click();
+		dialogBot.waitUntil(Conditions.shellCloses(reDialog));
+	}
 }
