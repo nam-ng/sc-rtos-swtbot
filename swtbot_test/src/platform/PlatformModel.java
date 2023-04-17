@@ -89,4 +89,13 @@ public class PlatformModel {
 		}
 		return false;
 	}
+
+	public static String getGroupNameById(String board) {
+		for (FamilyInfo info : familyInfo) {
+			if (!getFamilyName(board).isEmpty()) {
+				return info.getGroupIdByTargetBoard(board);
+			}
+		}
+		return "";
+	}
 }

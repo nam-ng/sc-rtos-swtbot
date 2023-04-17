@@ -1,7 +1,5 @@
 package utilities;
 
-import static org.junit.Assert.assertFalse;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,8 +10,11 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.osgi.framework.Bundle;
 
@@ -63,6 +64,15 @@ public class Utility {
 			}
 		}
 		return bot.tree().getTreeItem(projectItem);
+	}
+
+	public static SWTBotTreeItem getProjectTreeItem(ProjectModel projectModel) {
+		SWTBotView projectExplorerBot = bot.viewByTitle("Project Explorer");
+		projectExplorerBot.show();
+		projectExplorerBot.bot().waitUntil(Conditions.widgetIsEnabled(projectExplorerBot.bot().tree()));
+		String buildType = projectModel.getActiveBuildConfiguration();
+		bot.tree().getTreeItem(projectModel.getProjectName() + " [" + buildType + "]").select();
+		return bot.tree().getTreeItem(projectModel.getProjectName() + " [" + buildType + "]");
 	}
 
 	public static void projectExplorerSelectProject(ProjectModel model) {
@@ -129,7 +139,6 @@ public class Utility {
 		bot.tree().getTreeItem(projectModel.getProjectName() + " ["+ projectModel.getActiveBuildConfiguration() +"]").getNode(projectModel.getProjectName()+".scfg").doubleClick();
 		SWTBotEditor scfgEditor = bot.editorByTitle(projectModel.getProjectName()+".scfg");
 		scfgEditor.setFocus();
-		bot.cTabItem(ProjectParameters.SCFG_COMPONENT_TAB).activate();
 	}
 	
 	public static void addComponent(String componentName) {
@@ -206,5 +215,115 @@ public class Utility {
 		boolean toolchainCondition = (toolchains.isEmpty() || toolchains.contains(selectedToolchain));
 		boolean boardCondition = (boards.isEmpty() || boards.contains(selectedBoard));
 		return toolchainCondition && boardCondition;
+	}
+
+	public static void changeRTOSLocation() {
+		bot.menu("Window").menu("Preferences").click();
+		bot.waitUntil(Conditions.shellIsActive("Preferences"));
+		SWTBotShell preferenceShell = bot.shell("Preferences");
+		SWTBot preferBot = preferenceShell.bot();
+		preferBot.text().setText("Module Download");
+		preferBot.tree().getTreeItem("Renesas").select();
+		preferBot.tree().getTreeItem("Renesas").expand();
+		preferBot.tree().getTreeItem("Renesas").getNode("Module Download").select();
+
+		// reset to default
+		preferBot.button("Restore &Defaults").click();
+		preferBot.sleep(1000);
+		preferBot.button("Apply and Close").click();
+		preferBot.sleep(5000);
+		bot.waitUntil(Conditions.shellCloses(preferenceShell));
+	}
+
+	/**
+	 * change board API with use-cases
+	 * 
+	 * case 1: change current board/device --> new board --> put new board to parameter 2, otherwise, put empty string
+	 * 
+	 * case 2: change current board/device --> new device --> put new device to parameter 3, otherwise, put empty string
+	 * 
+	 * case 3: change current board from linear mode --> dual mode --> put boolean true to parameter 4, otherwise, put false
+	 * 
+	 * case 4, change current board from dual model --> linear model --> put boolean true to parameter 5, otherwise, put false
+	 * 
+	 * @param model
+	 * @param board
+	 * @param device
+	 * @param isLinearDualConverted
+	 * @param isDualLinearConverted
+	 */
+	public static void changeBoard(ProjectModel model, String board, String device, boolean isLinearDualConverted, boolean isDualLinearConverted) {
+		openSCFGEditor(model);
+		SWTBotEditor scfgEditor = bot.editorByTitle(model.getProjectName() + ".scfg");
+		SWTBot editorBot = scfgEditor.bot();
+		editorBot.cTabItem("Board").activate();
+		editorBot.button("...").click();
+
+		// handle change board dialog
+		editorBot.waitUntil(Conditions.shellIsActive("Refactoring"));
+		SWTBotShell refactorShell = editorBot.shell("Refactoring");
+		SWTBot refactorBot = refactorShell.bot();
+		// handle Linear -- Dual device
+		if (isLinearDualConverted) {
+			String dualDevice = refactorBot.styledText().getText() + "_DUAL";
+			refactorBot.styledText().setText(dualDevice);
+		} else if (isDualLinearConverted) {
+			String linearDevice = refactorBot.styledText().getText().replace("_DUAL", "");
+			refactorBot.styledText().setText(linearDevice);
+		}
+		// handle not Linear -- Dual device
+		if (!board.isEmpty()) {
+			refactorBot.comboBox().setText(board);
+		} else if (!device.isEmpty()) {
+			refactorBot.styledText().setText(device);
+		}
+
+		refactorBot.styledText().setText(board);
+		refactorBot.button(ButtonAction.BUTTON_NEXT).click();
+		refactorBot.waitUntil(Conditions.widgetIsEnabled(refactorBot.button(ButtonAction.BUTTON_NEXT)));
+		refactorBot.button(ButtonAction.BUTTON_NEXT).click();
+		refactorBot.waitUntil(Conditions.widgetIsEnabled(refactorBot.button(ButtonAction.BUTTON_FINISH)));
+		refactorBot.button(ButtonAction.BUTTON_FINISH).click();
+		if (isLinearDualConverted) {
+			// handle confirm dialog
+			refactorBot.waitUntil(Conditions.shellIsActive("Question"));
+			SWTBotShell confirmShell = refactorBot.shell("Question");
+			SWTBot confirmBot = confirmShell.bot();
+			confirmBot.button(ButtonAction.BUTTON_YES).click();
+			refactorBot.waitUntil(Conditions.shellCloses(refactorShell));
+		}
+	}
+
+	public static void updateGCCLinkerScriptFile(ProjectModel model) {
+		bot.sleep(2000);
+		SWTBotTreeItem projectItem = getProjectTreeItem(model);
+		projectItem.select();
+		projectItem.expand();
+		projectItem.getNode("src").select();
+		projectItem.getNode("src").expand();
+		SWTBotTreeItem linkerItem = projectItem.getNode("src").getNode("linker_script.ld").select();
+		linkerItem.contextMenu().menu("Rename...").click();
+
+		// handle rename resource dialog
+		bot.waitUntil(Conditions.shellIsActive("Rename Resource"));
+		SWTBotShell renameShell = bot.shell("Rename Resource");
+		SWTBot renameBot = renameShell.bot();
+		renameBot.text().setText("linker_script_1.ld");
+		renameBot.waitUntil(Conditions.widgetIsEnabled(renameBot.button(ButtonAction.BUTTON_OK)));
+		renameBot.button(ButtonAction.BUTTON_OK).click();
+		renameBot.waitUntil(Conditions.shellCloses(renameShell));
+
+		// handle rename for linker_script_sample.ld
+		projectItem.select();
+		SWTBotTreeItem linkerSampleItem = projectItem.getNode("src").getNode("linker_script_sample.ld").select();
+		linkerSampleItem.contextMenu().menu("Rename...").click();
+
+		bot.waitUntil(Conditions.shellIsActive("Rename Resource"));
+		SWTBotShell reShell = bot.shell("Rename Resource");
+		SWTBot reBot = reShell.bot();
+		reBot.text().setText("linker_script.ld");
+		reBot.waitUntil(Conditions.widgetIsEnabled(reBot.button(ButtonAction.BUTTON_OK)));
+		reBot.button(ButtonAction.BUTTON_OK).click();
+		reBot.waitUntil(Conditions.shellCloses(reShell));
 	}
 }

@@ -3,9 +3,14 @@ package utilities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.swtbot.eclipse.finder.matchers.WidgetMatcherFactory;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 
+import common.Constants;
 import model.Application;
 import model.Board;
 import model.Config;
@@ -21,10 +26,20 @@ import parameters.ProjectParameters.BuildType;
 import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
-import common.Constants;
+import parameters.ProjectParameters.RTOSApplication;
+import parameters.ProjectParameters.ToolchainType;
 import platform.PlatformModel;
 
 public class PGUtility extends Utility {
+	public static Map<String, String> projNames = new HashMap<>();
+	static {
+		projNames.put("RSKRX65N-2MB", "rsk65n");
+		projNames.put("RSKRX65N-2MB(TSIP)", "rsk65ntsip");
+		projNames.put("CK-RX65N", "ckrx65n");
+		projNames.put("CloudKitRX65N", "ckitrx65n");
+		projNames.put("RSKRX671", "rsk671");
+		projNames.put("EnvisionKitRX72N", "ekrx72n");
+	}
 
 	public static void createProject(String rtosType, String version, String appId) {
 		Collection<ProjectModel> list = prepareProjectModel(rtosType, version, appId);
@@ -33,6 +48,15 @@ public class PGUtility extends Utility {
 			if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
 				createRXProject(model);
 				BuildUtility.setBuildConfiguration(model);
+				if (model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU)
+						|| model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)) {
+					Utility.changeBoard(model, "", "", true, false);
+					if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
+						Utility.updateGCCLinkerScriptFile(model);
+					}
+				}
+				Utility.getProjectTreeItem(model).collapse();
+				bot.closeAllEditors();
 			} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RZ)) {
 				createRZProject(model);
 			}
@@ -48,6 +72,15 @@ public class PGUtility extends Utility {
 		if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
 			createRXProject(model);
 			BuildUtility.setBuildConfiguration(model);
+			if (model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU)
+					|| model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)) {
+				Utility.changeBoard(model, "", "", true, false);
+				if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
+					Utility.updateGCCLinkerScriptFile(model);
+				}
+			}
+			Utility.getProjectTreeItem(model).collapse();
+			bot.closeAllEditors();
 		} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RZ)) {
 			createRZProject(model);
 		}
@@ -77,7 +110,8 @@ public class PGUtility extends Utility {
 					model.setApplication(appId);
 					model.setApplicationOrder(app.getApplicationOrder());
 					model.setToolchain(toolchain.getName());
-					model.setProjectName(appId + toolchain.getName() + i);
+					model.setProjectName(
+							appId + "_" + toolchain.getName() + "_" + getProjectNameByBoard(board.getBoard()));
 					model.setSkipApplication(version.isSkipAppSelection());
 					ProjectConfiguration filtered = getProjectConfiguration(app.getProjectConfiguration(), toolchain.getName(), board.getBoard());
 					if (filtered == null) {
@@ -114,7 +148,8 @@ public class PGUtility extends Utility {
 		model.setApplication(appId);
 		model.setApplicationOrder(app.getApplicationOrder());
 		model.setToolchain(toolchain);
-		model.setProjectName(appId + toolchain);
+		model.setProjectName(
+				appId + "_" + toolchain + "_" + getProjectNameByBoard(board));
 		model.setSkipApplication(version.isSkipAppSelection());
 		ProjectConfiguration filtered = getProjectConfiguration(app.getProjectConfiguration(), toolchain, board);
 		if (filtered == null) {
@@ -187,39 +222,34 @@ public class PGUtility extends Utility {
 			bot.radio(model.getApplicationOrder()).click();
 		}
 		bot.button(ButtonAction.BUTTON_FINISH).click();
-		bot.sleep(20000);
+		bot.sleep(3000);
+
+		boolean breakLoop = false;
 		while (true) {
-			if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_INSTALL)) {
-				bot.button(ButtonAction.BUTTON_CANCEL).click();
-			}
-			if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
-				bot.button(ButtonAction.BUTTON_OPEN_PERSPECTIVE).click();
-			}
-			if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_FIT)) {
-				bot.button(ButtonAction.BUTTON_YES).click();
-				bot.comboBox(0).setSelection("Singapore/South &Southeast Asia/Oceania");
-				bot.button(ButtonAction.BUTTON_OK).click();
-				bot.sleep(5000);
-				bot.button(ButtonAction.BUTTON_SELECT_ALL).click();
-				bot.button(ButtonAction.BUTTON_DOWNLOAD).click();
-				bot.button(ButtonAction.BUTTON_ACCEPT).click();
-				bot.shell(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE).activate();
-			}
-			if (bot.activeShell().getText().contains(ProjectParameters.CODE_GENERATING)) {
-				bot.button(ButtonAction.BUTTON_PROCEED).click();
-			}
-			if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_MARKETPLACE)) {
-				bot.button(ButtonAction.BUTTON_CANCEL).click();
-				break;
+			SWTBotShell[] shells = bot.shells();
+			for (SWTBotShell shell : shells) {
+				if (shell.isActive()) {
+					if (shell.getText().equals(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
+						shell.bot().button(ButtonAction.BUTTON_OPEN_PERSPECTIVE).click();
+					}
+					if (shell.getText().equals(ProjectParameters.WINDOW_MARKETPLACE)) {
+						shell.bot().button(ButtonAction.BUTTON_CANCEL).click();
+						breakLoop = true;
+						break;
+					}
+				}
 			}
 			bot.sleep(3000);
+			if (breakLoop) {
+				// close all Editors
+				bot.closeAllEditors();
+				if (bot.activeShell().getText().contains("Save Resource")) {
+					bot.button("Don't Save").click();
+				}
+				bot.sleep(3000);
+				break;
+			}
 		}
-
-		bot.closeAllEditors();
-		if (bot.activeShell().getText().contains("Save Resource")) {
-			bot.button("Don't Save").click();
-		}
-		bot.sleep(10000);
 
 	}
 
@@ -238,5 +268,14 @@ public class PGUtility extends Utility {
 			return null;
 		}
 		return filtered.stream().findFirst().get();
+	}
+
+	public static String getProjectNameByBoard(String board) {
+		if (PlatformModel.isTargetBoard(board)) {
+			return projNames.get(board);
+		} else {
+			// return project in format: <group><device_name_from_index_7>
+			return PlatformModel.getGroupNameById(board) + board.substring(7);
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package swtbot_test;
+package testcase;
 
 import java.io.File;
 
@@ -20,7 +20,7 @@ import utilities.PGUtility;
 import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SampleTest {
+public class CreateAllAzureProjectBuildAllTest {
 	private static SWTWorkbenchBot bot;
 	
 

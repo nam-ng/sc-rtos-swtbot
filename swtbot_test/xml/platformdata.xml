@@ -2,16 +2,16 @@
 <platform>
 	<!-- platform database -->
 	<family id="RX">
-		<board>TargetBoardRX130</board>
-		<board>RSKRX140</board>
-		<board>RSKRX65N-2MB</board>
-		<board>RSKRX65N-2MB(TSIP)</board>
-		<board>CloudKitRX65N</board>
-		<board>CK-RX65N</board>
-		<board>RSKRX66T</board>
-		<board>RSKRX660</board>
-		<board>RSKRX671</board>
-		<board>EnvisionKitRX72N</board>
+		<board group="rx130">TargetBoardRX130</board>
+		<board group="rx140">RSKRX140</board>
+		<board group="rx65n">RSKRX65N-2MB</board>
+		<board group="rx65n">RSKRX65N-2MB(TSIP)</board>
+		<board group="rx65n">CloudKitRX65N</board>
+		<board group="rx65n">CK-RX65N</board>
+		<board group="rx66t">RSKRX66T</board>
+		<board group="rx660">RSKRX660</board>
+		<board group="rx671">RSKRX671</board>
+		<board group="rx72n">EnvisionKitRX72N</board>
 		<board custom="true">
 			<group id="RX65N">
 				<device>R5F565NEHxFC</device>
