@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
@@ -19,7 +22,10 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.osgi.framework.Bundle;
 
 import model.AbstractNode;
+import model.Action;
+import model.Project;
 import model.ProjectModel;
+import model.TC;
 import parameters.ProjectParameters;
 import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.MenuName;
@@ -391,5 +397,40 @@ public class Utility {
 		SWTBot reBot = reDialog.bot();
 		reBot.button("Rebuild Index").click();
 		dialogBot.waitUntil(Conditions.shellCloses(reDialog));
+	}
+
+	public static void executeTCStep(TC tc) throws ParseException {
+		// create project or import project or using current project
+		Collection<ProjectModel> result = null;
+		for (Project project : tc.getProjects()) {
+			if (project.getProjectId().equalsIgnoreCase("pg")) {
+				result = PGUtility.createProjectByTC(tc);
+			} else if (project.getProjectId().equalsIgnoreCase("import")) {
+				
+			} else {
+				// using current project
+			}
+		}
+		// do action
+		Collection<Action> rawActions = tc.getActions();
+		Collections.sort((List<Action> ) rawActions, new Comparator<Action>() {
+
+			@Override
+			public int compare(Action o1, Action o2) {
+				return o2.getActionOrder() - o1.getActionOrder();
+			}
+			
+		});
+		for (Action action : rawActions) {
+			if (action.getActionId().equalsIgnoreCase("changeboard")) {
+				if (result != null) {
+					for (ProjectModel model : result) {
+						Utility.changeBoard(model, null, null, true, false);
+					}
+				}
+			} else if (action.getActionId().equalsIgnoreCase("buildproject")) {
+				BuildUtility.buildAll();
+			}
+		}
 	}
 }

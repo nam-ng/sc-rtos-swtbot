@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<testdata>
+	<TC id="TC1">
+		<project id="pg">
+			<projectname>adu</projectname>
+			<group id="toolchain">
+				<language id="C"></language>
+				<toolchain>GCC</toolchain>
+				<toolchain>CCRX</toolchain>
+				<RTOSType>AzureRTOS</RTOSType>
+				<RTOSVersion>6.2.1_rel-rx-1.0.0</RTOSVersion>
+			</group>
+			<group id="device">
+				<board>CK-RX65N</board>
+				<board>RSKRX65N-2MB</board>
+			</group>
+			<group id="configuration">
+				<config id="HardwareDebug" active="true"/>
+			</group>
+			<application id="iot_adu" order="16" skipapp="false"></application>
+		</project>
+		<action id="changeboard" order="0"></action>
+		<action id="buildproject" order="1"></action>
+	</TC>
+</testdata>

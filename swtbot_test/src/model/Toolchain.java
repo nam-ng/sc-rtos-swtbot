@@ -3,7 +3,7 @@ package model;
 import org.w3c.dom.Element;
 
 public class Toolchain {
-	private String version;
+	private String version = "";
 	private String name;
 
 	public Toolchain(Element element) {

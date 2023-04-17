@@ -14,12 +14,15 @@ import common.Constants;
 import model.Application;
 import model.Board;
 import model.Config;
+import model.GroupSetting;
 import model.Language;
+import model.Project;
 import model.ProjectConfiguration;
 import model.ProjectModel;
 import model.RTOSManager;
 import model.RTOSVersion;
 import model.RXCLinkerFile;
+import model.TC;
 import model.Target;
 import model.Toolchain;
 import parameters.ProjectParameters;
@@ -46,24 +49,7 @@ public class PGUtility extends Utility {
 		Collection<ProjectModel> list = prepareProjectModel(rtosType, version, appId);
 		// create project
 		for (ProjectModel model : list) {
-			if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
-				createRXProject(model);
-				BuildUtility.setBuildConfiguration(model);
-				if (model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU)
-						|| model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)) {
-					Utility.changeBoard(model, "", "", true, false);
-					if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
-						Utility.updateGCCLinkerScriptFile(model);
-					} else if (model.getToolchain().equals(ToolchainType.CCRX_TOOLCHAIN)
-							&& !model.getRXCLinkerFile().isEmpty()) {
-						Utility.updateRXCLinkerSection(model, model.getRXCLinkerFile());
-					}
-				}
-				Utility.getProjectTreeItem(model).collapse();
-				bot.closeAllEditors();
-			} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RZ)) {
-				createRZProject(model);
-			}
+			internalCreateProject(model);
 		}
 	}
 
@@ -72,24 +58,24 @@ public class PGUtility extends Utility {
 		if (model == null) {
 			return;
 		}
+		internalCreateProject(model);
+	}
+
+	public static Collection<ProjectModel> createProjectByTC(TC tc) {
+		Collection<ProjectModel> list = prepareProjectModel(tc);
 		// create project
-		if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
-			createRXProject(model);
-			BuildUtility.setBuildConfiguration(model);
-			if (model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU)
-					|| model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)) {
-				Utility.changeBoard(model, "", "", true, false);
-				if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
-					Utility.updateGCCLinkerScriptFile(model);
-				} else if (model.getToolchain().equals(ToolchainType.CCRX_TOOLCHAIN)
-						&& !model.getRXCLinkerFile().isEmpty()) {
-					Utility.updateRXCLinkerSection(model, model.getRXCLinkerFile());
-				}
+		for (ProjectModel model : list) {
+			internalCreateProject(model);
+		}
+		return list;
+	}
+	
+	public static void createProjectByAllTC(Collection<TC> tces) {
+		for (TC tc : tces) {
+			Collection<ProjectModel> list = prepareProjectModel(tc);
+			for (ProjectModel model : list) {
+				internalCreateProject(model);
 			}
-			Utility.getProjectTreeItem(model).collapse();
-			bot.closeAllEditors();
-		} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RZ)) {
-			createRZProject(model);
 		}
 	}
 
@@ -171,8 +157,79 @@ public class PGUtility extends Utility {
 		return model;
 	}
 
+
+	public static Collection<ProjectModel> prepareProjectModel(TC tc) {
+		Collection<ProjectModel> results = new ArrayList<>();
+		for (Project project : tc.getProjects()) {
+			GroupSetting toolSetting = project.getGroupSettingById("toolchain");
+			GroupSetting deviceSetting = project.getGroupSettingById("device");
+			GroupSetting configSetting = project.getGroupSettingById("configuration");
+			if (toolSetting != null) {
+				for (Toolchain toolchain : toolSetting.getToolchains()) {
+					if (deviceSetting == null) {
+						continue;
+					}
+					for (Board board : deviceSetting.getBoards()) {
+						ProjectModel model = new ProjectModel();
+						if (deviceSetting.getBoards().size() == 1) {
+							model.setProjectName(project.getProjectName());
+						} else {
+							model.setProjectName(
+									project.getProjectName() + "_" + toolchain.getName() + "_" + getProjectNameByBoard(board.getBoard()));
+						}
+						if (toolSetting.getLanguage() != null) {
+							model.setLanguage(toolSetting.getLanguage().getId());
+						}
+						model.setFamilyName(PlatformModel.getFamilyName(board.getBoard()));
+						model.setToolchain(toolchain.getName());
+						model.setToolchainVersion(toolchain.getVersion());
+						model.setRtosType(Utility.convertRTOSTypeToDisplay(toolSetting.getRTOSType()));
+						model.setRtosVersion(toolSetting.getRTOSVersion());
+						model.setBoard(board.getBoard());
+						if (configSetting != null && !configSetting.getConfigs().isEmpty()) {
+							for (Config config : configSetting.getConfigs()) {
+								model.setBuildType(config.getId(), config.isActive());
+							}
+						} else {
+							model.setBuildType(BuildType.HARDWARE, true);
+						}
+						if (project.getApp() != null) {
+							model.setApplication(project.getApp().getApplicationId());
+							model.setApplicationOrder(project.getApp().getApplicationOrder());
+							model.setRXCLinkerFile(getRXCLinkerFile(project.getApp().getLinkerFiles(), toolchain.getName(), board.getBoard()));
+						}
+						results.add(model);
+					}
+				}
+			}
+		}
+		return results;
+	}
+
 	private static void createRZProject(ProjectModel model) {
 		// not yet implemented
+	}
+
+	private static void internalCreateProject(ProjectModel model) {
+		// create project
+		if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
+			createRXProject(model);
+			BuildUtility.setBuildConfiguration(model);
+			if (model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU)
+					|| model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)) {
+				Utility.changeBoard(model, "", "", true, false);
+				if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
+					Utility.updateGCCLinkerScriptFile(model);
+				} else if (model.getToolchain().equals(ToolchainType.CCRX_TOOLCHAIN)
+						&& !model.getRXCLinkerFile().isEmpty()) {
+					Utility.updateRXCLinkerSection(model, model.getRXCLinkerFile());
+				}
+			}
+			Utility.getProjectTreeItem(model).collapse();
+			bot.closeAllEditors();
+		} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RZ)) {
+			createRZProject(model);
+		}
 	}
 
 	private static void createRXProject(ProjectModel model) {
