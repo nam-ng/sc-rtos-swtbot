@@ -11,7 +11,7 @@ public class Project {
 	private String id;
 	private String projectName;
 	private Collection<GroupSetting> groupSettings = new ArrayList<>();
-	private Application app;
+	private Collection<Application> apps = new ArrayList<>();
 
 	public Project(Element element) {
 		parseAttribute(element);
@@ -26,7 +26,7 @@ public class Project {
 				} else if ("group".equalsIgnoreCase(name)) {
 					addGroupSetting(new GroupSetting(childElement));
 				} else if ("application".equalsIgnoreCase(name)) {
-					setApplication(new Application(childElement));
+					addApplication(new Application(childElement));
 				}
 			}
 		}
@@ -61,11 +61,11 @@ public class Project {
 		return null;
 	}
 
-	private void setApplication(Application app) {
-		this.app = app;
+	private void addApplication(Application app) {
+		apps.add(app);
 	}
 
-	public Application getApp() {
-		return app;
+	public Collection<Application> getApps() {
+		return apps;
 	}
 }

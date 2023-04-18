@@ -1,7 +1,6 @@
 package testcase;
 
 import java.io.File;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
@@ -14,7 +13,6 @@ import org.junit.runners.MethodSorters;
 
 import common.Constants;
 import common.LogUtil;
-import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
@@ -28,7 +26,6 @@ import utilities.Utility;
 public class TrialTest {
 	private static SWTWorkbenchBot bot;
 	private static SWTBotShell workbenchShell;
-	private static ProjectModel model;
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -36,8 +33,6 @@ public class TrialTest {
 		PlatformModel
 				.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.RTOS_PG_XML_FILE)));
-		model = PGUtility.prepareProjectModel(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_IOT_ADU,
-				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 
 		// initialize the SWTBot
 		bot = new SWTWorkbenchBot();
@@ -66,6 +61,10 @@ public class TrialTest {
 	public void TC_02_createProject() {
 		workbenchShell.setFocus();
 		Utility.changeRTOSLocation();
-		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_IOT_ADU);
+		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_BARE,
+				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+		workbenchShell.setFocus();
+		//build All
+		bot.menu(workbenchShell).menu("Project").menu("Build All").click();
 	}
 }

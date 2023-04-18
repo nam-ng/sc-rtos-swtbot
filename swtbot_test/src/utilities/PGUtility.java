@@ -164,19 +164,16 @@ public class PGUtility extends Utility {
 			GroupSetting toolSetting = project.getGroupSettingById("toolchain");
 			GroupSetting deviceSetting = project.getGroupSettingById("device");
 			GroupSetting configSetting = project.getGroupSettingById("configuration");
-			if (toolSetting != null) {
-				for (Toolchain toolchain : toolSetting.getToolchains()) {
-					if (deviceSetting == null) {
-						continue;
-					}
-					for (Board board : deviceSetting.getBoards()) {
+			if (toolSetting == null) {
+				return results;
+			}
+			for (Toolchain toolchain : toolSetting.getToolchains()) {
+				if (deviceSetting == null) {
+					continue;
+				}
+				for (Board board : deviceSetting.getBoards()) {
+					for (Application app : project.getApps()) {
 						ProjectModel model = new ProjectModel();
-						if (deviceSetting.getBoards().size() == 1) {
-							model.setProjectName(project.getProjectName());
-						} else {
-							model.setProjectName(
-									project.getProjectName() + "_" + toolchain.getName() + "_" + getProjectNameByBoard(board.getBoard()));
-						}
 						if (toolSetting.getLanguage() != null) {
 							model.setLanguage(toolSetting.getLanguage().getId());
 						}
@@ -193,11 +190,13 @@ public class PGUtility extends Utility {
 						} else {
 							model.setBuildType(BuildType.HARDWARE, true);
 						}
-						if (project.getApp() != null) {
-							model.setApplication(project.getApp().getApplicationId());
-							model.setApplicationOrder(project.getApp().getApplicationOrder());
-							model.setRXCLinkerFile(getRXCLinkerFile(project.getApp().getLinkerFiles(), toolchain.getName(), board.getBoard()));
-						}
+						model.setProjectName(app.getApplicationId() + "_" + toolchain.getName() + "_"
+								+ getProjectNameByBoard(board.getBoard()));
+						model.setApplication(app.getApplicationId());
+						model.setApplicationOrder(app.getApplicationOrder());
+						model.setSkipApplication(app.isSkipApp());
+						model.setRXCLinkerFile(
+								getRXCLinkerFile(app.getLinkerFiles(), toolchain.getName(), board.getBoard()));
 						results.add(model);
 					}
 				}

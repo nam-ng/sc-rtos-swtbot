@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import parameters.ProjectParameters.BuildType;
 
 public class ProjectModel {
-	private String language;
+	private String language = "C"; // default C project
 	private String familyName;
 	private String projectName;
 	private String toolchain;

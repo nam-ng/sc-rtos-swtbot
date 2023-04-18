@@ -399,7 +399,7 @@ public class Utility {
 		dialogBot.waitUntil(Conditions.shellCloses(reDialog));
 	}
 
-	public static void executeTCStep(TC tc) throws ParseException {
+	public static void executeTCStep(TC tc, SWTBotShell shell) throws ParseException {
 		// create project or import project or using current project
 		Collection<ProjectModel> result = null;
 		for (Project project : tc.getProjects()) {
@@ -428,8 +428,8 @@ public class Utility {
 						Utility.changeBoard(model, null, null, true, false);
 					}
 				}
-			} else if (action.getActionId().equalsIgnoreCase("buildproject")) {
-				BuildUtility.buildAll();
+			} else if (action.getActionId().equalsIgnoreCase("buildAll")) {
+				BuildUtility.buildAll(shell);
 			}
 		}
 	}

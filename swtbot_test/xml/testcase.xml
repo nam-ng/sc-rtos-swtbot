@@ -2,24 +2,38 @@
 <testdata>
 	<TC id="TC1">
 		<project id="pg">
-			<projectname>adu</projectname>
 			<group id="toolchain">
-				<language id="C"></language>
 				<toolchain>GCC</toolchain>
-				<toolchain>CCRX</toolchain>
+				<!--toolchain>CCRX</toolchain-->
 				<RTOSType>AzureRTOS</RTOSType>
 				<RTOSVersion>6.2.1_rel-rx-1.0.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
-				<board>RSKRX65N-2MB</board>
+				<!--board>RSKRX65N-2MB</board>
+				<board>EnvisionKitRX72N</board-->
+				<board>CloudKitRX65N</board>
 			</group>
-			<group id="configuration">
-				<config id="HardwareDebug" active="true"/>
-			</group>
-			<application id="iot_adu" order="16" skipapp="false"></application>
+			<application id="iot_sdk" order="4"></application>
+			<application id="iot_sdk_pnp" order="6"></application>
+			<application id="temp_pnp" order="8"></application>
 		</project>
-		<action id="changeboard" order="0"></action>
-		<action id="buildproject" order="1"></action>
+	</TC>
+	<TC id="TC2">
+		<project id="pg">
+			<group id="toolchain">
+				<toolchain>GCC</toolchain>
+				<!--toolchain>CCRX</toolchain-->
+				<RTOSType>AzureRTOS</RTOSType>
+				<RTOSVersion>6.2.1_rel-rx-1.0.0</RTOSVersion>
+			</group>
+			<group id="device">
+				<board>CK-RX65N</board>
+			</group>
+			<application id="iot_sdk_ewf" order="5"></application>
+			<application id="iot_sdk_pnp_ewf" order="7"></application>
+			<application id="temp_pnp_ewf" order="9"></application>
+		</project>
+		<action id="buildAll" order="0"></action>
 	</TC>
 </testdata>

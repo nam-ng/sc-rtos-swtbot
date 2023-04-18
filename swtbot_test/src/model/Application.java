@@ -12,6 +12,7 @@ import common.LogUtil;
 public class Application {
 	private String appId;
 	private int appOrder;
+	private boolean skipApp = false;
 	private Collection<Language> languages = new ArrayList<>();
 	private Collection<ProjectConfiguration> configuration = new ArrayList<>();
 	private Collection<Target> targets = new ArrayList<>();
@@ -46,8 +47,13 @@ public class Application {
 		return appOrder;
 	}
 
+	public boolean isSkipApp() {
+		return skipApp;
+	}
+
 	private void parseAttribute(Element element) {
 		appId = element.getAttribute("id");
+		skipApp = Boolean.parseBoolean(element.getAttribute("skipapp"));
 		try {
 			appOrder = Integer.parseInt(element.getAttribute("order"));
 		} catch (Exception e) {

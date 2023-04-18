@@ -3,10 +3,8 @@ package utilities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jface.bindings.keys.KeyStroke;
-import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
-import org.eclipse.swtbot.swt.finder.keyboard.Keystrokes;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 import common.Constants;
@@ -112,9 +110,7 @@ public class BuildUtility extends Utility {
 		
 	}
 
-	public static void buildAll() throws ParseException {
-		bot.sleep(3000);
-		bot.shell().pressShortcut(Keystrokes.CTRL, Keystrokes.ALT, KeyStroke.getInstance("B"));
-		bot.sleep(3000);
+	public static void buildAll(SWTBotShell shell){
+		bot.menu(shell).menu("Project").menu("Build All").click();
 	}
 }
