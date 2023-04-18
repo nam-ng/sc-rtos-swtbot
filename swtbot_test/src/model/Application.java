@@ -12,9 +12,11 @@ import common.LogUtil;
 public class Application {
 	private String appId;
 	private int appOrder;
+	private boolean skipApp = false;
 	private Collection<Language> languages = new ArrayList<>();
 	private Collection<ProjectConfiguration> configuration = new ArrayList<>();
 	private Collection<Target> targets = new ArrayList<>();
+	private Collection<RXCLinkerFile> linkerFiles = new ArrayList<>();
 
 	public Application(Element element) {
 		parseAttribute(element);
@@ -30,6 +32,8 @@ public class Application {
 					addTarget(new Target(childElement));
 				} else if ("language".equalsIgnoreCase(name)) {
 					addLanguage(new Language(childElement));
+				} else if ("rxclinkerfile".equalsIgnoreCase(name)) {
+					addLinkerFile(new RXCLinkerFile(childElement));
 				}
 			}
 		}
@@ -43,8 +47,13 @@ public class Application {
 		return appOrder;
 	}
 
+	public boolean isSkipApp() {
+		return skipApp;
+	}
+
 	private void parseAttribute(Element element) {
 		appId = element.getAttribute("id");
+		skipApp = Boolean.parseBoolean(element.getAttribute("skipapp"));
 		try {
 			appOrder = Integer.parseInt(element.getAttribute("order"));
 		} catch (Exception e) {
@@ -77,4 +86,11 @@ public class Application {
 		languages.add(item);
 	}
 
+	private void addLinkerFile(RXCLinkerFile file) {
+		linkerFiles.add(file);
+	}
+
+	public Collection<RXCLinkerFile> getLinkerFiles() {
+		return linkerFiles;
+	}
 }

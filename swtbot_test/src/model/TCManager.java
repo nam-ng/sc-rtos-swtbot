@@ -1,4 +1,4 @@
-package platform;
+package model;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,14 +20,14 @@ import org.xml.sax.InputSource;
 
 import common.LogUtil;
 
-public class PlatformModel {
-	private static Collection<FamilyInfo> familyInfo = new ArrayList<>();
+public class TCManager {
+	private static Collection<TC> tces = new ArrayList<>();
 
-	private PlatformModel() {
+	private TCManager() {
 		// do nothing
 	}
 
-	public static void loadPlatformModel(File xmlFile) {
+	public static void loadRTOSModel(File xmlFile) {
 		if (xmlFile == null || !xmlFile.exists()) {
 			return;
 		}
@@ -46,56 +46,33 @@ public class PlatformModel {
 	}
 
 	private static void parseXML(Element rootElement) {
-		if (!"platform".equals(rootElement.getTagName())) {
+		if (!"testdata".equals(rootElement.getTagName())) {
 			return;
 		}
-		familyInfo.clear();
+		tces.clear();
 		NodeList children = rootElement.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			Node childNode = children.item(i);
 			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element childElement = (Element) childNode;
 				String name = childElement.getTagName();
-				if ("family".equalsIgnoreCase(name)) {
-					familyInfo.add(new FamilyInfo(childElement));
+				if ("TC".equalsIgnoreCase(name)) {
+					tces.add(new TC(childElement));
 				}
 			}
 		}
 	}
 
-	public static String getFamilyName(String boardId) {
-		for (FamilyInfo info : familyInfo) {
-			if (info.isBoardExist(boardId)) {
-				return info.getFamilyName();
-			}
-		}
-		return "";
+	public static Collection<TC> getAllTCes() {
+		return tces;
 	}
 
-	public static boolean isTargetBoard(String id) {
-		for (FamilyInfo info : familyInfo) {
-			if (info.isTargetBoard(id)) {
-				return true;
+	public static TC getTCById(String id) {
+		for (TC tc : tces) {
+			if (id.equalsIgnoreCase(tc.getTCId())) {
+				return tc;
 			}
 		}
-		return false;
-	}
-
-	public static boolean isCustomBoard(String id) {
-		for (FamilyInfo info : familyInfo) {
-			if (info.isCustomBoard(id)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static String getGroupNameById(String board) {
-		for (FamilyInfo info : familyInfo) {
-			if (!getFamilyName(board).isEmpty()) {
-				return info.getGroupIdByTargetBoard(board);
-			}
-		}
-		return "";
+		return null;
 	}
 }

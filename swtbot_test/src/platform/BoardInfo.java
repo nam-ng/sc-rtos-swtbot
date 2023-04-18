@@ -8,6 +8,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class BoardInfo {
+	private String groupId = "";
 	private static final String CUSTOM_ATT = "custom";
 	private boolean isCustom = false;
 	private String boardName;
@@ -30,6 +31,7 @@ public class BoardInfo {
 	}
 
 	private void parseAttribute(Element element) {
+		setGroupId(element.getAttribute("group"));
 		setCustomBoard(Boolean.parseBoolean(element.getAttribute(CUSTOM_ATT)));
 	}
 
@@ -43,6 +45,17 @@ public class BoardInfo {
 
 	public Collection<GroupInfo> getGroupInfoList() {
 		return groupInfo;
+	}
+
+	public GroupInfo getGroupInfoById(String board) {
+		if (!groupInfo.isEmpty()) {
+			for (GroupInfo info : groupInfo) {
+				if (info.getDeviceInfoList().contains(board)) {
+					return info;
+				}
+			}
+		}
+		return null;
 	}
 
 	public Collection<String> getDeviceList() {
@@ -61,5 +74,13 @@ public class BoardInfo {
 
 	public boolean isCustomBoard() {
 		return isCustom;
+	}
+
+	private void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getGroupId() {
+		return groupId;
 	}
 }

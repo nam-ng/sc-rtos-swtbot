@@ -72,4 +72,17 @@ public class FamilyInfo {
 		}
 		return false;
 	}
+
+	public String getGroupIdByTargetBoard(String board) {
+		for (BoardInfo info : boardList) {
+			if (info.getBoardName().equalsIgnoreCase(board) || info.getDeviceList().contains(board)) {
+				if (info.isCustomBoard()) {
+					return info.getGroupInfoById(board) != null ? info.getGroupInfoById(board).getGroupId() : "";
+				} else {
+					info.getGroupId();
+				}
+			}
+		}
+		return "";
+	}
 }

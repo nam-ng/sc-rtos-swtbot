@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import parameters.ProjectParameters.BuildType;
 
 public class ProjectModel {
-	private String language;
+	private String language = "C"; // default C project
 	private String familyName;
 	private String projectName;
 	private String toolchain;
@@ -19,6 +19,7 @@ public class ProjectModel {
 	private int applicationOrder;
 	private boolean skipApplication = true;
 	private Map<String, Boolean> buildType = new HashMap<>();
+	private String rxcLinkerFile;
 
 	public ProjectModel() {
 		// do nothing
@@ -168,4 +169,11 @@ public class ProjectModel {
 		this.language = language;
 	}
 
+	public void setRXCLinkerFile(String file) {
+		rxcLinkerFile = file;
+	}
+
+	public String getRXCLinkerFile() {
+		return rxcLinkerFile;
+	}
 }

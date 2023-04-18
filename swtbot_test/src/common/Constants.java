@@ -10,4 +10,5 @@ public class Constants {
 	// XML path
 	public static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	public static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
+	public static final String TC_XML_FILE = "xml/testcase.xml";
 }
