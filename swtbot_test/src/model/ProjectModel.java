@@ -19,7 +19,7 @@ public class ProjectModel {
 	private int applicationOrder;
 	private boolean skipApplication = true;
 	private Map<String, Boolean> buildType = new HashMap<>();
-	private String rxcLinkerFile;
+	private String rxcLinkerFile = "";
 
 	public ProjectModel() {
 		// do nothing

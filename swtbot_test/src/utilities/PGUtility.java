@@ -214,8 +214,12 @@ public class PGUtility extends Utility {
 		if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
 			createRXProject(model);
 			BuildUtility.setBuildConfiguration(model);
-			if (model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU)
-					|| model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)) {
+			// extension process for IoT ADU and Bootloader project
+			// currently hard-code these applications by name and order
+			// will find better way for the improvement
+			if ((model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU) || model.getApplicationOrder() == 16)
+					|| (model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)
+							|| model.getApplicationOrder() == 17)) {
 				Utility.changeBoard(model, "", "", true, false);
 				if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
 					Utility.updateGCCLinkerScriptFile(model);

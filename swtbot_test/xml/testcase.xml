@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <testdata>
-	<TC id="TC1">
+	<!--TC id="TC1">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
-				<!--toolchain>CCRX</toolchain-->
+				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
 				<RTOSVersion>6.2.1_rel-rx-1.0.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
-				<!--board>RSKRX65N-2MB</board>
-				<board>EnvisionKitRX72N</board-->
+				<board>RSKRX65N-2MB</board>
+				<board>EnvisionKitRX72N</board>
 				<board>CloudKitRX65N</board>
 			</group>
 			<application id="iot_sdk" order="4"></application>
 			<application id="iot_sdk_pnp" order="6"></application>
 			<application id="temp_pnp" order="8"></application>
 		</project>
-	</TC>
-	<TC id="TC2">
+	</TC-->
+	<!--TC id="TC2">
 		<project id="pg">
 			<group id="toolchain">
-				<toolchain>GCC</toolchain>
-				<!--toolchain>CCRX</toolchain-->
+				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
 				<RTOSVersion>6.2.1_rel-rx-1.0.0</RTOSVersion>
 			</group>
@@ -33,6 +32,68 @@
 			<application id="iot_sdk_ewf" order="5"></application>
 			<application id="iot_sdk_pnp_ewf" order="7"></application>
 			<application id="temp_pnp_ewf" order="9"></application>
+		</project>
+		<action id="buildAll" order="0"></action>
+	</TC-->
+	<!-- sample TC definition for testing IoT ADU and Bootloader project -->
+	<!-- the .xml.fragment files need to prepared beforehand for updating linker section after change board -->
+	<TC id="TC3">
+		<project id="pg">
+			<group id="toolchain">
+				<toolchain>GCC</toolchain>
+				<toolchain>CCRX</toolchain>
+				<RTOSType>AzureRTOS</RTOSType>
+				<RTOSVersion>6.2.1_rel-rx-1.0.0</RTOSVersion>
+			</group>
+			<group id="device">
+				<board>CK-RX65N</board>
+				<!--board>RSKRX671</board>
+				<board>EnvisionKitRX72N</board-->
+			</group>
+			<application id="iot_adu_1" order="16">
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CK-RX65N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F565NE_ether.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>CloudKitRX65N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F565NE_wifi.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX671</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F5671E.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>EnvisionKitRX72N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F572NN.xmi.fragment</path>
+				</rxclinkerfile>
+			</application>
+			<application id="bootloader_1" order="17">
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F565NE.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX671</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F5671E.xmi.fragment</path>
+				</rxclinkerfile>
+				<rxclinkerfile>
+					<toolchain>CCRX</toolchain>
+					<board>EnvisionKitRX72N</board>
+					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F572NN.xmi.fragment</path>
+				</rxclinkerfile>
+			</application>
 		</project>
 		<action id="buildAll" order="0"></action>
 	</TC>
