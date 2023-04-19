@@ -308,14 +308,14 @@ public class PGUtility extends Utility {
 					}
 				}
 			}
-			bot.sleep(3000);
+			bot.sleep(2000);
 			if (breakLoop) {
 				// close all Editors
 				bot.closeAllEditors();
 				if (bot.activeShell().getText().contains("Save Resource")) {
 					bot.button("Don't Save").click();
 				}
-				bot.sleep(3000);
+				bot.sleep(2000);
 				break;
 			}
 		}

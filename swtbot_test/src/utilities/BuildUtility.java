@@ -18,7 +18,6 @@ import parameters.ProjectParameters.MenuName;
 public class BuildUtility extends Utility {
 
 	public static void setBuildConfiguration(ProjectModel model) {
-		bot.sleep(2000);
 		Utility.projectExplorerSelectProject(model);
 		String buildType = model.getActiveBuildConfiguration();
 		SWTBotTreeItem projectItem = Utility.getProjectItemOnProjectExplorer(model.getProjectName()); 
@@ -76,7 +75,6 @@ public class BuildUtility extends Utility {
 				}
 			}
 		}
-		bot.sleep(2000);
 	}
 
 	public static void buildProject(ProjectModel model) {
