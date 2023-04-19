@@ -84,7 +84,6 @@ public class Utility {
 	public static void projectExplorerSelectProject(ProjectModel model) {
 		// open project explorer
 		openProjectExplorer();
-		bot.sleep(5000);
 		// select project
 		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
 		String projectName = model.getProjectName();
