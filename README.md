@@ -1,12 +1,17 @@
-# sc-rtos-swtbot
-Automated test for SC RTOS using SWTBot
-First stage is to update SWTBot script to check build for Azure RTOS package.
+SWTBot Sample
+=============
+SWTBot sample for RTOS Configurator
 
-Further one will migrate the automated test of SC RTOS from RCPTT to SWTBot.
+Pre-requisites
+--------------
+* [Eclipse IDE for Java Developers](https://eclipse.org/downloads/packages/) + [SWTBot](http://download.eclipse.org/technology/swtbot/snapshots)
+* [e2 studio for RX](https://www.renesas.com/software-tool/e2studio-information-rx-family) (AUT, for target platform setup)
 
-# Update on 19/12/2022:
-Support ewf and usbx mass storage PG and build
+How to use
+----------
+* Import project
+* Run a test in testcase or testsuites package as SWTBot Test
 
-Refactor the code to avoid duplication by using TestUtils.java, which is a utility java class
-# Update on 20/12/2022:
-Minor bug fix: Handle pop up in PG
+Release Notes
+-------------
+* Under construction
