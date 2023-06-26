@@ -43,6 +43,12 @@ public class CommonParameters extends NLS {
 		public static final String RELEASE = "Release";
 	}
 
+	public class CalculateExecuteTime {
+		public static final String CREATETIME = "Create Time";
+		public static final String BUILDTIME = "Build Time";
+		public static final String OVERALLTIME = "Overall Time";
+	}
+
 	public enum Language {
 		C, CPP
 	}

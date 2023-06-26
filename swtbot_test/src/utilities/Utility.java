@@ -134,6 +134,8 @@ public class Utility {
 			return RTOSDisplay.AMAZONFREERTOS;
 		} else if (rtosType.equalsIgnoreCase(RTOSType.FREERTOSKERNEL)) {
 			return RTOSDisplay.FREERTOSKERNEL;
+		} else if (rtosType.equalsIgnoreCase(RTOSType.RI600v4)) {
+			return RTOSDisplay.RI600v4;
 		}
 		return "";
 	}
@@ -144,6 +146,7 @@ public class Utility {
 		bot.tree().getTreeItem(projectModel.getProjectName() + " ["+ projectModel.getActiveBuildConfiguration() +"]").getNode(projectModel.getProjectName()+".scfg").doubleClick();
 		SWTBotEditor scfgEditor = bot.editorByTitle(projectModel.getProjectName()+".scfg");
 		scfgEditor.setFocus();
+		bot.cTabItem("Components").activate();
 	}
 	
 	public static void addComponent(String componentName) {

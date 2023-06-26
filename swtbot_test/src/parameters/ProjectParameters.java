@@ -34,18 +34,21 @@ public class ProjectParameters {
 		public static final String AZURE = "AzureRTOS";
 		public static final String AMAZONFREERTOS = "AmazonFreeRTOS";
 		public static final String FREERTOSKERNEL = "FreeRTOSKernel";
+		public static final String RI600v4 = "RI600V4";
 	}
 
 	public class RTOSDisplay {
 		public static final String AZURE = "Azure RTOS";
 		public static final String AMAZONFREERTOS = "FreeRTOS (with IoT libraries)";
 		public static final String FREERTOSKERNEL = "FreeRTOS (kernel only)";
+		public static final String RI600v4 = "RI600V4";
 	}
 
 	public class RTOSVersion {
-		public static final String Azure_6_2_1 = "6.2.1_rel-rx-1.0.0";
+		public static final String Azure_6_2_1 = "6.2.1_rel-rx-1.1.0";
 		public static final String Azure_6_2_0 = "6.2.0_rel-rx-1.0.0";
 		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
+		public static final String RI600_1_06_01 = "1.06.01";
 	}
 
 	public class RTOSApplication {
@@ -57,8 +60,6 @@ public class ProjectParameters {
 		public static final String AZURE_IOT_SDK_EWF = "iot_sdk_ewf";
 		public static final String AZURE_IOT_PNP = "iot_sdk_pnp";
 		public static final String AZURE_IOT_PNP_EWF = "iot_sdk_pnp_ewf";
-		public static final String AZURE_TEMP_PNP = "temp_pnp";
-		public static final String AZURE_TEMP_PNP_EWF = "temp_pnp_ewf";
 		public static final String AZURE_GUIX_8BPP = "guix_8bpp";
 		public static final String AZURE_GUIX_16BPP = "guix_16bpp";
 		public static final String AZURE_GUIX_16BPP_DRAW = "guix_16bpp_draw";
@@ -67,12 +68,16 @@ public class ProjectParameters {
 		public static final String AZURE_LOW_POWER = "low_power";
 		public static final String AZURE_IOT_ADU = "iot_adu";
 		public static final String AZURE_BOOTLOADER = "bootloader";
+		
+		public static final String RI600V4 = "RI600v4";
+		public static final String AZURE_BARE_CPLUSPLUS = "bare_Cplusplus";
 	}
 
 	public class TargetBoard {
 		public static final String CUSTOM = "Custom";
 		public static final String BOARD_RSK_RX65N_2MB = "RSKRX65N-2MB";
 		public static final String BOARD_CK_RX65N = "CK-RX65N";
+		public static final String DEVICE_R5F565NCDxBG = "R5F565NCDxBG";
 	}
 
 	public class ToolchainType {
@@ -157,5 +162,11 @@ public class ProjectParameters {
 		public static final String USBX = "usbx";
 		public static final String THREADX = "threadx";
 		public static final String AZURERTOS_OBJECT = "azurertos_object";
+	}
+	
+	public class ProjectSettings {
+		public static final String ASSEMBLER = "Assembler";
+		public static final String SOURCE = "Source";
+		public static final String C_CPLUSPLUS_PROJECT_SETTINGS = "C/C++ Project Settings";
 	}
 }

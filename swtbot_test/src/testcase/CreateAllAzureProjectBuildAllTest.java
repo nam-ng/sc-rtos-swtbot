@@ -99,16 +99,6 @@ public class CreateAllAzureProjectBuildAllTest {
 	}
 
 	@Test
-	public void TC_101_PGAzure_Temp_Pnp() throws Exception {
-		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_TEMP_PNP);
-	}
-
-	@Test
-	public void TC_112_PGAzure_Temp_Pnp_Ewf() throws Exception {
-		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_TEMP_PNP_EWF);
-	}
-
-	@Test
 	public void TC_122_PGAzure_Guix_8bpp() throws Exception {
 		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_GUIX_8BPP);
 	}
