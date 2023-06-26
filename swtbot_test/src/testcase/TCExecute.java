@@ -2,6 +2,8 @@ package testcase;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.swt.widgets.Display;
@@ -9,6 +11,7 @@ import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -19,6 +22,7 @@ import common.LogUtil;
 import model.RTOSManager;
 import model.TC;
 import model.TCManager;
+import parameters.CommonParameters;
 import parameters.ProjectParameters;
 import parameters.ProjectParameters.ButtonAction;
 import platform.PlatformModel;
@@ -29,9 +33,7 @@ public class TCExecute {
 	private static SWTWorkbenchBot bot;
 	private static SWTBotShell workbenchShell;
 	private static Collection<TC> tces;
-	public static int numberOfProject = 0;
-	private static double createTime = 0.0;
-	private static double buildTime = 0.0;
+	private static Map<String, String> timeRecord = new HashMap<>();
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -69,40 +71,56 @@ public class TCExecute {
 	public void TC_00_execute () throws ParseException {
 		workbenchShell.setFocus();
 		//Utility.changeRTOSLocation();
-		long start = System.nanoTime();
+		long start = System.currentTimeMillis();
 		for (TC tc : tces) {
 			Utility.executeTCStep(tc, workbenchShell);
 		}
-		long end = System.nanoTime();
+		long end = System.currentTimeMillis();
 		long timeExecute = end-start;
-		createTime = (double) timeExecute/1_000_000_000.0;
-		System.out.println("Create time: " + createTime + " seconds");
+		double createTime = (double) timeExecute/1000.0;
+		timeRecord.put(CommonParameters.CalculateExecuteTime.CREATETIME, Double.toString(createTime));
+		System.out.println("Create time: " + timeRecord.get(CommonParameters.CalculateExecuteTime.CREATETIME) + " seconds");
 	}
 	
-//	@Test
-//	public void TC_01_checkBuild () {
-//		SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
-//		long start = System.nanoTime();
-//		while (true) {
-//			bot.sleep(1);
-//			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_SUCCESSFULLY)) {
-//				numberOfProject--;
-//				bot.sleep(10000);
-//			}
-//			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_FAILED)) {
-//				numberOfProject--;
-//				bot.sleep(10000);
-//			}
-//			if(numberOfProject<=0) {
-//				break;
-//			}
-//		}
-//		long end = System.nanoTime();
-//		long timeExecute = end-start;
-//		buildTime = (double) timeExecute/1_000_000_000.0;
-//		System.out.println("PG time: " + createTime + " seconds");
-//		System.out.println("Build time: " + buildTime + " seconds");
-//		double overallTime = createTime + buildTime;
-//		System.out.println("Overall time: " + overallTime + " seconds");
-//	}
+	
+	@Test
+	public void TC_01_checkBuild () {
+		SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
+		long start = System.currentTimeMillis();
+		String lastProject = "";
+		while (true) {
+			bot.sleep(10000);
+			lastProject = getLastProject();
+			bot.tree().getTreeItem(lastProject).select();
+			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_SUCCESSFULLY)) {
+				break;
+			}
+			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_FAILED)) {
+				break;
+			}
+		}
+		long end = System.currentTimeMillis();
+		long timeExecute = end-start;
+		double buildTime = (double) timeExecute/1000.0;
+		timeRecord.put(CommonParameters.CalculateExecuteTime.BUILDTIME, Double.toString(buildTime));
+		System.out.println("PG time: " + timeRecord.get(CommonParameters.CalculateExecuteTime.CREATETIME) + " seconds");
+		System.out.println("Build time: " + timeRecord.get(CommonParameters.CalculateExecuteTime.BUILDTIME) + " seconds");
+		double overallTime = Double.parseDouble(timeRecord.get(CommonParameters.CalculateExecuteTime.CREATETIME)) + Double.parseDouble(timeRecord.get(CommonParameters.CalculateExecuteTime.BUILDTIME));
+		timeRecord.put(CommonParameters.CalculateExecuteTime.OVERALLTIME, Double.toString(overallTime));
+		System.out.println("Overall time: " + timeRecord.get(CommonParameters.CalculateExecuteTime.OVERALLTIME) + " seconds");
+	}
+	
+	public String getLastProject() {
+		int i=0;
+		int length = bot.tree().visibleRowCount();
+		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
+		for (SWTBotTreeItem treeItem: allItems) {
+			if(i==length-1) {
+				return treeItem.getText();
+			}
+			i++;
+		}
+		return "";
+	}
+	
 }

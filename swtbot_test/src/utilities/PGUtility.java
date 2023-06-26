@@ -215,7 +215,6 @@ public class PGUtility extends Utility {
 		// create project
 		if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
 			createRXProject(model);
-			TCExecute.numberOfProject++;
 			BuildUtility.setBuildConfiguration(model);
 			// extension process for IoT ADU and Bootloader project
 			// currently hard-code these applications by name and order
