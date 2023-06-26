@@ -31,8 +31,10 @@ import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
 import parameters.ProjectParameters.RTOSApplication;
+import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.ToolchainType;
 import platform.PlatformModel;
+import testcase.TCExecute;
 
 public class PGUtility extends Utility {
 	public static Map<String, String> projNames = new HashMap<>();
@@ -213,6 +215,7 @@ public class PGUtility extends Utility {
 		// create project
 		if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
 			createRXProject(model);
+			TCExecute.numberOfProject++;
 			BuildUtility.setBuildConfiguration(model);
 			// extension process for IoT ADU and Bootloader project
 			// currently hard-code these applications by name and order
@@ -293,6 +296,15 @@ public class PGUtility extends Utility {
 		bot.button(ButtonAction.BUTTON_FINISH).click();
 		bot.sleep(3000);
 
+		if(model.getRtosType().equalsIgnoreCase("Azure RTOS")) {
+			loopForPGAzure();
+		} else {
+			loopForPGOther();
+		}
+
+	}
+	
+	private static void loopForPGAzure() {
 		boolean breakLoop = false;
 		while (true) {
 			SWTBotShell[] shells = bot.shells();
@@ -319,7 +331,32 @@ public class PGUtility extends Utility {
 				break;
 			}
 		}
-
+	}
+	
+	private static void loopForPGOther() {
+		boolean breakLoop = false;
+		while (true) {
+			SWTBotShell[] shells = bot.shells();
+			for (SWTBotShell shell : shells) {
+				if (shell.isActive()) {
+					if (shell.getText().equals(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
+						shell.bot().button(ButtonAction.BUTTON_NO).click();
+						breakLoop = true;
+						break;
+					}
+				}
+			}
+			bot.sleep(10000);
+			if (breakLoop) {
+				// close all Editors
+				bot.closeAllEditors();
+				if (bot.activeShell().getText().contains("Save Resource")) {
+					bot.button("Don't Save").click();
+				}
+				bot.sleep(2000);
+				break;
+			}
+		}
 	}
 
 	private static String getLanguage(Collection<Language> model, String selectedToolchain, String selectedBoard) {

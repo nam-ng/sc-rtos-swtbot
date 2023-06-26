@@ -77,7 +77,7 @@ public class BuildUtility extends Utility {
 		}
 	}
 
-	public static void buildProject(ProjectModel model) {
+	public static boolean buildProject(ProjectModel model) {
 		bot.sleep(5000);
 		setBuildConfiguration(model);
 		bot.sleep(5000);
@@ -88,9 +88,6 @@ public class BuildUtility extends Utility {
 		SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
 		boolean isBuildSuccessful = false;
 		while (true) {
-			if (bot.activeShell().getText().contains(ProjectParameters.WINDOW_INSTALL)) {
-				bot.button(ButtonAction.BUTTON_CANCEL).click();
-			}
 			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_SUCCESSFULLY)) {
 				isBuildSuccessful = true;
 				break;
@@ -102,10 +99,11 @@ public class BuildUtility extends Utility {
 		if (isBuildSuccessful) {
 			deleteProject(model);
 		}
+		return isBuildSuccessful;
 	}
 
 	public static void deleteProject(ProjectModel model) {
-		
+		Utility.deleteProject(model.getProjectName(), true);
 	}
 
 	public static void buildAll(SWTBotShell shell){
