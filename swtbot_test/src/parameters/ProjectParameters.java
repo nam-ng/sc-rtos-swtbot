@@ -28,6 +28,7 @@ public class ProjectParameters {
 	public static final String SCFG_COMPONENT_TAB = "Components";
 	public static final String GENERAL = "General";
 	public static final CharSequence WINDOW_QUESTION = "Question";
+	public static final Object WINDOW_SAVE_RESOURCES = "Save Resource";
 	
 
 	public class RTOSType {
@@ -49,6 +50,7 @@ public class ProjectParameters {
 		public static final String Azure_6_2_0 = "6.2.0_rel-rx-1.0.0";
 		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
 		public static final String RI600_1_06_01 = "1.06.01";
+		public static final String Kernel_1_0_7 = "10.4.3-rx-1.0.7";
 	}
 
 	public class RTOSApplication {
@@ -71,6 +73,7 @@ public class ProjectParameters {
 		
 		public static final String RI600V4 = "RI600v4";
 		public static final String AZURE_BARE_CPLUSPLUS = "bare_Cplusplus";
+		public static final String KERNEL_BARE = "bare";
 	}
 
 	public class TargetBoard {
@@ -113,6 +116,8 @@ public class ProjectParameters {
 		public static final String BUTTON_PROCEED = "Proceed";
 		public static final String BUTTON_ADD_COMPONENT = "Add component";
 		public static final String BUTTON_REMOVE_COMPONENT = "Remove component";
+		public static final String BUTTON_DONT_SAVE = "Don't Save";
+		public static final String BUTTON_CLEAR_CONSOLE = "Clear Console";
 	}
 
 	public class LabelName {
@@ -135,6 +140,7 @@ public class ProjectParameters {
 		public static final String MENU_BUILD_PROJECT = "Build Project";
 		public static final String MENU_BUILD_ALL = "Build All";
 		public static final String CONTEXT_MENU_DELETE = "Delete";
+		public static final String CONTEXT_MENU_PROPERTIES = "Properties";
 		public static final String MENU_FILE = "File";
 		public static final String MENU_NEW = "New";
 		public static final String MENU_C_CPP_PROJECT = "Renesas C/C++ Project";
@@ -153,6 +159,9 @@ public class ProjectParameters {
 		public static final String FILE_NXD_DHCP_CLIENT_H = "nxd_dhcp_client.h";
 		public static final String FOLDER_RTOS_KERNEL = "RTOS Kernel";
 		public static final String FOLDER_RTOS_OBJECT = "RTOS Object";
+		public static final String FILE_FREERTOSCONFIG_H = "FreeRTOSConfig.h";
+		public static final String FOLDER_SRC = "src";
+		public static final String FOLDER_FRTOS_CONFIG = "frtos_config";
 	}
 	
 	public class RTOSComponent {
@@ -162,6 +171,8 @@ public class ProjectParameters {
 		public static final String USBX = "usbx";
 		public static final String THREADX = "threadx";
 		public static final String AZURERTOS_OBJECT = "azurertos_object";
+		public static final String FREERTOS_OBJECT = "FreeRTOS_Object";
+		public static final String FREERTOS_KERNEL = "FreeRTOS_Kernel";
 	}
 	
 	public class ProjectSettings {

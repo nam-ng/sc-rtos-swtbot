@@ -325,7 +325,7 @@
 	</RTOS>
 	
 	<RTOS id="FreeRTOSKernel">
-		<version id="10.4.3-rx-1.0.5" skipapp="true">
+		<version id="10.4.3-rx-1.0.7" skipapp="true">
 			<application id="bare" order="0">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>

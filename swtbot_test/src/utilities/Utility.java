@@ -17,6 +17,8 @@ import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCanvas;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.osgi.framework.Bundle;
@@ -144,6 +146,10 @@ public class Utility {
 		Utility.getProjectExplorerView().setFocus();
 		bot.tree().getTreeItem(projectModel.getProjectName() + " ["+ projectModel.getActiveBuildConfiguration() +"]").expand();
 		bot.tree().getTreeItem(projectModel.getProjectName() + " ["+ projectModel.getActiveBuildConfiguration() +"]").getNode(projectModel.getProjectName()+".scfg").doubleClick();
+		bot.sleep(3000);
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
+			bot.button(ButtonAction.BUTTON_NO).click();
+		}
 		SWTBotEditor scfgEditor = bot.editorByTitle(projectModel.getProjectName()+".scfg");
 		scfgEditor.setFocus();
 		bot.cTabItem("Components").activate();
@@ -434,5 +440,26 @@ public class Utility {
 				BuildUtility.buildAll(shell);
 			}
 		}
+	}
+	
+	public static void addOrRemoveKernelObject (boolean isAdd) {
+		SWTBotCanvas filterCanvas;
+		if (isAdd) {
+			filterCanvas = new SWTBotCanvas(bot.widget(WidgetMatcherFactory.withTooltip("Add new object")));
+	        filterCanvas.click();
+		} else {
+			filterCanvas = new SWTBotCanvas(bot.widget(WidgetMatcherFactory.withTooltip("Remove object")));
+	        filterCanvas.click();
+		}
+	}
+	
+	public static void clickClearConsole() {
+		bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_CLEAR_CONSOLE).click();
+	}
+	
+	public static boolean isConsoleHasString(String text) {
+		SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
+		return consoleView.bot().styledText().getText().contains(text);
+			
 	}
 }
