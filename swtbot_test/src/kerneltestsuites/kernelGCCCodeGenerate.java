@@ -27,7 +27,7 @@ import utilities.PGUtility;
 import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class kernelCCRXCodeGenerate {
+public class kernelGCCCodeGenerate {
 	private static SWTWorkbenchBot bot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
@@ -39,13 +39,13 @@ public class kernelCCRXCodeGenerate {
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7,
-				RTOSApplication.KERNEL_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+				RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 	}
 
 	@Test
 	public void tc_01_CreateKernelProject() throws Exception {
 		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE,
-				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 
 	}
 

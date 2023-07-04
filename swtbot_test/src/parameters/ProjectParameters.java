@@ -74,6 +74,7 @@ public class ProjectParameters {
 		public static final String RI600V4 = "RI600v4";
 		public static final String AZURE_BARE_CPLUSPLUS = "bare_Cplusplus";
 		public static final String KERNEL_BARE = "bare";
+		public static final String KERNEL_BARE_CPLUSPLUS = "bare_Cplusplus";
 	}
 
 	public class TargetBoard {
@@ -141,11 +142,14 @@ public class ProjectParameters {
 		public static final String MENU_BUILD_ALL = "Build All";
 		public static final String CONTEXT_MENU_DELETE = "Delete";
 		public static final String CONTEXT_MENU_PROPERTIES = "Properties";
+		public static final String CONTEXT_MENU_CLOSE_PROJECT = "Close Project";
 		public static final String MENU_FILE = "File";
 		public static final String MENU_NEW = "New";
 		public static final String MENU_C_CPP_PROJECT = "Renesas C/C++ Project";
 		public static final String MENU_RENESAS_RX = "Renesas RX";
 		public static final String MENU_CHANGE_VERSION= "Change version...";
+		public static final String CONTEXT_MENU_OPEN_PROJECT = "Open Project";
+		public static final String MENU_SAVE = "Save";
 	}
 	
 	public class FolderAndFile {
@@ -162,6 +166,10 @@ public class ProjectParameters {
 		public static final String FILE_FREERTOSCONFIG_H = "FreeRTOSConfig.h";
 		public static final String FOLDER_SRC = "src";
 		public static final String FOLDER_FRTOS_CONFIG = "frtos_config";
+		public static final String FILE_FREERTOS_OBJECT_INIT_C = "freertos_object_init.c";
+		public static final String FOLDER_FRTOS_STARTUP = "frtos_startup";
+		public static final String FOLDER_FRTOS_SKELETON = "frtos_skeleton";
+		public static final String FILE_TASK_1_C = "task_1.c";
 	}
 	
 	public class RTOSComponent {

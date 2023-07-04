@@ -79,7 +79,6 @@ public class TCExecute {
 		long timeExecute = end-start;
 		double createTime = (double) timeExecute/1000.0;
 		timeRecord.put(CommonParameters.CalculateExecuteTime.CREATETIME, Double.toString(createTime));
-		System.out.println("Create time: " + timeRecord.get(CommonParameters.CalculateExecuteTime.CREATETIME) + " seconds");
 	}
 	
 	
