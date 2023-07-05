@@ -50,7 +50,7 @@ public class ChangeRTOSVersion {
 	
 	@Test
 	public void tc_02_ChangeRTOSVersion() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 		bot.text().setText(ProjectParameters.RTOSComponent.USBX);
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS).getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY).getNode(ProjectParameters.RTOSComponent.USBX).contextMenu(ProjectParameters.MenuName.MENU_CHANGE_VERSION).click();
 		bot.comboBoxWithLabel(ProjectParameters.LabelName.LABEL_AVAILABLE_VERSION).setSelection(ProjectParameters.RTOSVersion.Azure_6_1_6);

@@ -51,29 +51,17 @@ public class kernelCCRXCodeGenerate {
 
 	@Test
 	public void tc_02_CheckCodeGenerate() throws Exception {
-		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
 				.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
 
-		SWTBotTreeItem[] kernelConfigTree = bot.tree(2).getTreeItem("Configurations ").getItems();
+		SWTBotTreeItem[] kernelConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
 		for (SWTBotTreeItem config : kernelConfigTree) {
-			if (config.cell(0).contains("RTOS scheduler ")) {
-				bot.sleep(2000);
-				config.click(1);
-				bot.list(0).select("Cooperative");
-			}
-			if (config.cell(0).contains("The frequency of the RTOS tick interrupt ")) {
-				bot.sleep(2000);
-				config.click(1);
-				bot.text(config.cell(1)).setText("test1");
-			}
-			if (config.cell(0).contains("The size of the stack used by the idle task ")) {
-				bot.sleep(2000);
-				config.click(1);
-				bot.text(config.cell(1)).setText("test2");
-			}
+			Utility.changeConfigOfCombobox(config, ProjectParameters.KernelConfig.RTOS_SCHEDULER, "Cooperative");
+			Utility.changeConfigOfTextBox(config, ProjectParameters.KernelConfig.THE_FREQUENCY_OF_RTOS_TICK_INTERRUPT, "test1", false);
+			Utility.changeConfigOfTextBox(config, ProjectParameters.KernelConfig.SIZE_OF_STACK_IDLE_TASK, "test2", false);
 		}
 
 		Utility.clickGenerateCode();

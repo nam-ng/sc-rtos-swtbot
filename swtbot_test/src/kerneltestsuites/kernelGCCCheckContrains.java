@@ -6,8 +6,6 @@ import java.io.File;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
-import org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotCanvas;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -35,310 +33,305 @@ public class kernelGCCCheckContrains {
 	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
 	private SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
 
-	
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7,
+				RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 	}
-	
+
 	@Test
-	public void tc_01_CreateKernelProject() throws Exception{
-		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
-		
+	public void tc_01_CreateKernelProject() throws Exception {
+		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE,
+				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+
 	}
-	
+
 	@Test
-	public void tc_02_TwoRowsDuplicate() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
-		
+	public void tc_02_TwoRowsDuplicate() throws Exception {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-		.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
-		
-		bot.tabItem("Tasks").activate();
-		Utility.addOrRemoveKernelObject(true);
-		Utility.addOrRemoveKernelObject(true);
-        
-        Utility.clickClearConsole();
-        
-        bot.sleep(3000);
-        bot.text(1+7*0).setText("task_1");
-        bot.text(1+7*1).setText("task_1");
-        
-		boolean check1 = Utility.isConsoleHasString("E04050007: This name exists. Please use another name");
-		
-        Utility.clickClearConsole();
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
 
-		
-        bot.text(1+7*1).setText("task_2");
-        bot.text(2+7*0).setText("task_1");
-        bot.text(2+7*1).setText("task_1");
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
 
-		
-		boolean check2 = Utility.isConsoleHasString("E04050007: This name exists. Please use another name");
-		
-        Utility.clickClearConsole();
+		Utility.clickClearConsole();
 
-        Utility.addOrRemoveKernelObject(false);
-        Utility.addOrRemoveKernelObject(false);
-        
-        if (!check1||!check2) {
-        	assertFalse(true);
-        }
+		bot.sleep(3000);
+		bot.text(1 + 7 * 0).setText("task_1");
+		bot.text(1 + 7 * 1).setText("task_1");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+
+		Utility.clickClearConsole();
+
+		bot.text(1 + 7 * 1).setText("task_2");
+		bot.text(2 + 7 * 0).setText("task_1");
+		bot.text(2 + 7 * 1).setText("task_1");
+
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+
+		Utility.clickClearConsole();
+
+		Utility.addOrRemoveKernelObject(false, 0);
+		Utility.addOrRemoveKernelObject(false, 0);
+
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
 
 	}
-	
-	@Test
-	public void tc_03_EmptyError() throws Exception{
-		
-		Utility.addOrRemoveKernelObject(true);
-        
-        bot.sleep(3000);
-        bot.text(1+7*0).setText("");
-        
-		boolean check1 = Utility.isConsoleHasString("E04050004: The value must not be empty");
-		
-		Utility.addOrRemoveKernelObject(false);
-        
-        Utility.clickClearConsole();
-        
-        if (!check1) {
-        	assertFalse(true);
-        }
-	}
-	
-	@Test
-	public void tc_04_MustBeANumber() throws Exception{
-		Utility.addOrRemoveKernelObject(true);
-        
-        bot.sleep(3000);
-        bot.text(3+7*0).setText("a");
-        
-		boolean check1 = Utility.isConsoleHasString("E04050002: The value must be a number");
-		
-        bot.text(3+7*0).setText("512");
-        
-        Utility.clickClearConsole();
-        
-        bot.text(6+7*0).setText("a");
-        
-		boolean check2 = Utility.isConsoleHasString("E04050002: The value must be a number");
-		
-        bot.text(3+7*0).setText("1");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1||!check2) {
-        	assertFalse(true);
-        }
-	}
-	
-	@Test
-	public void tc_05_MustBeANumber2() throws Exception{
-		bot.tabItem("Queues").activate();
-		
-		Utility.addOrRemoveKernelObject(true);
-		
-        bot.text(2).setText("a");
 
-		boolean check1 = Utility.isConsoleHasString("E04050002: The value must be a number");
-		
-        bot.text(2).setText("100");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1) {
-        	assertFalse(true);
-        }
-	}
-	
 	@Test
-	public void tc_06_MustBeANumber3() throws Exception{
-		bot.tabItem("Software Timers").activate();
-		
-		Utility.addOrRemoveKernelObject(true);
-        
-        bot.text(3).setText("a");
-        
-		boolean check1 = Utility.isConsoleHasString("E04050002: The value must be a number");
-		
-        bot.text(3).setText("100");
-        
-        Utility.clickClearConsole();
-        
-        
-        bot.text(4).setText("a");
-        
-		boolean check2 = Utility.isConsoleHasString("E04050002: The value must be a number");
-		
-        bot.text(4).setText("0");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1||!check2) {
-        	assertFalse(true);
-        }
-	}
-	
-	@Test
-	public void tc_07_MustBeANumber4() throws Exception{
-		bot.tabItem("Stream Buffers").activate();
-		
-		Utility.addOrRemoveKernelObject(true);
-        
-        bot.text(2).setText("a");
-        
-		boolean check1 = Utility.isConsoleHasString("E04050002: The value must be a number");
-		
-        bot.text(2).setText("100");
-        
-        Utility.clickClearConsole();
-        
-        
-        bot.text(3).setText("a");
-        
-		boolean check2 = Utility.isConsoleHasString("E04050002: The value must be a number");
-		
-        bot.text(3).setText("10");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1||!check2) {
-        	assertFalse(true);
-        }
-	}
-	
-	@Test
-	public void tc_08_MustBeANumber5() throws Exception{
-		bot.tabItem("Message Buffers").activate();
-		
-		Utility.addOrRemoveKernelObject(true);
-		
-        bot.text(2).setText("a");
+	public void tc_03_EmptyError() throws Exception {
 
-		boolean check1 = Utility.isConsoleHasString("E04050002: The value must be a number");
-		
-        bot.text(2).setText("100");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1) {
-        	assertFalse(true);
-        }
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.sleep(3000);
+		bot.text(1 + 7 * 0).setText("");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050004);
+
+		Utility.addOrRemoveKernelObject(false, 0);
+
+		Utility.clickClearConsole();
+
+		if (!check1) {
+			assertFalse(true);
+		}
 	}
-	
+
+	@Test
+	public void tc_04_MustBeANumber() throws Exception {
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.sleep(3000);
+		bot.text(3 + 7 * 0).setText("a");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050002);
+
+		bot.text(3 + 7 * 0).setText("512");
+
+		Utility.clickClearConsole();
+
+		bot.text(6 + 7 * 0).setText("a");
+
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050002);
+
+		bot.text(3 + 7 * 0).setText("1");
+
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
+	}
+
+	@Test
+	public void tc_05_MustBeANumberQueues() throws Exception {
+		bot.tabItem(ProjectParameters.KernelObjectTab.QUEUES).activate();
+
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.text(2).setText("a");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050002);
+
+		bot.text(2).setText("100");
+
+		Utility.clickClearConsole();
+
+		if (!check1) {
+			assertFalse(true);
+		}
+	}
+
+	@Test
+	public void tc_06_MustBeANumberSWTimer() throws Exception {
+		bot.tabItem(ProjectParameters.KernelObjectTab.SOFTWARE_TIMERS).activate();
+
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.text(3).setText("a");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050002);
+
+		bot.text(3).setText("100");
+
+		Utility.clickClearConsole();
+
+		bot.text(4).setText("a");
+
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050002);
+
+		bot.text(4).setText("0");
+
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
+	}
+
+	@Test
+	public void tc_07_MustBeANumberStreamBuffer() throws Exception {
+		bot.tabItem(ProjectParameters.KernelObjectTab.STREAM_BUFFERS).activate();
+
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.text(2).setText("a");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050002);
+
+		bot.text(2).setText("100");
+
+		Utility.clickClearConsole();
+
+		bot.text(3).setText("a");
+
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050002);
+
+		bot.text(3).setText("10");
+
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
+	}
+
+	@Test
+	public void tc_08_MustBeANumberMsgBuffer() throws Exception {
+		bot.tabItem(ProjectParameters.KernelObjectTab.MESSAGE_BUFFERS).activate();
+
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.text(2).setText("a");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050002);
+
+		bot.text(2).setText("100");
+
+		Utility.clickClearConsole();
+
+		if (!check1) {
+			assertFalse(true);
+		}
+	}
+
 	@Test
 	public void tc_09_MustNotBeANumber() throws Exception {
-		bot.tabItem("Tasks").activate();
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
 
 		bot.sleep(3000);
 		bot.text(1).setText("1");
-		
-		boolean check1 = Utility.isConsoleHasString("E04050001: The first character must not be a digit");
-		boolean check2 = Utility.isConsoleHasString("E04050003: The value must not be a number");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
 
 		bot.text(1).setText("task_4");
-        Utility.clickClearConsole();
+		Utility.clickClearConsole();
 
 		bot.text(4).setText("1");
 
-		boolean check3 = Utility.isConsoleHasString("E04050001: The first character must not be a digit");
-		boolean check4 = Utility.isConsoleHasString("E04050003: The value must not be a number");
+		boolean check3 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check4 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
 
 		bot.text(4).setText("NULL");
-        Utility.clickClearConsole();
+		Utility.clickClearConsole();
 
 		if (!check1 || !check2 || !check3 || !check4) {
 			assertFalse(true);
 		}
 	}
-	
-	@Test
-	public void tc_10_OutOfSize2() throws Exception{
-		bot.tabItem("Queues").activate();
-		
-        bot.text(2).setText("4294967296");
 
-		boolean check1 = Utility.isConsoleHasString("E04050006: The value must be from 1 to 4294967295");
-		
-        bot.text(2).setText("100");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1) {
-        	assertFalse(true);
-        }
+	@Test
+	public void tc_10_OutOfSizeQueues() throws Exception {
+		bot.tabItem(ProjectParameters.KernelObjectTab.QUEUES).activate();
+
+		bot.text(2).setText("4294967296");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050006);
+
+		bot.text(2).setText("100");
+
+		Utility.clickClearConsole();
+
+		if (!check1) {
+			assertFalse(true);
+		}
 	}
-	
+
 	@Test
-	public void tc_11_OutOfSize3() throws Exception{
-		bot.tabItem("Software Timers").activate();
-        bot.text(3).setText("4294967296");
+	public void tc_11_OutOfSizeSWTimer() throws Exception {
+		bot.tabItem(ProjectParameters.KernelObjectTab.SOFTWARE_TIMERS).activate();
+		bot.text(3).setText("4294967296");
 		boolean check1 = Utility.isConsoleHasString("E04050006: The value must be from 1 to 4294967295");
 
-        bot.text(3).setText("100");
-        
-        Utility.clickClearConsole();
-        
-        bot.text(4).setText("4294967296");
+		bot.text(3).setText("100");
+
+		Utility.clickClearConsole();
+
+		bot.text(4).setText("4294967296");
 		boolean check2 = Utility.isConsoleHasString("E04050006: The value must be from 0 to 4294967295");
 
-        bot.text(4).setText("0");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1 || !check2) {
-        	assertFalse(true);
-        }
+		bot.text(4).setText("0");
+
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
 	}
-	
+
 	@Test
-	public void tc_12_OutOfSize4() throws Exception{
-		bot.tabItem("Stream Buffers").activate();
-        
-        bot.text(2).setText("4294967296");
-        
-		boolean check1 = Utility.isConsoleHasString("E04050006: The value must be from 1 to 4294967295");
-		
-        bot.text(2).setText("100");
-        
-        Utility.clickClearConsole();
-        
-        
-        bot.text(3).setText("4294967296");
-        
-		boolean check2 = Utility.isConsoleHasString("E04050006: The value must be from 1 to 4294967295");
+	public void tc_12_OutOfSizeStreamBuffer() throws Exception {
+		bot.tabItem(ProjectParameters.KernelObjectTab.STREAM_BUFFERS).activate();
 
-		
-        bot.text(3).setText("10");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1||!check2) {
-        	assertFalse(true);
-        }
+		bot.text(2).setText("4294967296");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050006);
+
+		bot.text(2).setText("100");
+
+		Utility.clickClearConsole();
+
+		bot.text(3).setText("4294967296");
+
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050006);
+
+		bot.text(3).setText("10");
+
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
 	}
-	
+
 	@Test
-	public void tc_13_OutOfSize5() throws Exception{
-		bot.tabItem("Message Buffers").activate();
-		
-        bot.text(2).setText("4294967296");
+	public void tc_13_OutOfSizeMsgBuffer() throws Exception {
+		bot.tabItem(ProjectParameters.KernelObjectTab.MESSAGE_BUFFERS).activate();
 
-		boolean check1 = Utility.isConsoleHasString("E04050006: The value must be from 1 to 4294967295");
+		bot.text(2).setText("4294967296");
 
-        bot.text(2).setText("100");
-        
-        Utility.clickClearConsole();
-        
-        if (!check1) {
-        	assertFalse(true);
-        }
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050006);
+
+		bot.text(2).setText("100");
+
+		Utility.clickClearConsole();
+
+		if (!check1) {
+			assertFalse(true);
+		}
 	}
-	
+
 	@Test
 	public void tc_14_DeleteKernelProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);

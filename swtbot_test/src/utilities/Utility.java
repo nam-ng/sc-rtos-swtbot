@@ -142,7 +142,7 @@ public class Utility {
 		return "";
 	}
 	
-	public static void openSCFGEditor(ProjectModel projectModel) {
+	public static void openSCFGEditor(ProjectModel projectModel, String tabOpen) {
 		Utility.getProjectExplorerView().setFocus();
 		bot.tree().getTreeItem(projectModel.getProjectName() + " ["+ projectModel.getActiveBuildConfiguration() +"]").expand();
 		bot.tree().getTreeItem(projectModel.getProjectName() + " ["+ projectModel.getActiveBuildConfiguration() +"]").getNode(projectModel.getProjectName()+".scfg").doubleClick();
@@ -152,7 +152,7 @@ public class Utility {
 		}
 		SWTBotEditor scfgEditor = bot.editorByTitle(projectModel.getProjectName()+".scfg");
 		scfgEditor.setFocus();
-		bot.cTabItem("Components").activate();
+		bot.cTabItem(tabOpen).activate();
 	}
 	
 	public static void addComponent(String componentName) {
@@ -267,7 +267,7 @@ public class Utility {
 	 * @param isDualLinearConverted
 	 */
 	public static void changeBoard(ProjectModel model, String board, String device, boolean isLinearDualConverted, boolean isDualLinearConverted) {
-		openSCFGEditor(model);
+		openSCFGEditor(model, ProjectParameters.SCFG_COMPONENT_TAB);
 		SWTBotEditor scfgEditor = bot.editorByTitle(model.getProjectName() + ".scfg");
 		SWTBot editorBot = scfgEditor.bot();
 		editorBot.cTabItem("Board").activate();
@@ -442,13 +442,13 @@ public class Utility {
 		}
 	}
 	
-	public static void addOrRemoveKernelObject (boolean isAdd) {
+	public static void addOrRemoveKernelObject (boolean isAdd, int index) {
 		SWTBotCanvas filterCanvas;
 		if (isAdd) {
-			filterCanvas = new SWTBotCanvas(bot.widget(WidgetMatcherFactory.withTooltip("Add new object")));
+			filterCanvas = new SWTBotCanvas(bot.widget(WidgetMatcherFactory.withTooltip("Add new object"), index));
 	        filterCanvas.click();
 		} else {
-			filterCanvas = new SWTBotCanvas(bot.widget(WidgetMatcherFactory.withTooltip("Remove object")));
+			filterCanvas = new SWTBotCanvas(bot.widget(WidgetMatcherFactory.withTooltip("Remove object"), index));
 	        filterCanvas.click();
 		}
 	}
@@ -461,5 +461,58 @@ public class Utility {
 		SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
 		return consoleView.bot().styledText().getText().contains(text);
 			
+	}
+	
+	public static void changeConfigOfCombobox(SWTBotTreeItem config, String configName, String configValue) {
+		if (config.cell(0).contains(configName)) {
+			bot.sleep(2000);
+			config.click(1);
+			bot.list(0).select(configValue);
+		}
+	}
+	
+	public static void changeConfigOfTextBox(SWTBotTreeItem config, String configName, String configValue, boolean isClearConsole) {
+		if (config.cell(0).contains(configName)) {
+			bot.sleep(2000);
+			config.click(1);
+			config.click(1);
+			if (isClearConsole) {
+				clickClearConsole();
+			}
+			bot.text(config.cell(1)).setText(configValue);
+		}
+	}
+	
+	public static void changeConfigOfTextBoxWithIndex(SWTBotTreeItem config, String configName, String configValue, boolean isClearConsole) {
+		if (config.cell(0).contains(configName)) {
+			bot.sleep(2000);
+			config.click(1);
+			config.click(1);
+			if (isClearConsole) {
+				clickClearConsole();
+			}
+			bot.text(1).setText(configValue);
+		}
+	}
+	
+	public static boolean changeConfigOfTextBoxVerifyError(SWTBotTreeItem config, String configName, String configValue,
+			boolean isClearConsole) {
+		boolean isVerifyError=false;
+		if (config.cell(0).contains(configName)) {
+			bot.sleep(2000);
+			config.click(1);
+			config.click(1);
+			if(isClearConsole) {
+				clickClearConsole();
+			}
+			try {
+				bot.text(config.cell(1)).setText("");
+			} catch (Exception e) {
+				isVerifyError = true;
+			}
+			;
+
+		}
+		return isVerifyError;
 	}
 }

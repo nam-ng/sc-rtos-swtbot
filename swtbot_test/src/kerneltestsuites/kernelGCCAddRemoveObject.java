@@ -5,8 +5,6 @@ import static org.junit.Assert.assertFalse;
 import java.io.File;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
-import org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotCanvas;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -32,170 +30,181 @@ public class kernelGCCAddRemoveObject {
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
-	
+
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7,
+				RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 	}
-	
+
 	@Test
-	public void tc_01_CreateKernelProject() throws Exception{
-		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
-		
+	public void tc_01_CreateKernelProject() throws Exception {
+		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE,
+				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+
 	}
-	
+
 	@Test
-	public void tc_02_AddAndRemoveRows() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
-		
+	public void tc_02_AddAndRemoveRows() throws Exception {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-		.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
-		
-		bot.tabItem("Tasks").activate();
-		Utility.addOrRemoveKernelObject(true);
-		Utility.addOrRemoveKernelObject(true);
-		Utility.addOrRemoveKernelObject(true);
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
 
-		Utility.addOrRemoveKernelObject(false);
-		Utility.addOrRemoveKernelObject(false);
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
 
-        
-        
-        bot.sleep(3000);
-        boolean check0 = bot.ccomboBox(0).getText().equals("kernel start");
-        boolean check1 = bot.text(1).getText().equals("task_3");
-        boolean check2 = bot.text(2).getText().equals("task_3");
-        boolean check3 = bot.text(3).getText().equals("512");
-        boolean check4 = bot.text(4).getText().equals("NULL");
-        boolean check5 = bot.text(5).getText().equals("NULL");
-        boolean check6 = bot.text(6).getText().equals("1");
-        
-		Utility.addOrRemoveKernelObject(false);
+		Utility.addOrRemoveKernelObject(false, 1);
+		Utility.addOrRemoveKernelObject(false, 1);
 
-        
-        if(!check0||!check1||!check2||!check3||!check4||!check5||!check6) {
-        	assertFalse(true);
-        }
+		bot.sleep(3000);
+		boolean check0 = bot.ccomboBox(0).getText().equals(ProjectParameters.KernelObject.KERNEL_START);
+		boolean check1 = bot.text(1).getText().equals(ProjectParameters.KernelObject.TASK_1);
+		boolean check2 = bot.text(2).getText().equals(ProjectParameters.KernelObject.TASK_1);
+		boolean check3 = bot.text(3).getText().equals(ProjectParameters.KernelObject.NUMBER_512);
+		boolean check4 = bot.text(4).getText().equals(ProjectParameters.KernelObject.NULL);
+		boolean check5 = bot.text(5).getText().equals(ProjectParameters.KernelObject.NULL);
+		boolean check6 = bot.text(6).getText().equals(ProjectParameters.KernelObject.NUMBER_1);
+
+		Utility.addOrRemoveKernelObject(false, 0);
+
+		if (!check0 || !check1 || !check2 || !check3 || !check4 || !check5 || !check6) {
+			assertFalse(true);
+		}
 	}
-	
+
 	@Test
-	public void tc_03_DeleteAndCreateKernelProject() throws Exception{
+	public void tc_03_DeleteAndCreateKernelProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
 		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
 			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
 		}
-		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE,
+				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 	}
-	
-	@Test
-	public void tc_04_AddFirstRowAndCheckDefault() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
-		
-		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-		.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
-		bot.tabItem("Tasks").activate();
-		Utility.addOrRemoveKernelObject(true);
-        
-        bot.sleep(3000);
-        boolean check0 = bot.ccomboBox(0).getText().equals("kernel start");
-        boolean check1 = bot.text(1).getText().equals("task_1");
-        boolean check2 = bot.text(2).getText().equals("task_1");
-        boolean check3 = bot.text(3).getText().equals("512");
-        boolean check4 = bot.text(4).getText().equals("NULL");
-        boolean check5 = bot.text(5).getText().equals("NULL");
-        boolean check6 = bot.text(6).getText().equals("1");
-        
-		Utility.addOrRemoveKernelObject(false);
 
-        
-        if(!check0||!check1||!check2||!check3||!check4||!check5||!check6) {
-        	assertFalse(true);
-        }
-	}
-	
 	@Test
-	public void tc_05_DeleteAndCreateKernelProject() throws Exception{
+	public void tc_04_AddFirstRowAndCheckDefault() throws Exception {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.sleep(3000);
+		boolean check0 = bot.ccomboBox(0).getText().equals(ProjectParameters.KernelObject.KERNEL_START);
+		boolean check1 = bot.text(1).getText().equals(ProjectParameters.KernelObject.TASK_1);
+		boolean check2 = bot.text(2).getText().equals(ProjectParameters.KernelObject.TASK_1);
+		boolean check3 = bot.text(3).getText().equals(ProjectParameters.KernelObject.NUMBER_512);
+		boolean check4 = bot.text(4).getText().equals(ProjectParameters.KernelObject.NULL);
+		boolean check5 = bot.text(5).getText().equals(ProjectParameters.KernelObject.NULL);
+		boolean check6 = bot.text(6).getText().equals(ProjectParameters.KernelObject.NUMBER_1);
+
+		Utility.addOrRemoveKernelObject(false, 0);
+
+		if (!check0 || !check1 || !check2 || !check3 || !check4 || !check5 || !check6) {
+			assertFalse(true);
+		}
+	}
+
+	@Test
+	public void tc_05_DeleteAndCreateKernelProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
 		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
 			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
 		}
-		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE,
+				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 	}
-	
+
 	@Test
-	public void tc_06_AddSecondRowAndCheckDefault() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
-		
+	public void tc_06_AddSecondRowAndCheckDefault() throws Exception {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-		.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
-		bot.tabItem("Tasks").activate();
-		Utility.addOrRemoveKernelObject(true);
-		Utility.addOrRemoveKernelObject(true);
-        
-        bot.sleep(3000);
-        boolean check0 = bot.ccomboBox(1).getText().equals("kernel start");
-        boolean check1 = bot.text(1+7*1).getText().equals("task_2");
-        boolean check2 = bot.text(2+7*1).getText().equals("task_2");
-        boolean check3 = bot.text(3+7*1).getText().equals("512");
-        boolean check4 = bot.text(4+7*1).getText().equals("NULL");
-        boolean check5 = bot.text(5+7*1).getText().equals("NULL");
-        boolean check6 = bot.text(6+7*1).getText().equals("1");
-        
-        Utility.addOrRemoveKernelObject(false);
-        Utility.addOrRemoveKernelObject(false);
-        
-        if(!check0||!check1||!check2||!check3||!check4||!check5||!check6) {
-        	assertFalse(true);
-        }
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.sleep(3000);
+		/*
+		 * Each cell of the tasks object text box is access by formula: columnNumber + 7
+		 * * rowNumber because there are 7 text box in a row columnNumber: count from 1
+		 * rowNumber: count from 0
+		 */
+		boolean check0 = bot.ccomboBox(1).getText().equals(ProjectParameters.KernelObject.KERNEL_START);
+		boolean check1 = bot.text(1 + 7 * 1).getText().equals(ProjectParameters.KernelObject.TASK_2);
+		boolean check2 = bot.text(2 + 7 * 1).getText().equals(ProjectParameters.KernelObject.TASK_2);
+		boolean check3 = bot.text(3 + 7 * 1).getText().equals(ProjectParameters.KernelObject.NUMBER_512);
+		boolean check4 = bot.text(4 + 7 * 1).getText().equals(ProjectParameters.KernelObject.NULL);
+		boolean check5 = bot.text(5 + 7 * 1).getText().equals(ProjectParameters.KernelObject.NULL);
+		boolean check6 = bot.text(6 + 7 * 1).getText().equals(ProjectParameters.KernelObject.NUMBER_1);
+
+		Utility.addOrRemoveKernelObject(false, 0);
+		Utility.addOrRemoveKernelObject(false, 0);
+
+		if (!check0 || !check1 || !check2 || !check3 || !check4 || !check5 || !check6) {
+			assertFalse(true);
+		}
 	}
-	
+
 	@Test
-	public void tc_07_DeleteAndCreateKernelProject() throws Exception{
+	public void tc_07_DeleteAndCreateKernelProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
 		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
 			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
 		}
-		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE,
+				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 	}
-	
+
 	@Test
-	public void tc_08_AddThirdRowAndCheckDefault() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
-		
+	public void tc_08_AddThirdRowAndCheckDefault() throws Exception {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-		.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
-		bot.tabItem("Tasks").activate();
-		Utility.addOrRemoveKernelObject(true);
-		Utility.addOrRemoveKernelObject(true);
-		Utility.addOrRemoveKernelObject(true);
-        
-        bot.sleep(3000);
-        boolean check0 = bot.ccomboBox(2).getText().equals("kernel start");
-        boolean check1 = bot.text(1+7*2).getText().equals("task_3");
-        boolean check2 = bot.text(2+7*2).getText().equals("task_3");
-        boolean check3 = bot.text(3+7*2).getText().equals("512");
-        boolean check4 = bot.text(4+7*2).getText().equals("NULL");
-        boolean check5 = bot.text(5+7*2).getText().equals("NULL");
-        boolean check6 = bot.text(6+7*2).getText().equals("1");
-        
-        Utility.addOrRemoveKernelObject(false);
-        Utility.addOrRemoveKernelObject(false);
-        Utility.addOrRemoveKernelObject(false);
-        
-        if(!check0||!check1||!check2||!check3||!check4||!check5||!check6) {
-        	assertFalse(true);
-        }
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.sleep(3000);
+		/*
+		 * Each cell of the tasks object text box is access by formula: columnNumber + 7
+		 * * rowNumber because there are 7 text box in a row columnNumber: count from 1
+		 * rowNumber: count from 0
+		 */
+		boolean check0 = bot.ccomboBox(2).getText().equals(ProjectParameters.KernelObject.KERNEL_START);
+		boolean check1 = bot.text(1 + 7 * 2).getText().equals(ProjectParameters.KernelObject.TASK_3);
+		boolean check2 = bot.text(2 + 7 * 2).getText().equals(ProjectParameters.KernelObject.TASK_3);
+		boolean check3 = bot.text(3 + 7 * 2).getText().equals(ProjectParameters.KernelObject.NUMBER_512);
+		boolean check4 = bot.text(4 + 7 * 2).getText().equals(ProjectParameters.KernelObject.NULL);
+		boolean check5 = bot.text(5 + 7 * 2).getText().equals(ProjectParameters.KernelObject.NULL);
+		boolean check6 = bot.text(6 + 7 * 2).getText().equals(ProjectParameters.KernelObject.NUMBER_1);
+
+		Utility.addOrRemoveKernelObject(false, 0);
+		Utility.addOrRemoveKernelObject(false, 0);
+		Utility.addOrRemoveKernelObject(false, 0);
+
+		if (!check0 || !check1 || !check2 || !check3 || !check4 || !check5 || !check6) {
+			assertFalse(true);
+		}
 	}
-	
+
 	@Test
-	public void tc_09_DeleteKernelProject() throws Exception{
+	public void tc_09_DeleteKernelProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
 		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
 			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();

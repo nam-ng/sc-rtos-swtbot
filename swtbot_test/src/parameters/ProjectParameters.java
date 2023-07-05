@@ -188,4 +188,66 @@ public class ProjectParameters {
 		public static final String SOURCE = "Source";
 		public static final String C_CPLUSPLUS_PROJECT_SETTINGS = "C/C++ Project Settings";
 	}
+
+	public class KernelObject {
+		public static final String KERNEL_START = "kernel start";
+		public static final String TASK_1 = "task_1";
+		public static final String NUMBER_512 = "512";
+		public static final String NULL = "NULL";
+		public static final String NUMBER_1 = "1";
+		public static final String TASK_2 = "task_2";
+		public static final String TASK_3 = "task_3";
+		public static final String TASK_4 = "task_4";
+		public static final String EVENT_GRP_HANDLE_1 = "event_grp_handle_1";
+		public static final String MSG_BFF_HANDLE_1 = "msg_bff_handle_1";
+		public static final String NUMBER_100 = "100";
+		public static final String QUEUE_HANDLE_1 = "queue_handle_1";
+		public static final String SIZEOF = "sizeof(uint32_t)";
+		public static final String SWT_HANDLE_1 = "swt_handle_1";
+		public static final String TIMER_1 = "Timer_1";
+		public static final String NUMBER_0 = "0";
+		public static final String SEMAPHORE_HANDLE_1 = "semaphore_handle_1";
+		public static final String BINARY = "binary";
+		public static final String STREAM_BFF_HANDLE_1 = "stream_bff_handle_1";
+		public static final String NUMBER_10 = "10";
+		public static final String MANUAL = "manual";
+	}
+	
+	public class MessageCode {
+		public static final String E04050007 = "E04050007: This name exists. Please use another name";
+		public static final String E04050004 = "E04050004: The value must not be empty";
+		public static final String E04050002 = "E04050002: The value must be a number";
+		public static final String E04050001 = "E04050001: The first character must not be a digit";
+		public static final String E04050003 = "E04050003: The value must not be a number";
+		public static final String E04050006 = "E04050006: The value must be from 1 to 4294967295";
+		public static final String E04020001 = "E04020001: Value must be in range 0 ~ configMAX_SYSCALL_INTERRUPT_PRIORITY - 1";
+		public static final String E04020001_2 = "E04020001: Value must be in range configKERNEL_INTERRUPT_PRIORITY + 1 ~ configMAX_PRIORITIES - 1";
+	}
+	
+	public class KernelObjectTab{
+		public static final String TASKS = "Tasks";
+		public static final String MESSAGE_BUFFERS = "Message Buffers";
+		public static final String EVENT_GROUPS = "Event Groups";
+		public static final String QUEUES = "Queues";
+		public static final String SOFTWARE_TIMERS = "Software Timers";
+		public static final String SEMAPHORES = "Semaphores";
+		public static final String STREAM_BUFFERS = "Stream Buffers";
+		public static final String HEAP_ESTIMATION = "Heap Estimation";
+	}
+	
+	public class KernelConfig{
+		public static final String CONFIGURATIONS = "Configurations ";
+		public static final String MAX_SYSCALL = "Maximum syscall interrupt priority";
+		public static final String KERNEL_INTERRUPT_PRIORITY = "Kernel interrupt priority";
+		public static final String THE_FREQUENCY_OF_THE_CPU_CLOCK = "The frequency of the CPU clock";
+		public static final String THE_FREQUENCY_OF_PHERIPHERAL_CLOCK = "The frequency of the PERIPHERAL clock";
+		public static final String THE_DEPTH_ALLOCATE_SW_TIMER_TASK = "The stack depth allocated to the software timer task";
+		public static final String BKT_PRIMARY_PRIORITY = "bktPRIMARY_PRIORITY";
+		public static final String BKT_SECONDARY_PRIORITY = "bktSECONDARY_PRIORITY";
+		public static final String INTQ_HIGHER_PRIORITY = "intqHIGHER_PRIORITY";
+		public static final String RTOS_SCHEDULER = "RTOS scheduler ";
+		public static final String THE_FREQUENCY_OF_RTOS_TICK_INTERRUPT = "The frequency of the RTOS tick interrupt ";
+		public static final String SIZE_OF_STACK_IDLE_TASK = "The size of the stack used by the idle task ";
+		public static final String MAXIMUM_PRIORITIES_APPLICATION_TASK = "Maximum number of priorities to the application task";
+	}
 }

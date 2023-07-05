@@ -3,12 +3,9 @@ package kerneltestsuites;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
-import java.util.List;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -54,32 +51,32 @@ public class kernelCCRXObjectCodeGenerate {
 
 	@Test
 	public void tc_02_GenerateDefault() throws Exception {
-		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
 				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
 
-		bot.tabItem("Tasks").activate();
-		Utility.addOrRemoveKernelObject(true);
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
 
-		bot.tabItem("Message Buffers").activate();
-		Utility.addOrRemoveKernelObject(true);
+		bot.tabItem(ProjectParameters.KernelObjectTab.MESSAGE_BUFFERS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
 
-		bot.tabItem("Event Groups").activate();
-		Utility.addOrRemoveKernelObject(true);
+		bot.tabItem(ProjectParameters.KernelObjectTab.EVENT_GROUPS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
 
-		bot.tabItem("Queues").activate();
-		Utility.addOrRemoveKernelObject(true);
+		bot.tabItem(ProjectParameters.KernelObjectTab.QUEUES).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
 
-		bot.tabItem("Software Timers").activate();
-		Utility.addOrRemoveKernelObject(true);
+		bot.tabItem(ProjectParameters.KernelObjectTab.SOFTWARE_TIMERS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
 
-		bot.tabItem("Semaphores").activate();
-		Utility.addOrRemoveKernelObject(true);
+		bot.tabItem(ProjectParameters.KernelObjectTab.SEMAPHORES).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
 
-		bot.tabItem("Stream Buffers").activate();
-		Utility.addOrRemoveKernelObject(true);
+		bot.tabItem(ProjectParameters.KernelObjectTab.STREAM_BUFFERS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
 
 		Utility.clickGenerateCode();
 
@@ -122,27 +119,27 @@ public class kernelCCRXObjectCodeGenerate {
 	@Test
 	public void tc_03_generateTaskKernelStart() throws Exception {
 		String task = """
-void Kernel_Object_init (void)
-{
-    /************** task creation ****************************/
+				void Kernel_Object_init (void)
+				{
+				    /************** task creation ****************************/
 
-    ret = xTaskCreate(task_1, "task_1", 512, NULL, 1, NULL);
-    if (pdPASS != ret)
-    {
-        while (1)
-        {
-            /* Failed! Task can not be created. */
-        }
-    }				
-				""";
+				    ret = xTaskCreate(task_1, "task_1", 512, NULL, 1, NULL);
+				    if (pdPASS != ret)
+				    {
+				        while (1)
+				        {
+				            /* Failed! Task can not be created. */
+				        }
+				    }
+								""";
 
-		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
 				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
 
-		bot.tabItem("Tasks").activate();
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
 		bot.ccomboBox(0).setSelection("kernel start");
 
 		Utility.clickGenerateCode();
@@ -177,28 +174,28 @@ void Kernel_Object_init (void)
 	@Test
 	public void tc_04_generateTaskManual() throws Exception {
 		String task = """
-void Object_init_manual (void)
-{
-    /************** task creation ****************************/
-    ret = xTaskCreate(task_1, "task_1", 512, NULL, 1, NULL);
-    if (pdPASS != ret)
-    {
-        while (1)
-        {
-            /* Failed! Task can not be created. */
-        }
-    }
-} /* End of function Object_init_manual()*/
-				""";
+				void Object_init_manual (void)
+				{
+				    /************** task creation ****************************/
+				    ret = xTaskCreate(task_1, "task_1", 512, NULL, 1, NULL);
+				    if (pdPASS != ret)
+				    {
+				        while (1)
+				        {
+				            /* Failed! Task can not be created. */
+				        }
+				    }
+				} /* End of function Object_init_manual()*/
+								""";
 
-		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
 				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
 
-		bot.tabItem("Tasks").activate();
-		bot.ccomboBox(0).setSelection("manual");
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		bot.ccomboBox(0).setSelection(ProjectParameters.KernelObject.MANUAL);
 
 		Utility.clickGenerateCode();
 
@@ -228,34 +225,34 @@ void Object_init_manual (void)
 			assertFalse(true);
 		}
 	}
-	
-	@Test
-	public void tc_05_generateWithUserCodeProtected() throws Exception{
-		String task_skeleton = """
-#include "task_function.h"
-/* Start user code for import. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
 
-void task_1(void * pvParameters)
-{
-/* Start user code for function. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
-}
-/* Start user code for other. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
-				""";
-		
-		Utility.openSCFGEditor(projectModelSpecific);
+	@Test
+	public void tc_05_generateWithUserCodeProtected() throws Exception {
+		String task_skeleton = """
+				#include "task_function.h"
+				/* Start user code for import. Do not edit comment generated here */
+				/* End user code. Do not edit comment generated here */
+
+				void task_1(void * pvParameters)
+				{
+				/* Start user code for function. Do not edit comment generated here */
+				/* End user code. Do not edit comment generated here */
+				}
+				/* Start user code for other. Do not edit comment generated here */
+				/* End user code. Do not edit comment generated here */
+								""";
+
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
 				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
-		
+
 		bot.tabItem("Tasks").activate();
 		bot.ccomboBox(0).setSelection("kernel start");
-		
+
 		Utility.clickGenerateCode();
-		
+
 		String buildType = projectModelSpecific.getActiveBuildConfiguration();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName()).select();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]").expand();
@@ -268,47 +265,47 @@ void task_1(void * pvParameters)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_SKELETON)
 				.getNode(ProjectParameters.FolderAndFile.FILE_TASK_1_C).doubleClick();
-		
-		SWTBotEclipseEditor task1Editor = bot
-				.editorByTitle(ProjectParameters.FolderAndFile.FILE_TASK_1_C).toTextEditor();
+
+		SWTBotEclipseEditor task1Editor = bot.editorByTitle(ProjectParameters.FolderAndFile.FILE_TASK_1_C)
+				.toTextEditor();
 		String textOfCFile = task1Editor.getText();
 		boolean isFileContainsText1 = false;
 
-		if (textOfCFile.contains(task_skeleton) && 
-				textOfCFile.contains("Copyright (C) 2019 Renesas Electronics Corporation. All rights reserved.")) {
+		if (textOfCFile.contains(task_skeleton)
+				&& textOfCFile.contains("Copyright (C) 2019 Renesas Electronics Corporation. All rights reserved.")) {
 			isFileContainsText1 = true;
 		}
-		
-		task1Editor.setFocus();
-		task1Editor.insertText(27,70,"""
 
-    int i = 0;""", false);
-		
+		task1Editor.setFocus();
+		task1Editor.insertText(27, 70, """
+
+				int i = 0;""", false);
+
 		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
-		
-		Utility.openSCFGEditor(projectModelSpecific);
-		
+
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
 		Utility.clickGenerateCode();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName()).select();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
-		.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
-		.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_SKELETON)
-		.getNode(ProjectParameters.FolderAndFile.FILE_TASK_1_C).doubleClick();
-		
-		SWTBotEclipseEditor task1Editor2 = bot
-				.editorByTitle(ProjectParameters.FolderAndFile.FILE_TASK_1_C).toTextEditor();
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_SKELETON)
+				.getNode(ProjectParameters.FolderAndFile.FILE_TASK_1_C).doubleClick();
+
+		SWTBotEclipseEditor task1Editor2 = bot.editorByTitle(ProjectParameters.FolderAndFile.FILE_TASK_1_C)
+				.toTextEditor();
 		String textOfCFile2 = task1Editor2.getText();
 		boolean isFileContainsText2 = false;
-		
-		if(textOfCFile2.contains("int i = 0;")) {
+
+		if (textOfCFile2.contains("int i = 0;")) {
 			isFileContainsText2 = true;
 		}
-		
+
 		if (!isFileContainsText1 || !isFileContainsText2) {
 			assertFalse(true);
 		}
 	}
-	
+
 	@Test
 	public void tc_06_DeleteKernelProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
