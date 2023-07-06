@@ -82,6 +82,9 @@ public class ProjectParameters {
 		public static final String BOARD_RSK_RX65N_2MB = "RSKRX65N-2MB";
 		public static final String BOARD_CK_RX65N = "CK-RX65N";
 		public static final String DEVICE_R5F565NCDxBG = "R5F565NCDxBG";
+		public static final String BOARD_RSK_RX130 = "RSKRX130";
+		public static final String BOARD_RSK_RX231 = "RSKRX231";
+		public static final String BOARD_RSK_RX72N = "RSKRX72N";
 	}
 
 	public class ToolchainType {

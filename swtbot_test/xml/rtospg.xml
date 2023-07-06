@@ -337,6 +337,8 @@
 					<toolchain>CCRX</toolchain>
 					<board>TargetBoardRX130</board>
 					<board>RSKRX140</board>
+					<board>RSKRX130</board>
+					<board>RSKRX231</board>
 					<board>RSKRX65N-2MB</board>
 					<board>RSKRX65N-2MB(TSIP)</board>
 					<board>CloudKitRX65N</board>
@@ -344,6 +346,7 @@
 					<board>RSKRX660</board>
 					<board>RSKRX66T</board>
 					<board>RSKRX671</board>
+					<board>RSKRX72N</board>
 					<board>EnvisionKitRX72N</board>
 					<device>R5F5651EDxFC</device>
 				</target>
