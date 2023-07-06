@@ -3,7 +3,9 @@
 	<!-- platform database -->
 	<family id="RX">
 		<board group="rx130">TargetBoardRX130</board>
+		<board group="rx130">RSKRX130</board>
 		<board group="rx140">RSKRX140</board>
+		<board group="rx231">RSKRX231</board>
 		<board group="rx65n">RSKRX65N-2MB</board>
 		<board group="rx65n">RSKRX65N-2MB(TSIP)</board>
 		<board group="rx65n">CloudKitRX65N</board>
@@ -12,6 +14,7 @@
 		<board group="rx660">RSKRX660</board>
 		<board group="rx671">RSKRX671</board>
 		<board group="rx72n">EnvisionKitRX72N</board>
+		<board group="rx72n">RSKRX72N</board>
 		<board custom="true">
 			<group id="RX65N">
 				<device>R5F565NEHxFC</device>

@@ -56,10 +56,14 @@ public class kernelCCRXObjectGUI {
 				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
 
 		boolean isEightTabsDisplay = false;
-		if (bot.tabItem("Heap Estimation").isVisible() && bot.tabItem("Tasks").isVisible()
-				&& bot.tabItem("Semaphores").isVisible() && bot.tabItem("Queues").isVisible()
-				&& bot.tabItem("Software Timers").isVisible() && bot.tabItem("Event Groups").isVisible()
-				&& bot.tabItem("Stream Buffers").isVisible() && bot.tabItem("Message Buffers").isVisible()) {
+		if (bot.tabItem(ProjectParameters.KernelObjectTab.HEAP_ESTIMATION).isVisible()
+				&& bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).isVisible()
+				&& bot.tabItem(ProjectParameters.KernelObjectTab.SEMAPHORES).isVisible()
+				&& bot.tabItem(ProjectParameters.KernelObjectTab.QUEUES).isVisible()
+				&& bot.tabItem(ProjectParameters.KernelObjectTab.SOFTWARE_TIMERS).isVisible()
+				&& bot.tabItem(ProjectParameters.KernelObjectTab.EVENT_GROUPS).isVisible()
+				&& bot.tabItem(ProjectParameters.KernelObjectTab.STREAM_BUFFERS).isVisible()
+				&& bot.tabItem(ProjectParameters.KernelObjectTab.MESSAGE_BUFFERS).isVisible()) {
 			isEightTabsDisplay = true;
 		}
 
