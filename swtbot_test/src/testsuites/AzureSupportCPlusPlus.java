@@ -14,6 +14,7 @@ import common.Constants;
 import common.LogUtil;
 import model.ProjectModel;
 import model.RTOSManager;
+import parameters.ProjectParameters;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
@@ -46,7 +47,7 @@ public class AzureSupportCPlusPlus {
 	
 	@Test
 	public void tc_02_GenerateCode() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 		Utility.clickGenerateCode();
 	}
 	

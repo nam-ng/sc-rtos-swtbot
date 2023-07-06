@@ -50,7 +50,7 @@ public class AddAzureModuleAndGenerateCode{
 	
 	@Test
 	public void tc_02_AddComponentFilex() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 		Utility.addComponent("filex");
 		Utility.clickGenerateCode();
 		boolean isFileXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.FILEX);

@@ -58,7 +58,7 @@ public class ThreadxLowPowerConfiguration {
 	
 	@Test
 	public void tc_02_LowPowerConfiguration() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
 		.getNode(RTOSComponent.THREADX).select();

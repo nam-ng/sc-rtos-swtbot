@@ -325,7 +325,7 @@
 	</RTOS>
 	
 	<RTOS id="FreeRTOSKernel">
-		<version id="10.4.3-rx-1.0.5" skipapp="true">
+		<version id="10.4.3-rx-1.0.7" skipapp="true">
 			<application id="bare" order="0">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
@@ -346,6 +346,18 @@
 					<board>RSKRX671</board>
 					<board>EnvisionKitRX72N</board>
 					<device>R5F5651EDxFC</device>
+				</target>
+			</application>
+			<application id="bare_Cplusplus" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<language>CPP</language>
+				<target>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
 				</target>
 			</application>
 		</version>
