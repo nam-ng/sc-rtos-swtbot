@@ -122,6 +122,7 @@ public class ProjectParameters {
 		public static final String BUTTON_REMOVE_COMPONENT = "Remove component";
 		public static final String BUTTON_DONT_SAVE = "Don't Save";
 		public static final String BUTTON_CLEAR_CONSOLE = "Clear Console";
+		public static final String BUTTON_EXPORT_CONFIG = "Export Configuration";
 	}
 
 	public class LabelName {
@@ -252,5 +253,6 @@ public class ProjectParameters {
 		public static final String THE_FREQUENCY_OF_RTOS_TICK_INTERRUPT = "The frequency of the RTOS tick interrupt ";
 		public static final String SIZE_OF_STACK_IDLE_TASK = "The size of the stack used by the idle task ";
 		public static final String MAXIMUM_PRIORITIES_APPLICATION_TASK = "Maximum number of priorities to the application task";
+		public static final String MAXIMUM_PRIORITIES_APPLICATION_CO_ROUTINE = "Maximum number of priorities to the application co-routines";
 	}
 }

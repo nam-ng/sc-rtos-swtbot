@@ -66,8 +66,28 @@ public class PGUtility extends Utility {
 	public static Collection<ProjectModel> createProjectByTC(TC tc) {
 		Collection<ProjectModel> list = prepareProjectModel(tc);
 		// create project
+		Map<String,String> boardAndTime;
 		for (ProjectModel model : list) {
+			long start = System.currentTimeMillis();
 			internalCreateProject(model);
+			long end = System.currentTimeMillis();
+			long timeExecute = end-start;
+			double createTime = (double) timeExecute/1000.0;
+			if (model.getToolchain().equals("CCRX")) {
+				boardAndTime = TCExecute.PGTimeForCCRX.get(model.getApplication());
+				if (boardAndTime == null) {
+					boardAndTime = new HashMap<>();
+				}
+				boardAndTime.put(getProjectNameByBoard(model.getBoard()), Double.toString(createTime));
+				TCExecute.PGTimeForCCRX.put(model.getApplication(), boardAndTime);
+			} else if (model.getToolchain().equals("GCC")) {
+				boardAndTime = TCExecute.PGTimeForGCC.get(model.getApplication());
+				if (boardAndTime == null) {
+					boardAndTime = new HashMap<>();
+				}
+				boardAndTime.put(getProjectNameByBoard(model.getBoard()), Double.toString(createTime));
+				TCExecute.PGTimeForGCC.put(model.getApplication(), boardAndTime);
+			}
 		}
 		return list;
 	}
