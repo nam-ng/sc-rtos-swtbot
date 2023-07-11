@@ -105,20 +105,20 @@
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
-				<!--toolchain>CCRX</toolchain-->
+				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
 				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
 				<board>RSKRX65N-2MB</board>
-				<board>EnvisionKitRX72N</board>
+				<!--board>EnvisionKitRX72N</board>
 				<board>RSKRX671</board>
-				<board>CloudKitRX65N</board>
+				<board>CloudKitRX65N</board-->
 			</group>
 			<application id="bare" order="0"></application>
-			<!--application id="ramdisk" order="1"></application>
-			<application id="lowpower" order="13"></application-->
+			<application id="ramdisk" order="1"></application>
+			<!--application id="lowpower" order="13"></application-->
 		</project>
 	</TC>
 	<!--TC id="TC1">

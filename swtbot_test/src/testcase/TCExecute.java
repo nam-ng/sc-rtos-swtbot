@@ -33,7 +33,11 @@ public class TCExecute {
 	private static SWTWorkbenchBot bot;
 	private static SWTBotShell workbenchShell;
 	private static Collection<TC> tces;
-	private static Map<String, String> timeRecord = new HashMap<>();
+	private static Map<String, String> timeRecordOverall = new HashMap<>();
+	public static Map<String, Map<String, String>> PGTimeForCCRX = new HashMap<>();
+	public static Map<String, Map<String, String>> PGTimeForGCC = new HashMap<>();
+	public static Map<String, Map<String, String>> BuildTimeforCCRX = new HashMap<>();
+	public static Map<String, Map<String, String>> BuildTimeforGCC = new HashMap<>();
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -68,53 +72,91 @@ public class TCExecute {
 	}
 
 	@Test
-	public void TC_00_execute () throws ParseException {
+	public void TC_00_execute() throws ParseException {
 		workbenchShell.setFocus();
-		//Utility.changeRTOSLocation();
+		// Utility.changeRTOSLocation();
 		long start = System.currentTimeMillis();
 		for (TC tc : tces) {
 			Utility.executeTCStep(tc, workbenchShell);
 		}
 		long end = System.currentTimeMillis();
-		long timeExecute = end-start;
-		double createTime = (double) timeExecute/1000.0;
-		timeRecord.put(CommonParameters.CalculateExecuteTime.CREATETIME, Double.toString(createTime));
+		long timeExecute = end - start;
+		double createTime = (double) timeExecute / 1000.0;
+		timeRecordOverall.put(CommonParameters.CalculateExecuteTime.CREATETIME, Double.toString(createTime));
 	}
-	
-	
+
 	@Test
-	public void TC_01_checkBuild () {
+	public void TC_01_checkBuild() {
 		SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
 		long start = System.currentTimeMillis();
-		String lastProject = "";
+		long checkPointStart = System.currentTimeMillis();
+		long checkPointEnd;
+		long timeExecutedCheckPoint;
+		double buildTimeCheckPoint;
+		String currentProject = "";
+		String[] stringSplit;
+		int index = 0;
+		Map<String,String> boardAndTime;
+		int length = bot.tree().visibleRowCount();
 		while (true) {
-			bot.sleep(10000);
-			lastProject = getLastProject();
-			bot.tree().getTreeItem(lastProject).select();
-			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_SUCCESSFULLY)) {
-				break;
+			bot.sleep(1000);
+			
+			currentProject = getCurrentProject(index);
+			stringSplit = currentProject.split("_");
+			bot.tree().getTreeItem(currentProject).select();
+			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_SUCCESSFULLY)
+					|| consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_FAILED)) {
+				index++;
+				checkPointEnd = System.currentTimeMillis();
+				timeExecutedCheckPoint = checkPointEnd - checkPointStart;
+				buildTimeCheckPoint = (double) timeExecutedCheckPoint / 1000.0;
+				if (stringSplit[1].equals("CCRX")) {
+					boardAndTime = BuildTimeforCCRX.get(stringSplit[0]);
+					if (boardAndTime == null) {
+						boardAndTime = new HashMap<>();
+					}
+					boardAndTime.put(stringSplit[2], Double.toString(buildTimeCheckPoint));
+					TCExecute.BuildTimeforCCRX.put(stringSplit[0], boardAndTime);
+				} else if (stringSplit[1].equals("GCC")) {
+					boardAndTime = BuildTimeforGCC.get(stringSplit[0]);
+					if (boardAndTime == null) {
+						boardAndTime = new HashMap<>();
+					}
+					boardAndTime.put(stringSplit[2], Double.toString(buildTimeCheckPoint));
+					TCExecute.BuildTimeforGCC.put(stringSplit[0], boardAndTime);
+				}
+				checkPointStart = System.currentTimeMillis();
+
 			}
-			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_FAILED)) {
+			if (index == length) {
 				break;
 			}
 		}
 		long end = System.currentTimeMillis();
-		long timeExecute = end-start;
-		double buildTime = (double) timeExecute/1000.0;
-		timeRecord.put(CommonParameters.CalculateExecuteTime.BUILDTIME, Double.toString(buildTime));
-		System.out.println("PG time: " + timeRecord.get(CommonParameters.CalculateExecuteTime.CREATETIME) + " seconds");
-		System.out.println("Build time: " + timeRecord.get(CommonParameters.CalculateExecuteTime.BUILDTIME) + " seconds");
-		double overallTime = Double.parseDouble(timeRecord.get(CommonParameters.CalculateExecuteTime.CREATETIME)) + Double.parseDouble(timeRecord.get(CommonParameters.CalculateExecuteTime.BUILDTIME));
-		timeRecord.put(CommonParameters.CalculateExecuteTime.OVERALLTIME, Double.toString(overallTime));
-		System.out.println("Overall time: " + timeRecord.get(CommonParameters.CalculateExecuteTime.OVERALLTIME) + " seconds");
+		long timeExecute = end - start;
+		double buildTime = (double) timeExecute / 1000.0;
+		calculateSumAndAverage("PG","CCRX", PGTimeForCCRX);
+		calculateSumAndAverage("PG","GCC", PGTimeForGCC);
+		calculateSumAndAverage("Build","CCRX", BuildTimeforCCRX);
+		calculateSumAndAverage("Build","GCC", BuildTimeforGCC);
+
+		timeRecordOverall.put(CommonParameters.CalculateExecuteTime.BUILDTIME, Double.toString(buildTime));
+		System.out.println(
+				"PG time: " + timeRecordOverall.get(CommonParameters.CalculateExecuteTime.CREATETIME) + " seconds");
+		System.out.println(
+				"Build time: " + timeRecordOverall.get(CommonParameters.CalculateExecuteTime.BUILDTIME) + " seconds");
+		double overallTime = Double.parseDouble(timeRecordOverall.get(CommonParameters.CalculateExecuteTime.CREATETIME))
+				+ Double.parseDouble(timeRecordOverall.get(CommonParameters.CalculateExecuteTime.BUILDTIME));
+		timeRecordOverall.put(CommonParameters.CalculateExecuteTime.OVERALLTIME, Double.toString(overallTime));
+		System.out.println("Overall time: " + timeRecordOverall.get(CommonParameters.CalculateExecuteTime.OVERALLTIME)
+				+ " seconds");
 	}
-	
-	public String getLastProject() {
-		int i=0;
-		int length = bot.tree().visibleRowCount();
+
+	public String getCurrentProject(int index) {
+		int i = 0;
 		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
-		for (SWTBotTreeItem treeItem: allItems) {
-			if(i==length-1) {
+		for (SWTBotTreeItem treeItem : allItems) {
+			if (i == index) {
 				return treeItem.getText();
 			}
 			i++;
@@ -122,4 +164,26 @@ public class TCExecute {
 		return "";
 	}
 	
+	public void calculateSumAndAverage(String pGOrBuild, String toolchain, Map<String, Map<String,String>> timeMap) {
+		int i=0;
+		int j=0;
+		double sum = 0.0;
+		double average = 0.0;
+		for (Map.Entry<String, Map<String, String>> application : timeMap.entrySet()) {
+			
+			Map<String, String> boardAndTime = application.getValue();
+			for (Map.Entry<String, String> entry : boardAndTime.entrySet()) {
+				j++;
+				sum = sum + Double.parseDouble(entry.getValue());
+				System.out.println(pGOrBuild + " time for "+ application.getKey()+ "_"+toolchain+"_"+ entry.getKey()+": " + entry.getValue() + "s" );
+			}
+			i++;
+			average = sum/j;
+			System.out.println("Overall "+ pGOrBuild +" time for "+ application.getKey()+ ", "+toolchain+" is "+ sum + "s" );
+			System.out.println("Average "+pGOrBuild+" time for "+ application.getKey()+ ", "+toolchain+" is "+ average+ "s");
+
+			j= 0;
+			sum = 0.0;
+		}
+	}
 }
