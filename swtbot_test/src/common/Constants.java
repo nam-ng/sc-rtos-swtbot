@@ -11,4 +11,6 @@ public class Constants {
 	public static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	public static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
 	public static final String TC_XML_FILE = "xml/testcase.xml";
+	
+	public static final String CONFIGURATION_ERROR_CHECK_FILE = "output/ConfigurationErrorCheckFile.txt";
 }

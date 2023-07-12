@@ -3,6 +3,7 @@ package testcase;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class TCExecute {
 	private static SWTWorkbenchBot bot;
 	private static SWTBotShell workbenchShell;
 	private static Collection<TC> tces;
+	private static String pathToConfigurationErrorFile = "";
 	private static Map<String, String> timeRecordOverall = new HashMap<>();
 	public static Map<String, Map<String, String>> PGTimeForCCRX = new HashMap<>();
 	public static Map<String, Map<String, String>> PGTimeForGCC = new HashMap<>();
@@ -52,6 +54,7 @@ public class TCExecute {
 				.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.RTOS_PG_XML_FILE)));
 		TCManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.TC_XML_FILE)));
+		pathToConfigurationErrorFile = Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.CONFIGURATION_ERROR_CHECK_FILE);
 		tces = TCManager.getAllTCes();
 
 		// initialize the SWTBot
@@ -103,28 +106,35 @@ public class TCExecute {
 	public void TC_01_checkConfigurationError() throws Exception {
 		int index = 0;
 		int length = bot.tree().visibleRowCount();
-		String currentProjectName ="";
+		String currentProjectName = "";
 		ProjectModel projectModel = null;
 		boolean isThereConfigurationError = false;
-		while(true) {
+		PrintWriter writer = new PrintWriter(pathToConfigurationErrorFile, "UTF-8");
+		while (true) {
 			currentProjectName = getCurrentProject(index);
 			projectModel = findProjectModelWithProjectName(currentProjectName);
-			bot.tree().getTreeItem(currentProjectName).select();
-			Utility.openSCFGEditor(projectModel, "Overview");
-			for (int i = 0; i < bot.table().rowCount(); i++) {
-				if (bot.table(0).getTableItem(i).getText(2).contains("configuration error")) {
-					System.out.println("Project "+ currentProjectName+" has configuration error");
-					isThereConfigurationError = true;
+			if (projectModel != null) {
+				bot.tree().getTreeItem(currentProjectName).select();
+				Utility.openSCFGEditor(projectModel, "Overview");
+				for (int i = 0; i < bot.table().rowCount(); i++) {
+					if (bot.table(0).getTableItem(i).getText(2).contains("configuration error")) {
+						writer.println("Project "+ currentProjectName + " has configuration error on component: "+ bot.table(0).getTableItem(i).getText(2));
+						isThereConfigurationError = true;
+					}
 				}
-				System.out.println(bot.table(0).getTableItem(i).getText(2));
+				
+				bot.closeAllEditors();
+				bot.tree()
+						.getTreeItem(
+								projectModel.getProjectName() + " [" + projectModel.getActiveBuildConfiguration() + "]")
+						.collapse();
 			}
-			index ++;
-			bot.closeAllEditors();
-			bot.tree().getTreeItem(projectModel.getProjectName() + " ["+ projectModel.getActiveBuildConfiguration() +"]").collapse();
+			index++;
 			if (index == length) {
 				break;
 			}
 		}
+		writer.close();
 		if (isThereConfigurationError) {
 			assertFalse(true);
 		}

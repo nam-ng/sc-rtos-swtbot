@@ -71,7 +71,6 @@ public class PGUtility extends Utility {
 			long start = System.currentTimeMillis();
 			internalCreateProject(model);
 			long end = System.currentTimeMillis();
-			//TCExecute.projectModelList.add(model);
 			long timeExecute = end-start;
 			double createTime = (double) timeExecute/1000.0;
 			if (model.getToolchain().equals("CCRX")) {

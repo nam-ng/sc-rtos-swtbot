@@ -112,8 +112,8 @@
 			<group id="device">
 				<!--board>CK-RX65N</board-->
 				<board>RSKRX65N-2MB</board>
-				<!--board>EnvisionKitRX72N</board>
-				<board>RSKRX671</board>
+				<board>EnvisionKitRX72N</board>
+				<!--board>RSKRX671</board>
 				<board>CloudKitRX65N</board-->
 			</group>
 			<application id="bare" order="0"></application>
@@ -137,7 +137,7 @@
 				<board>RSKRX671</board>
 				<board>CloudKitRX65N</board-->
 			</group>
-			<application id="ramdisk" order="1"></application>
+			<!--application id="ramdisk" order="1"></application-->
 			<!--application id="lowpower" order="13"></application-->
 		</project>
 	</TC>
