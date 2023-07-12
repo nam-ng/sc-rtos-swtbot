@@ -1,0 +1,2 @@
+Project guix_16bpp_draw_CCRX_ekrx72nhas configuration error on component: r_bsp(configuration error)
+Project guix_16bpp_draw_CCRX_rsk65nhas configuration error on component: r_bsp(configuration error)

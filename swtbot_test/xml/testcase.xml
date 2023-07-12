@@ -104,20 +104,40 @@
 	<TC id="TC7">
 		<project id="pg">
 			<group id="toolchain">
-				<toolchain>GCC</toolchain>
+				<!--toolchain>GCC</toolchain-->
+				<toolchain>CCRX</toolchain>
+				<RTOSType>AzureRTOS</RTOSType>
+				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
+			</group>
+			<group id="device">
+				<!--board>CK-RX65N</board-->
+				<board>RSKRX65N-2MB</board>
+				<board>EnvisionKitRX72N</board>
+				<!--board>RSKRX671</board>
+				<board>CloudKitRX65N</board-->
+			</group>
+			<application id="bare" order="0"></application>
+			<application id="guix_16bpp_draw" order="10"></application>
+			<!--application id="ramdisk" order="1"></application-->
+			<!--application id="lowpower" order="13"></application-->
+		</project>
+	</TC>
+	<TC id="TC8">
+		<project id="pg">
+			<group id="toolchain">
+				<!--toolchain>GCC</toolchain-->
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
 				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
-				<board>RSKRX65N-2MB</board>
+				<!--board>RSKRX65N-2MB</board-->
 				<!--board>EnvisionKitRX72N</board>
 				<board>RSKRX671</board>
 				<board>CloudKitRX65N</board-->
 			</group>
-			<application id="bare" order="0"></application>
-			<application id="ramdisk" order="1"></application>
+			<!--application id="ramdisk" order="1"></application-->
 			<!--application id="lowpower" order="13"></application-->
 		</project>
 	</TC>
@@ -139,7 +159,4 @@
 			<application id="bootloader" order="15"></application>
 		</project>
 	</TC-->
-	<TC>
-		<action id="buildAll" order="0"></action>
-	</TC>
 </testdata>
