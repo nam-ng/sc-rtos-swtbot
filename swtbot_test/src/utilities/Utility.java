@@ -436,8 +436,6 @@ public class Utility {
 						Utility.changeBoard(model, null, null, true, false);
 					}
 				}
-			} else if (action.getActionId().equalsIgnoreCase("buildAll")) {
-				BuildUtility.buildAll(shell);
 			}
 		}
 	}

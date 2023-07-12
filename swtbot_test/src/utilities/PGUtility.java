@@ -71,6 +71,7 @@ public class PGUtility extends Utility {
 			long start = System.currentTimeMillis();
 			internalCreateProject(model);
 			long end = System.currentTimeMillis();
+			//TCExecute.projectModelList.add(model);
 			long timeExecute = end-start;
 			double createTime = (double) timeExecute/1000.0;
 			if (model.getToolchain().equals("CCRX")) {
@@ -332,6 +333,9 @@ public class PGUtility extends Utility {
 					if (shell.getText().equals(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
 						shell.bot().button(ButtonAction.BUTTON_OPEN_PERSPECTIVE).click();
 					}
+					if (shell.getText().contains(ProjectParameters.CODE_GENERATING)) {
+						shell.bot().button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
+					}
 					if (shell.getText().equals(ProjectParameters.WINDOW_MARKETPLACE)) {
 						shell.bot().button(ButtonAction.BUTTON_CANCEL).click();
 						breakLoop = true;
@@ -358,6 +362,9 @@ public class PGUtility extends Utility {
 			SWTBotShell[] shells = bot.shells();
 			for (SWTBotShell shell : shells) {
 				if (shell.isActive()) {
+					if (shell.getText().contains(ProjectParameters.CODE_GENERATING)) {
+						shell.bot().button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
+					}
 					if (shell.getText().equals(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
 						shell.bot().button(ButtonAction.BUTTON_NO).click();
 						breakLoop = true;
