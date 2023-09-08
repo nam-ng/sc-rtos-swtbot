@@ -365,6 +365,34 @@
 			</application>
 		</version>
 	</RTOS>
+	<RTOS id="AmazonFreeRTOS">
+		<version id="v202107.00-rx-1.0.1" skipapp="true">
+			<application id="bare" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+				</target>
+			</application>
+			<application id="bare_Cplusplus" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<language>CPP</language>
+				<target>
+					<toolchain>CCRX</toolchain>
+					<board>RSKRX65N-2MB</board>
+				</target>
+			</application>
+		</version>
+	</RTOS>
 	<RTOS id="RI600V4">
 		<version id="1.06.01" skipapp="true">
 			<application id="RI600v4" order="0">

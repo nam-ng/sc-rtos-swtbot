@@ -1,5 +1,7 @@
 package utilities;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCanvas;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.junit.Test;
 import org.osgi.framework.Bundle;
 
 import model.AbstractNode;
@@ -512,5 +515,127 @@ public class Utility {
 
 		}
 		return isVerifyError;
+	}
+	
+	
+	public static void checkEventGroups() {
+		
+		bot.tabItem(ProjectParameters.KernelObjectTab.EVENT_GROUPS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isEventGroupsDisplayCorrectly = false;
+		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.EVENT_GRP_HANDLE_1)) {
+			isEventGroupsDisplayCorrectly = true;
+		}
+
+		if (!isEventGroupsDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	
+	public static void checkMsgBuffer() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.MESSAGE_BUFFERS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isMsgBufferDisplayCorrectly = false;
+		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.MSG_BFF_HANDLE_1)
+				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.NUMBER_100)) {
+			isMsgBufferDisplayCorrectly = true;
+		}
+
+		if (!isMsgBufferDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	
+	public static void checkQueueUI() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.QUEUES).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isQueueDisplayCorrectly = false;
+		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.QUEUE_HANDLE_1)
+				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.NUMBER_100)
+				&& bot.text(3).getText().equals(ProjectParameters.KernelObject.SIZEOF)) {
+			isQueueDisplayCorrectly = true;
+		}
+
+		if (!isQueueDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void checkSemaphoresUI() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.SEMAPHORES).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isSemaphoreDisplayCorrectly = false;
+		if (bot.ccomboBox(0).getText().equals(ProjectParameters.KernelObject.BINARY)
+				&& bot.text(1).getText().equals(ProjectParameters.KernelObject.SEMAPHORE_HANDLE_1)) {
+			isSemaphoreDisplayCorrectly = true;
+		}
+
+		if (!isSemaphoreDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	
+	public static void checkSWTimerUI()  {
+		bot.tabItem(ProjectParameters.KernelObjectTab.SOFTWARE_TIMERS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isSWTimerDisplayCorrectly = false;
+		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.SWT_HANDLE_1)
+				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.TIMER_1)
+				&& bot.text(3).getText().equals(ProjectParameters.KernelObject.NUMBER_100)
+				&& bot.ccomboBox(0).getText().equals(ProjectParameters.KernelObject.FALSE)
+				&& bot.text(4).getText().equals(ProjectParameters.KernelObject.NUMBER_0)
+				&& bot.text(5).getText().equals(ProjectParameters.KernelObject.NULL)) {
+			isSWTimerDisplayCorrectly = true;
+		}
+
+		if (!isSWTimerDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	
+	public static void checkStreamBufferUI() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.STREAM_BUFFERS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isStreamBufferDisplayCorrectly = false;
+		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.STREAM_BFF_HANDLE_1)
+				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.NUMBER_100)
+				&& bot.text(3).getText().equals(ProjectParameters.KernelObject.NUMBER_10)) {
+			isStreamBufferDisplayCorrectly = true;
+		}
+
+		if (!isStreamBufferDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	
+	public static void CheckTaskUI() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isTasksObjectDisplayCorrectly = false;
+		if (bot.ccomboBox(0).getText().equals(ProjectParameters.KernelObject.KERNEL_START)
+				&& bot.text(1).getText().equals(ProjectParameters.KernelObject.TASK_1)
+				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.TASK_1)
+				&& bot.text(3).getText().equals(ProjectParameters.KernelObject.NUMBER_512)
+				&& bot.text(4).getText().equals(ProjectParameters.KernelObject.NULL)
+				&& bot.text(5).getText().equals(ProjectParameters.KernelObject.NULL)
+				&& bot.text(6).getText().equals(ProjectParameters.KernelObject.NUMBER_1)) {
+			isTasksObjectDisplayCorrectly = true;
+		}
+
+		if (!isTasksObjectDisplayCorrectly) {
+			assertFalse(true);
+		}
 	}
 }

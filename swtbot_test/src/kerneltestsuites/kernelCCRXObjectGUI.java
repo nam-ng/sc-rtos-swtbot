@@ -125,123 +125,37 @@ public class kernelCCRXObjectGUI {
 
 	@Test
 	public void tc_05_CheckTaskUI() throws Exception {
-		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
-		Utility.addOrRemoveKernelObject(true, 0);
-
-		boolean isTasksObjectDisplayCorrectly = false;
-		if (bot.ccomboBox(0).getText().equals(ProjectParameters.KernelObject.KERNEL_START)
-				&& bot.text(1).getText().equals(ProjectParameters.KernelObject.TASK_1)
-				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.TASK_1)
-				&& bot.text(3).getText().equals(ProjectParameters.KernelObject.NUMBER_512)
-				&& bot.text(4).getText().equals(ProjectParameters.KernelObject.NULL)
-				&& bot.text(5).getText().equals(ProjectParameters.KernelObject.NULL)
-				&& bot.text(6).getText().equals(ProjectParameters.KernelObject.NUMBER_1)) {
-			isTasksObjectDisplayCorrectly = true;
-		}
-
-		if (!isTasksObjectDisplayCorrectly) {
-			assertFalse(true);
-		}
+		Utility.CheckTaskUI();
 	}
 
 	@Test
 	public void tc_06_CheckEventGroups() throws Exception {
-		bot.tabItem(ProjectParameters.KernelObjectTab.EVENT_GROUPS).activate();
-		Utility.addOrRemoveKernelObject(true, 0);
-
-		boolean isEventGroupsDisplayCorrectly = false;
-		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.EVENT_GRP_HANDLE_1)) {
-			isEventGroupsDisplayCorrectly = true;
-		}
-
-		if (!isEventGroupsDisplayCorrectly) {
-			assertFalse(true);
-		}
+		Utility.checkEventGroups();
 	}
 
 	@Test
 	public void tc_07_checkMsgBuffer() throws Exception {
-		bot.tabItem(ProjectParameters.KernelObjectTab.MESSAGE_BUFFERS).activate();
-		Utility.addOrRemoveKernelObject(true, 0);
-
-		boolean isMsgBufferDisplayCorrectly = false;
-		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.MSG_BFF_HANDLE_1)
-				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.NUMBER_100)) {
-			isMsgBufferDisplayCorrectly = true;
-		}
-
-		if (!isMsgBufferDisplayCorrectly) {
-			assertFalse(true);
-		}
+		Utility.checkMsgBuffer();
 	}
 
 	@Test
 	public void tc_08_checkQueueUI() throws Exception {
-		bot.tabItem(ProjectParameters.KernelObjectTab.QUEUES).activate();
-		Utility.addOrRemoveKernelObject(true, 0);
-
-		boolean isQueueDisplayCorrectly = false;
-		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.QUEUE_HANDLE_1)
-				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.NUMBER_100)
-				&& bot.text(3).getText().equals(ProjectParameters.KernelObject.SIZEOF)) {
-			isQueueDisplayCorrectly = true;
-		}
-
-		if (!isQueueDisplayCorrectly) {
-			assertFalse(true);
-		}
+		Utility.checkQueueUI();
 	}
 
 	@Test
 	public void tc_09_checkSWTimerUI() throws Exception {
-		bot.tabItem(ProjectParameters.KernelObjectTab.SOFTWARE_TIMERS).activate();
-		Utility.addOrRemoveKernelObject(true, 0);
-
-		boolean isSWTimerDisplayCorrectly = false;
-		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.SWT_HANDLE_1)
-				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.TIMER_1)
-				&& bot.text(3).getText().equals(ProjectParameters.KernelObject.NUMBER_100)
-				&& bot.text(4).getText().equals(ProjectParameters.KernelObject.NUMBER_0)
-				&& bot.text(5).getText().equals(ProjectParameters.KernelObject.NULL)) {
-			isSWTimerDisplayCorrectly = true;
-		}
-
-		if (!isSWTimerDisplayCorrectly) {
-			assertFalse(true);
-		}
+		Utility.checkSWTimerUI();
 	}
 
 	@Test
 	public void tc_10_checkSemaphoresUI() throws Exception {
-		bot.tabItem(ProjectParameters.KernelObjectTab.SEMAPHORES).activate();
-		Utility.addOrRemoveKernelObject(true, 0);
-
-		boolean isSemaphoreDisplayCorrectly = false;
-		if (bot.ccomboBox(0).getText().equals(ProjectParameters.KernelObject.BINARY)
-				&& bot.text(1).getText().equals(ProjectParameters.KernelObject.SEMAPHORE_HANDLE_1)) {
-			isSemaphoreDisplayCorrectly = true;
-		}
-
-		if (!isSemaphoreDisplayCorrectly) {
-			assertFalse(true);
-		}
+		Utility.checkSemaphoresUI();
 	}
 
 	@Test
 	public void tc_11_checkStreamBufferUI() throws Exception {
-		bot.tabItem(ProjectParameters.KernelObjectTab.STREAM_BUFFERS).activate();
-		Utility.addOrRemoveKernelObject(true, 0);
-
-		boolean isStreamBufferDisplayCorrectly = false;
-		if (bot.text(1).getText().equals(ProjectParameters.KernelObject.STREAM_BFF_HANDLE_1)
-				&& bot.text(2).getText().equals(ProjectParameters.KernelObject.NUMBER_100)
-				&& bot.text(3).getText().equals(ProjectParameters.KernelObject.NUMBER_10)) {
-			isStreamBufferDisplayCorrectly = true;
-		}
-
-		if (!isStreamBufferDisplayCorrectly) {
-			assertFalse(true);
-		}
+		Utility.checkStreamBufferUI();
 	}
 
 	@Test
