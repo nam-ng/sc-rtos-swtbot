@@ -40,7 +40,7 @@ public class ProjectParameters {
 
 	public class RTOSDisplay {
 		public static final String AZURE = "Azure RTOS";
-		public static final String AMAZONFREERTOS = "FreeRTOS (with IoT libraries)";
+		public static final String AMAZONFREERTOS = "FreeRTOS (with IoT libraries)(deprecated structure)";
 		public static final String FREERTOSKERNEL = "FreeRTOS (kernel only)";
 		public static final String RI600v4 = "RI600V4";
 	}
@@ -51,6 +51,7 @@ public class ProjectParameters {
 		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
 		public static final String RI600_1_06_01 = "1.06.01";
 		public static final String Kernel_1_0_7 = "10.4.3-rx-1.0.7";
+		public static final String Amazon_202107_1_0_1 = "v202107.00-rx-1.0.1";
 	}
 
 	public class RTOSApplication {
@@ -75,6 +76,8 @@ public class ProjectParameters {
 		public static final String AZURE_BARE_CPLUSPLUS = "bare_Cplusplus";
 		public static final String KERNEL_BARE = "bare";
 		public static final String KERNEL_BARE_CPLUSPLUS = "bare_Cplusplus";
+		
+		public static final String AMAZON_BARE = "bare";
 	}
 
 	public class TargetBoard {
@@ -154,6 +157,9 @@ public class ProjectParameters {
 		public static final String MENU_CHANGE_VERSION= "Change version...";
 		public static final String CONTEXT_MENU_OPEN_PROJECT = "Open Project";
 		public static final String MENU_SAVE = "Save";
+		public static final String CONTEXT_MENU_EXCLUDE = "Exclude";
+		public static final String MENU_SAVE_ALL = "Save All";
+		public static final String CONTEXT_MENU_INCLUDE = "Include";
 	}
 	
 	public class FolderAndFile {
@@ -174,6 +180,9 @@ public class ProjectParameters {
 		public static final String FOLDER_FRTOS_STARTUP = "frtos_startup";
 		public static final String FOLDER_FRTOS_SKELETON = "frtos_skeleton";
 		public static final String FILE_TASK_1_C = "task_1.c";
+		public static final String FILE_TASK_2_C = "task_2.c";
+		public static final String FOLDER_APPLICATION_CODE = "application_code";
+		public static final String FOLDER_RENESAS_CODE = "renesas_code";
 	}
 	
 	public class RTOSComponent {
@@ -185,6 +194,7 @@ public class ProjectParameters {
 		public static final String AZURERTOS_OBJECT = "azurertos_object";
 		public static final String FREERTOS_OBJECT = "FreeRTOS_Object";
 		public static final String FREERTOS_KERNEL = "FreeRTOS_Kernel";
+		public static final String AWS_DEVICE_SHADOW = "AWS_device_shadow";
 	}
 	
 	public class ProjectSettings {
@@ -215,6 +225,35 @@ public class ProjectParameters {
 		public static final String STREAM_BFF_HANDLE_1 = "stream_bff_handle_1";
 		public static final String NUMBER_10 = "10";
 		public static final String MANUAL = "manual";
+		public static final Object FALSE = "False";
+	}
+	
+	public class KernelObjectTableColumn {
+		public static final String PLUS_MINUS = "+/-";
+		public static final String EVENT_GROUP_HANDLER = "Event Group Handler";
+		public static final String MSG_BUFFER_HANDLER = "MsgBuffer Handler";
+		public static final String MSG_BUFFER_SIZE = "MsgBuffer Size";
+		public static final String QUEUE_HANDLER = "Queue Handler";
+		public static final String QUEUE_LENGTH = "Queue Length";
+		public static final String ITEMS_SIZE = "Items Size";
+		public static final String SEMAPHORE_TYPE = "Semaphore Type";
+		public static final String SEMAPHORE_HANDLER = "Semaphore Handler";
+		public static final String STREAM_BUFFER_HANDLER = "Stream Buffer Handler";
+		public static final String STREAM_BUFFER_SIZE = "Stream Buffer Size";
+		public static final String TRIGGER_LEVEL = "Trigger Level";
+		public static final String SWTIMER_HANDLER = "swTimer Handler";
+		public static final String SWTIMER_NAME = "swTimer Name";
+		public static final String SWTIMER_PERIOD = "swTimer Period";
+		public static final String AUTO_RELOAD = "Auto Reload";
+		public static final String SWTIMER_ID = "swTimer ID";
+		public static final String CALLBACK_FUNCTION = "Callback Function";
+		public static final String INITIALIZE = "Initialize";
+		public static final String TASK_CODE = "Task Code";
+		public static final String TASK_NAME = "Task Name";
+		public static final String STACK_SIZE = "Stack Size";
+		public static final String TASK_HANDLER = "Task Handler";
+		public static final String PARAMETER = "Parameter";
+		public static final String PRIORITY = "Priority";
 	}
 	
 	public class MessageCode {
