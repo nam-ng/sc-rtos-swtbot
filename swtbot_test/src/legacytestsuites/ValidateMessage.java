@@ -3,7 +3,6 @@ package legacytestsuites;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
-import java.util.List;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.matchers.WidgetMatcherFactory;
@@ -17,9 +16,7 @@ import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
 import parameters.ProjectParameters.RTOSDisplay;
-import parameters.ProjectParameters.TargetBoard;
 import platform.PlatformModel;
-import utilities.PGUtility;
 import utilities.Utility;
 
 public class ValidateMessage {

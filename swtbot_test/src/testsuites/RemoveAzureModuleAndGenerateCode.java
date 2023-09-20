@@ -3,22 +3,15 @@ package testsuites;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.Test;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import common.Constants;
 import common.LogUtil;
-import utilities.PGUtility;
-import utilities.Utility;
-
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
@@ -28,6 +21,8 @@ import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
 import parameters.ProjectParameters.TargetBoard;
 import platform.PlatformModel;
+import utilities.PGUtility;
+import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RemoveAzureModuleAndGenerateCode{

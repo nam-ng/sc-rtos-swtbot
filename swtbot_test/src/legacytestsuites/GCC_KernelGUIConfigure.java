@@ -1,11 +1,8 @@
 package legacytestsuites;
 
-import static org.junit.Assert.assertFalse;
-
 import java.io.File;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -17,7 +14,6 @@ import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
 import parameters.ProjectParameters.ButtonAction;
-import parameters.ProjectParameters.MenuName;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
