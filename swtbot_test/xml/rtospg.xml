@@ -40,7 +40,7 @@
 					<board>RSKRX65N-2MB</board>
 				</target>
 			</application>
-			<application id="ramdisk" order="1">
+			<application id="ramdisk" order="2">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug"/>
@@ -62,7 +62,7 @@
 					<board custom="true">R5F5651EDxFC</board>
 				</target>
 			</application>
-			<application id="ping" order="2">
+			<application id="ping" order="3">
 				<projectconfiguration>
 					<config id="HardwareDebug" active="true"/>
 					<config id="Debug"/>
@@ -79,7 +79,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="iperf" order="3">
+			<application id="iperf" order="4">
 				<projectconfiguration>
 					<config id="HardwareDebug" active="true"/>
 					<config id="Debug"/>
@@ -94,7 +94,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="iot_sdk" order="4">
+			<application id="iot_sdk" order="5">
 				<projectconfiguration>
 					<config id="HardwareDebug" active="true"/>
 					<config id="Debug"/>
@@ -111,7 +111,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="iot_sdk_ewf" order="5">
+			<application id="iot_sdk_ewf" order="6">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -123,7 +123,7 @@
 					<board>CK-RX65N</board>
 				</target>
 			</application>
-			<application id="iot_sdk_pnp" order="6">
+			<application id="iot_sdk_pnp" order="7">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -140,7 +140,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="iot_sdk_pnp_ewf" order="7">
+			<application id="iot_sdk_pnp_ewf" order="8">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -152,7 +152,7 @@
 					<board>CK-RX65N</board>
 				</target>
 			</application>
-			<application id="guix_8bpp" order="8">
+			<application id="guix_8bpp" order="9">
 				<projectconfiguration>
 					<config id="HardwareDebug" active="true"/>
 					<config id="Debug"/>
@@ -166,7 +166,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="guix_16bpp" order="9">
+			<application id="guix_16bpp" order="10">
 				<projectconfiguration>
 					<config id="HardwareDebug" active="true"/>
 					<config id="Debug"/>
@@ -180,7 +180,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="guix_16bpp_draw" order="10">
+			<application id="guix_16bpp_draw" order="11">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -194,7 +194,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="usbx_cdc" order="11">
+			<application id="usbx_cdc" order="12">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -209,7 +209,7 @@
 					<board>CK-RX65N</board>
 				</target>
 			</application>
-			<application id="usbx_hmsc" order="12">
+			<application id="usbx_hmsc" order="13">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -225,7 +225,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="low_power" order="13">
+			<application id="low_power" order="14">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -247,7 +247,7 @@
 					<board custom="true">R5F5651EDxFC</board>
 				</target>
 			</application>
-			<application id="iot_adu" order="14">
+			<application id="iot_adu" order="15">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -286,7 +286,7 @@
 					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F572NN.xmi.fragment</path>
 				</rxclinkerfile>
 			</application>
-			<application id="bootloader" order="15">
+			<application id="bootloader" order="16">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -377,6 +377,8 @@
 					<toolchain>GCC</toolchain>
 					<toolchain>CCRX</toolchain>
 					<board>RSKRX65N-2MB</board>
+					<board>CK-RX65N</board>
+					<device>R5F565NEHxLJ_DUAL</device>
 				</target>
 			</application>
 			<application id="bare_Cplusplus" order="0">
@@ -389,6 +391,7 @@
 				<target>
 					<toolchain>CCRX</toolchain>
 					<board>RSKRX65N-2MB</board>
+					<board>CK-RX65N</board>
 				</target>
 			</application>
 		</version>

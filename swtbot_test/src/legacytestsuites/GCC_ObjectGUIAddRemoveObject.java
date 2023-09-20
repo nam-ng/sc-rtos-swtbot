@@ -25,7 +25,7 @@ import utilities.PGUtility;
 import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ObjectGUIAddRemoveObject {
+public class GCC_ObjectGUIAddRemoveObject {
 	private static SWTWorkbenchBot bot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
@@ -37,13 +37,13 @@ public class ObjectGUIAddRemoveObject {
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1,
-				RTOSApplication.AMAZON_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+				RTOSApplication.AMAZON_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 
 	@Test
 	public void tc_01_CreateAmazonProject() throws Exception {
 		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
-				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 
 	}
 	

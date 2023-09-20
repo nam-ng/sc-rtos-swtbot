@@ -15,6 +15,7 @@ import common.LogUtil;
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
+import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
@@ -60,4 +61,5 @@ public class kernelCCRXBuildProjectRX700 {
 			assertFalse(true);
 		}
 	}
+	
 }

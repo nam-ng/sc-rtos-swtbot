@@ -1,4 +1,4 @@
-package kerneltestsuites;
+package legacytestsuites;
 
 import static org.junit.Assert.assertFalse;
 
@@ -15,7 +15,6 @@ import common.LogUtil;
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
-import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
@@ -26,7 +25,7 @@ import utilities.PGUtility;
 import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class kernelGCCBuildProjectRX100 {
+public class SupportCPlusPlusLegacy {
 	private static SWTWorkbenchBot bot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
@@ -37,17 +36,17 @@ public class kernelGCCBuildProjectRX100 {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7,
-				RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX130);
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1,
+				RTOSApplication.AMAZON_BARE_CPLUSPLUS, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 
 	@Test
-	public void tc_01_CreateKernelProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE,
-				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX130);
+	public void tc_01_CreateAmazonProject() throws Exception {
+		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE_CPLUSPLUS,
+				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 
 	}
-	
+
 	@Test
 	public void tc_02_GenerateCode() throws Exception {
 		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
@@ -61,5 +60,4 @@ public class kernelGCCBuildProjectRX100 {
 			assertFalse(true);
 		}
 	}
-	
 }

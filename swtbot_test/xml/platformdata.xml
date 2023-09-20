@@ -24,6 +24,7 @@
 				<device>R5F565NEHxBG</device>
 				<device>R5F565NEHxBG_DUAL</device>
 				<device>R5F565NCDxBG</device>
+				<device>R5F565NEHxLJ_DUAL</device>
 			</group>
 			<group id="RX651">
 				<device>R5F5651EDxFC</device>

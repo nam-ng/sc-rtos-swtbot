@@ -123,7 +123,7 @@ public class kernelGCCCodeGenerate {
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_CONFIG)
 				.getNode(ProjectParameters.FolderAndFile.FILE_FREERTOSCONFIG_H)
 				.contextMenu(ProjectParameters.MenuName.CONTEXT_MENU_DELETE).click();
-		bot.checkBox("Move to Recycle Bin").select();
+		//bot.checkBox("Move to Recycle Bin").select();
 		bot.button(ProjectParameters.ButtonAction.BUTTON_OK).click();
 
 		Utility.clickGenerateCode();

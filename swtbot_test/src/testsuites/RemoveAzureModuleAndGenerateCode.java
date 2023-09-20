@@ -22,6 +22,7 @@ import utilities.Utility;
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
+import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
@@ -54,6 +55,7 @@ public class RemoveAzureModuleAndGenerateCode{
 		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 		Utility.addComponent("filex");
 		Utility.clickGenerateCode();
+		bot.sleep(10000);
 		boolean isFileXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.FILEX);
 		if (!isFileXInComponentTree) {
 			assertFalse(true);
@@ -64,6 +66,7 @@ public class RemoveAzureModuleAndGenerateCode{
 		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
 		Utility.addComponent("netx");
 		Utility.clickGenerateCode();
+		bot.sleep(10000);
 		boolean isNetXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO);
 		if (!isNetXInComponentTree) {
 			assertFalse(true);
@@ -74,6 +77,7 @@ public class RemoveAzureModuleAndGenerateCode{
 		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
 		Utility.addComponent("netx duo addons");
 		Utility.clickGenerateCode();
+		bot.sleep(10000);
 		boolean isAddonsInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO_ADDONS);
 		if (!isAddonsInComponentTree) {
 			assertFalse(true);
@@ -84,6 +88,7 @@ public class RemoveAzureModuleAndGenerateCode{
 		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
 		Utility.removeComponent(ProjectParameters.RTOSComponent.FILEX);
 		Utility.clickGenerateCode();
+		bot.sleep(10000);
 		boolean isFileXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.FILEX);
 		if (isFileXInComponentTree) {
 			assertFalse(true);
@@ -95,6 +100,7 @@ public class RemoveAzureModuleAndGenerateCode{
 		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
 		Utility.removeComponent(ProjectParameters.RTOSComponent.NETXDUO_ADDONS);
 		Utility.clickGenerateCode();
+		bot.sleep(10000);
 		boolean isAddonsInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO_ADDONS);
 		if (isAddonsInComponentTree) {
 			assertFalse(true);
@@ -106,12 +112,19 @@ public class RemoveAzureModuleAndGenerateCode{
 		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
 		Utility.removeComponent(ProjectParameters.RTOSComponent.NETXDUO);
 		Utility.clickGenerateCode();
+		bot.sleep(10000);
 		boolean isNetXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO);
 		if (isNetXInComponentTree) {
 			assertFalse(true);
 		}
 	}
-	
+	@Test
+	public void tc_08_DeleteAzureProject() throws Exception {
+		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
+			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
+		}
+	}
 	
 	
 }

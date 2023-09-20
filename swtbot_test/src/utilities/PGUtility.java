@@ -323,7 +323,7 @@ public class PGUtility extends Utility {
 
 	}
 	
-	private static void loopForPGAzure() {
+	public static void loopForPGAzure() {
 		boolean breakLoop = false;
 		while (true) {
 			SWTBotShell[] shells = bot.shells();
@@ -355,7 +355,7 @@ public class PGUtility extends Utility {
 		}
 	}
 	
-	private static void loopForPGOther() {
+	public static void loopForPGOther() {
 		boolean breakLoop = false;
 		while (true) {
 			SWTBotShell[] shells = bot.shells();

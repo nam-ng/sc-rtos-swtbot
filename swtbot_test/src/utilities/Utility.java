@@ -638,4 +638,191 @@ public class Utility {
 			assertFalse(true);
 		}
 	}
+	
+	public static void SaveConfigOfAWSLibs(ProjectModel projectModelSpecific) {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_MQTT).select();
+		SWTBotTreeItem[] amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS)
+				.getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfCombobox(config, ProjectParameters.AmazonConfig.REPORT_USAGE, "Disable");
+		}
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_DEVICE_SHADOW).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.JSMN_TOKENS, "128", false);
+		}
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_GGD).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.SIZE_ARRAY_FOR_TOKENS, "256", false);
+		}
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_SECURE_SOCKET).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.DEFAULT_SOCKET_RECEIVE_TIMEOUT,
+					"20000", false);
+		}
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_TCP_IP).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfCombobox(config, ProjectParameters.AmazonConfig.BYTE_ORDER, "pdFREERTOS_BIG_ENDIAN");
+		}
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
+
+		bot.closeAllEditors();
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_MQTT).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		boolean isRightValue = false;
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			if (config.cell(0).contains(ProjectParameters.AmazonConfig.REPORT_USAGE)) {
+				isRightValue = config.cell(1).equals("Disable");
+			}
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_DEVICE_SHADOW).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		boolean isRightValue2 = false;
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			if (config.cell(0).contains(ProjectParameters.AmazonConfig.JSMN_TOKENS)) {
+				isRightValue2 = config.cell(1).equals("128");
+			}
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_GGD).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		boolean isRightValue3 = false;
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			if (config.cell(0).contains(ProjectParameters.AmazonConfig.SIZE_ARRAY_FOR_TOKENS)) {
+				isRightValue3 = config.cell(1).equals("256");
+			}
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_SECURE_SOCKET).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		boolean isRightValue4 = false;
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			if (config.cell(0).contains(ProjectParameters.AmazonConfig.DEFAULT_SOCKET_RECEIVE_TIMEOUT)) {
+				isRightValue4 = config.cell(1).equals("20000");
+			}
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_TCP_IP).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		boolean isRightValue5 = false;
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			if (config.cell(0).contains(ProjectParameters.AmazonConfig.BYTE_ORDER)) {
+				isRightValue5 = config.cell(1).equals("pdFREERTOS_BIG_ENDIAN");
+			}
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_MQTT).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfCombobox(config, ProjectParameters.AmazonConfig.REPORT_USAGE, "Enable ");
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_DEVICE_SHADOW).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.JSMN_TOKENS, "64", false);
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_GGD).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.SIZE_ARRAY_FOR_TOKENS, "128", false);
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_SECURE_SOCKET).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.DEFAULT_SOCKET_RECEIVE_TIMEOUT,
+					"10000", false);
+		}
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+				.getNode(ProjectParameters.RTOSComponent.AWS_TCP_IP).select();
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfCombobox(config, ProjectParameters.AmazonConfig.BYTE_ORDER,
+					"pdFREERTOS_LITTLE_ENDIAN ");
+		}
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
+
+		if (!isRightValue || !isRightValue2 || !isRightValue3 || !isRightValue4 || !isRightValue5) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void testRemoveAWSLibs() {
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+		.getNode(ProjectParameters.RTOSComponent.AWS_MQTT).select();
+		boolean canNotBeRemoved1 = !bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_REMOVE_COMPONENT).isEnabled();
+		
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+		.getNode(ProjectParameters.RTOSComponent.AWS_DEVICE_SHADOW).select();
+		boolean canNotBeRemoved2 = !bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_REMOVE_COMPONENT).isEnabled();
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+		.getNode(ProjectParameters.RTOSComponent.AWS_GGD).select();
+		boolean canNotBeRemoved3 = !bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_REMOVE_COMPONENT).isEnabled();
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+		.getNode(ProjectParameters.RTOSComponent.AWS_SECURE_SOCKET).select();
+		boolean canNotBeRemoved4 = !bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_REMOVE_COMPONENT).isEnabled();
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
+		.getNode(ProjectParameters.RTOSComponent.AWS_TCP_IP).select();
+		boolean canNotBeRemoved5 = !bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_REMOVE_COMPONENT).isEnabled();
+		
+		if (!canNotBeRemoved1 || !canNotBeRemoved2 || !canNotBeRemoved3 || !canNotBeRemoved4 || !canNotBeRemoved5) {
+			assertFalse(true);
+		}
+	}
 }

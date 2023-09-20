@@ -22,6 +22,7 @@ import utilities.Utility;
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
+import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
@@ -70,6 +71,7 @@ public class ChangeRTOSVersion {
 			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
 		}
 		bot.sleep(25000);
+		bot.sleep(10000);
 		boolean isUsbXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.USBX);
 		Utility.addComponent(ProjectParameters.RTOSComponent.FILEX);
 		bot.text().setText(ProjectParameters.RTOSComponent.FILEX);
@@ -81,6 +83,13 @@ public class ChangeRTOSVersion {
 		Utility.openProjectExplorer();
 		if (!isUsbXShowInTable || isUsbXInComponentTree || !isVersionChange) {
 			assertFalse(true);
+		}
+	}
+	@Test
+	public void tc_03_DeleteAzureProject() throws Exception {
+		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
+			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
 		}
 	}
 }
