@@ -1,4 +1,4 @@
-package kerneltestsuites;
+package legacytestsuites;
 
 import static org.junit.Assert.assertFalse;
 
@@ -14,7 +14,6 @@ import common.Constants;
 import common.LogUtil;
 import model.ProjectModel;
 import model.RTOSManager;
-import parameters.ProjectParameters;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
@@ -25,9 +24,10 @@ import utilities.PGUtility;
 import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class kernelCCRXBuildProjectRX700 {
+public class BuildAfterBoardSelection {
 	private static SWTWorkbenchBot bot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
+	private static ProjectModel projectModelSpecific2 = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
 
@@ -36,29 +36,36 @@ public class kernelCCRXBuildProjectRX700 {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7,
-				RTOSApplication.KERNEL_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX72N);
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1,
+				RTOSApplication.AMAZON_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+		projectModelSpecific2 = PGUtility.prepareProjectModel(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
+				Constants.CCRX_TOOLCHAIN, TargetBoard.DEVICE_R5F565NEHxLJ_DUAL);
 	}
 
 	@Test
-	public void tc_01_CreateKernelProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7, RTOSApplication.KERNEL_BARE,
-				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX72N);
+	public void tc_01_CreateAmazonProject() throws Exception {
+		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
+				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 
 	}
 	
 	@Test
-	public void tc_02_GenerateCode() throws Exception {
-		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
-		Utility.clickGenerateCode();
-	}
-
-	@Test
-	public void tc_03_buildProject() throws Exception {
-		boolean isBuildSuccessful = BuildUtility.buildProject(projectModelSpecific);
-		if (!isBuildSuccessful) {
+	public void tc_02_buildProject() throws Exception {
+		if(!BuildUtility.buildProject(projectModelSpecific)) {
 			assertFalse(true);
 		}
 	}
 	
+	@Test
+	public void tc_03_CreateProjectUnsupported() throws Exception {
+		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
+				Constants.CCRX_TOOLCHAIN, TargetBoard.DEVICE_R5F565NEHxLJ_DUAL);
+	}
+	
+	@Test
+	public void tc_04_buildProject() throws Exception {
+		if(BuildUtility.buildProject(projectModelSpecific2)) {
+			assertFalse(true);
+		}
+	}
 }

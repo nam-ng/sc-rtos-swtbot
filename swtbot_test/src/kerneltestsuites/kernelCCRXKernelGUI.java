@@ -238,7 +238,6 @@ public class kernelCCRXKernelGUI {
 		if (bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_REMOVE_COMPONENT).isEnabled()) {
 			assertFalse(true);
 		}
-		;
 	}
 
 	@Test

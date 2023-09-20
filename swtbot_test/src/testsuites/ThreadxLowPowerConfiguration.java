@@ -17,6 +17,7 @@ import common.LogUtil;
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
+import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSComponent;
 import parameters.ProjectParameters.RTOSType;
@@ -94,5 +95,8 @@ public class ThreadxLowPowerConfiguration {
 	public void tc_03_deleteProject() throws Exception{
 		bot.button(ProjectParameters.ButtonAction.BUTTON_CANCEL).click();
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
+			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
+		}
 	}
 }

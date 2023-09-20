@@ -60,4 +60,5 @@ public class kernelCCRXBuildProjectRX600 {
 			assertFalse(true);
 		}
 	}
+	
 }

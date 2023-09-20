@@ -15,9 +15,10 @@
 				<board>RSKRX671</board>
 				<board>CloudKitRX65N</board>
 			</group>
-			<application id="iot_sdk" order="4"></application>
-			<application id="iot_sdk_pnp" order="6"></application>
-			<application id="ping" order="2"></application>
+			<application id="iot_adu" order="15"></application>
+			<application id="bootloader" order="16"></application>
+			<application id="iot_sdk" order="5"></application>
+			<application id="ping" order="3"></application>
 		</project>
 	</TC-->
 	<!--TC id="TC2">
@@ -31,11 +32,11 @@
 			<group id="device">
 				<board>CK-RX65N</board>
 			</group>
-			<application id="iot_sdk_ewf" order="5"></application>
-			<application id="iot_sdk_pnp_ewf" order="7"></application>
+			<application id="iot_sdk_ewf" order="6"></application>
+			<application id="iot_sdk_pnp_ewf" order="8"></application>
 		</project>
-	</TC-->
-	<!--TC id="TC3">
+	</TC>
+	<TC id="TC3">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
@@ -48,10 +49,10 @@
 				<board>RSKRX65N-2MB</board>
 				<board>EnvisionKitRX72N</board>
 			</group>
-			<application id="iperf" order="3"></application>
+			<application id="iperf" order="4"></application>
 		</project>
 	</TC-->
-	<!--TC id="TC4">
+	<TC id="TC4">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
@@ -64,7 +65,7 @@
 				<board>RSKRX65N-2MB</board>
 				<board>CloudKitRX65N</board>
 			</group>
-			<application id="usbx_cdc" order="11"></application>
+			<application id="usbx_cdc" order="12"></application>
 		</project>
 	</TC>
 	<TC id="TC5">
@@ -79,9 +80,7 @@
 				<board>RSKRX65N-2MB</board>
 				<board>EnvisionKitRX72N</board>
 			</group>
-			<application id="guix_8bpp" order="8"></application>
-			<application id="guix_16bpp" order="9"></application>
-			<application id="guix_16bpp_draw" order="10"></application>
+			<application id="guix_16bpp" order="10"></application>
 		</project>
 	</TC>
 	<TC id="TC6">
@@ -98,65 +97,7 @@
 				<board>EnvisionKitRX72N</board>
 				<board>RSKRX671</board>
 			</group>
-			<application id="usbx_hmsc" order="12"></application>
-		</project>
-	</TC-->
-	<TC id="TC7">
-		<project id="pg">
-			<group id="toolchain">
-				<!--toolchain>GCC</toolchain-->
-				<toolchain>CCRX</toolchain>
-				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
-			</group>
-			<group id="device">
-				<!--board>CK-RX65N</board-->
-				<board>RSKRX65N-2MB</board>
-				<board>EnvisionKitRX72N</board>
-				<!--board>RSKRX671</board>
-				<board>CloudKitRX65N</board-->
-			</group>
-			<application id="bare" order="0"></application>
-			<application id="guix_16bpp_draw" order="10"></application>
-			<!--application id="ramdisk" order="1"></application-->
-			<!--application id="lowpower" order="13"></application-->
+			<application id="usbx_hmsc" order="13"></application>
 		</project>
 	</TC>
-	<TC id="TC8">
-		<project id="pg">
-			<group id="toolchain">
-				<!--toolchain>GCC</toolchain-->
-				<toolchain>CCRX</toolchain>
-				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
-			</group>
-			<group id="device">
-				<board>CK-RX65N</board>
-				<!--board>RSKRX65N-2MB</board-->
-				<!--board>EnvisionKitRX72N</board>
-				<board>RSKRX671</board>
-				<board>CloudKitRX65N</board-->
-			</group>
-			<!--application id="ramdisk" order="1"></application-->
-			<!--application id="lowpower" order="13"></application-->
-		</project>
-	</TC>
-	<!--TC id="TC1">
-		<project id="pg">
-			<group id="toolchain">
-				<toolchain>GCC</toolchain>
-				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
-			</group>
-			<group id="device">
-				<board>CK-RX65N</board>
-				<board>RSKRX65N-2MB</board>
-				<board>EnvisionKitRX72N</board>
-				<board>RSKRX671</board>
-				<board>CloudKitRX65N</board>
-			</group>
-			<application id="iot_adu" order="14"></application>
-			<application id="bootloader" order="15"></application>
-		</project>
-	</TC-->
 </testdata>

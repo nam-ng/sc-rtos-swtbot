@@ -78,6 +78,7 @@ public class ProjectParameters {
 		public static final String KERNEL_BARE_CPLUSPLUS = "bare_Cplusplus";
 		
 		public static final String AMAZON_BARE = "bare";
+		public static final String AMAZON_BARE_CPLUSPLUS = "bare_Cplusplus";
 	}
 
 	public class TargetBoard {
@@ -88,6 +89,7 @@ public class ProjectParameters {
 		public static final String BOARD_RSK_RX130 = "RSKRX130";
 		public static final String BOARD_RSK_RX231 = "RSKRX231";
 		public static final String BOARD_RSK_RX72N = "RSKRX72N";
+		public static final String DEVICE_R5F565NEHxLJ_DUAL = "R5F565NEHxLJ_DUAL";
 	}
 
 	public class ToolchainType {
@@ -183,6 +185,7 @@ public class ProjectParameters {
 		public static final String FILE_TASK_2_C = "task_2.c";
 		public static final String FOLDER_APPLICATION_CODE = "application_code";
 		public static final String FOLDER_RENESAS_CODE = "renesas_code";
+		public static final String FOLDER_CONFIG_FILES = "config_files";
 	}
 	
 	public class RTOSComponent {
@@ -195,6 +198,10 @@ public class ProjectParameters {
 		public static final String FREERTOS_OBJECT = "FreeRTOS_Object";
 		public static final String FREERTOS_KERNEL = "FreeRTOS_Kernel";
 		public static final String AWS_DEVICE_SHADOW = "AWS_device_shadow";
+		public static final String AWS_MQTT = "AWS_mqtt";
+		public static final String AWS_GGD = "AWS_ggd";
+		public static final String AWS_SECURE_SOCKET = "AWS_secure_socket";
+		public static final String AWS_TCP_IP = "AWS_tcp_ip";
 	}
 	
 	public class ProjectSettings {
@@ -293,5 +300,18 @@ public class ProjectParameters {
 		public static final String SIZE_OF_STACK_IDLE_TASK = "The size of the stack used by the idle task ";
 		public static final String MAXIMUM_PRIORITIES_APPLICATION_TASK = "Maximum number of priorities to the application task";
 		public static final String MAXIMUM_PRIORITIES_APPLICATION_CO_ROUTINE = "Maximum number of priorities to the application co-routines";
+	}
+
+	public class AmazonConfig{
+
+		public static final String REPORT_USAGE = "Report usage metrics to the AWS IoT broker";
+		public static final String JSMN_TOKENS = "Number of jsmn tokens";
+		public static final String SIZE_ARRAY_FOR_TOKENS = "Size of the array for tokens";
+		public static final String DEFAULT_SOCKET_RECEIVE_TIMEOUT = "Default socket receive timeout";
+		public static final String BYTE_ORDER = "Byte order of the target MCU";
+		public static final String RTOS_SCHEDULER = "RTOS scheduler";
+		public static final String MAXIMUM_PRIORITIES_APPLICATION_TASK = "Maximum number of priorities to the application task";
+		public static final String THE_FREQUENCY_OF_RTOS_TICK_INTERRUPT = "The frequency of the RTOS tick interrupt ";
+
 	}
 }

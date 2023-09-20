@@ -3,30 +3,27 @@ package testsuites;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.Test;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import common.Constants;
 import common.LogUtil;
-import utilities.PGUtility;
-import utilities.Utility;
-
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
+import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
 import parameters.ProjectParameters.TargetBoard;
 import platform.PlatformModel;
+import utilities.PGUtility;
+import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ChangeRTOSVersion {
@@ -70,6 +67,7 @@ public class ChangeRTOSVersion {
 			bot.button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
 		}
 		bot.sleep(25000);
+		bot.sleep(10000);
 		boolean isUsbXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.USBX);
 		Utility.addComponent(ProjectParameters.RTOSComponent.FILEX);
 		bot.text().setText(ProjectParameters.RTOSComponent.FILEX);
@@ -81,6 +79,13 @@ public class ChangeRTOSVersion {
 		Utility.openProjectExplorer();
 		if (!isUsbXShowInTable || isUsbXInComponentTree || !isVersionChange) {
 			assertFalse(true);
+		}
+	}
+	@Test
+	public void tc_03_DeleteAzureProject() throws Exception {
+		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
+			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
 		}
 	}
 }
