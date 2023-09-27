@@ -2,9 +2,13 @@ package kerneltestsuites;
 
 import static org.junit.Assert.assertFalse;
 
+import java.awt.Robot;
 import java.io.File;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -27,6 +31,7 @@ import utilities.Utility;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class kernelGCCAddRemoveObject {
 	private static SWTWorkbenchBot bot;
+	private static Robot robot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
@@ -38,6 +43,37 @@ public class kernelGCCAddRemoveObject {
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSKERNEL, RTOSVersion.Kernel_1_0_7,
 				RTOSApplication.KERNEL_BARE, Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+		robot = new Robot();
+		Display.getDefault().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				bot.getDisplay().getActiveShell().setMaximized(true);
+			}
+		});
+		SWTBotPreferences.TIMEOUT = 20000;
+		SWTBotPreferences.PLAYBACK_DELAY = 30;
+		closeWelcomePage();
+		changeView();
+	}
+
+	private static void closeWelcomePage() {
+		for (SWTBotView view : bot.views()) {
+			if (view.getTitle().equals("Welcome")) {
+				view.close();
+			}
+		}
+	}
+	
+	private static void changeView() {
+		bot.defaultPerspective().activate();
+	}
+	
+	@Test
+	public void tc_00_ChangeRTOSLocation() throws Exception{
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.KERNEL_RTOS_LOCATION, true);
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.FIT_MODULES_LOCATION, false);
+		Utility.reFocus(robot);
 	}
 
 	@Test

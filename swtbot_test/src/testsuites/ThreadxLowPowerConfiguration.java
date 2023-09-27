@@ -2,6 +2,7 @@ package testsuites;
 
 import static org.junit.Assert.assertFalse;
 
+import java.awt.Robot;
 import java.io.File;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
@@ -30,6 +31,7 @@ import utilities.Utility;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ThreadxLowPowerConfiguration {
 	private static SWTWorkbenchBot bot;
+	private static Robot robot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
@@ -37,6 +39,7 @@ public class ThreadxLowPowerConfiguration {
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		bot = new SWTWorkbenchBot();
+		robot = new Robot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_LOW_POWER, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
@@ -50,6 +53,13 @@ public class ThreadxLowPowerConfiguration {
 				view.close();
 			}
 		}
+	}
+	
+	@Test
+	public void tc_00_ChangeRTOSLocation() throws Exception{
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.AZURE_RTOS_LOCATION, true);
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION, false);
+		Utility.reFocus(robot);
 	}
 	
 	@Test

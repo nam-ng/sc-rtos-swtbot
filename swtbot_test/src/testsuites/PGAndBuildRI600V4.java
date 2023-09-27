@@ -38,7 +38,7 @@ public class PGAndBuildRI600V4 {
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.RI600v4, RTOSVersion.RI600_1_06_01, RTOSApplication.RI600V4, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
 		closeWelcomePage();
-		
+		changeView();
 	}
 	private static void closeWelcomePage() {
 		for (SWTBotView view : bot.views()) {
@@ -46,6 +46,9 @@ public class PGAndBuildRI600V4 {
 				view.close();
 			}
 		}
+	}
+	private static void changeView() {
+		bot.defaultPerspective().activate();
 	}
 	
 	@Test

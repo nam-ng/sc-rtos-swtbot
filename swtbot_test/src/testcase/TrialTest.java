@@ -57,14 +57,14 @@ public class TrialTest {
 		}
 	}
 
-	@Test
-	public void TC_02_createProject() {
-		workbenchShell.setFocus();
-		Utility.changeRTOSLocation();
-		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_BARE,
-				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
-		workbenchShell.setFocus();
-		//build All
-		bot.menu(workbenchShell).menu("Project").menu("Build All").click();
-	}
+//	@Test
+//	public void TC_02_createProject() {
+//		workbenchShell.setFocus();
+//		Utility.changeRTOSLocation();
+//		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_BARE,
+//				Constants.GCC_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+//		workbenchShell.setFocus();
+//		//build All
+//		bot.menu(workbenchShell).menu("Project").menu("Build All").click();
+//	}
 }

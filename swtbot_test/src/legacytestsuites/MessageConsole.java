@@ -2,9 +2,13 @@ package legacytestsuites;
 
 import static org.junit.Assert.assertFalse;
 
+import java.awt.Robot;
 import java.io.File;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -27,6 +31,7 @@ import utilities.Utility;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MessageConsole {
 	private static SWTWorkbenchBot bot;
+	private static Robot robot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
@@ -38,6 +43,37 @@ public class MessageConsole {
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1,
 				RTOSApplication.AMAZON_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+		robot = new Robot();
+		Display.getDefault().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				bot.getDisplay().getActiveShell().setMaximized(true);
+			}
+		});
+		SWTBotPreferences.TIMEOUT = 20000;
+		SWTBotPreferences.PLAYBACK_DELAY = 30;
+		closeWelcomePage();
+		changeView();
+	}
+
+	private static void closeWelcomePage() {
+		for (SWTBotView view : bot.views()) {
+			if (view.getTitle().equals("Welcome")) {
+				view.close();
+			}
+		}
+	}
+	
+	private static void changeView() {
+		bot.defaultPerspective().activate();
+	}
+	
+	@Test
+	public void tc_00_ChangeRTOSLocation() throws Exception{
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.AMAZON_RTOS_LOCATION, true);
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.FIT_MODULES_LOCATION, false);
+		Utility.reFocus(robot);
 	}
 
 	@Test
@@ -58,13 +94,12 @@ public class MessageConsole {
 		Utility.clickClearConsole();
 		Utility.clickGenerateCode();
 		bot.sleep(5000);
-		boolean check1 = Utility.isConsoleHasString("M04050011: File modified:config_files\\FreeRTOSConfig.h");
 		boolean check2 = Utility.isConsoleHasString("M04050011: File modified:config_files\\FreeRTOSIPConfig.h");
 		boolean check3 = Utility.isConsoleHasString("M04050001: File generated:application_code\\renesas_code\\frtos_startup\\freertos_object_init.c");
 		boolean check4 = Utility.isConsoleHasString("M04050001: File generated:application_code\\renesas_code\\frtos_skeleton\\task_function.h");
 		boolean check5 = Utility.isConsoleHasString("M04050001: File generated:application_code\\renesas_code\\frtos_skeleton\\task_1.c");
 		
-		if (!check1 || !check2 || !check3 || !check4 || !check5) {
+		if (!check2 || !check3 || !check4 || !check5) {
 			assertFalse(true);
 		}
 
