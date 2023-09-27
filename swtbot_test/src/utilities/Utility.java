@@ -681,7 +681,6 @@ public class Utility {
 		for (SWTBotTreeItem config : amazonConfigTree) {
 			Utility.changeConfigOfCombobox(config, ProjectParameters.AmazonConfig.REPORT_USAGE, "Disable");
 		}
-		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
@@ -690,7 +689,6 @@ public class Utility {
 		for (SWTBotTreeItem config : amazonConfigTree) {
 			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.JSMN_TOKENS, "128", false);
 		}
-		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
@@ -699,7 +697,6 @@ public class Utility {
 		for (SWTBotTreeItem config : amazonConfigTree) {
 			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.SIZE_ARRAY_FOR_TOKENS, "256", false);
 		}
-		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
@@ -709,7 +706,6 @@ public class Utility {
 			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.DEFAULT_SOCKET_RECEIVE_TIMEOUT,
 					"20000", false);
 		}
-		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)

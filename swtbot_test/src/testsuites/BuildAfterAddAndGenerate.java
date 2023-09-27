@@ -19,6 +19,7 @@ import common.LogUtil;
 import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
+import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
@@ -114,6 +115,14 @@ public class BuildAfterAddAndGenerate {
 		boolean isBuildSuccessful = BuildUtility.buildProject(projectModelSpecific);
 		if(isBuildSuccessful) {
 			assertFalse(true);
+		}
+	}
+	
+	@Test
+	public void tc_06_DeleteAzureProject() throws Exception {
+		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
+			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
 		}
 	}
 }

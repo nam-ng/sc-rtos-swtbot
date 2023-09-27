@@ -95,7 +95,7 @@ public class DownloadAFRPackage {
 		
 		
 		bot.link("<a>Manage RTOS Versions...</a>").click();
-		bot.sleep(20000);
+		bot.sleep(40000);
 
 		bot.table().getTableItem(0).check();
 		

@@ -159,7 +159,7 @@ public class ProjectParameters {
 		public static final String MENU_BUILD_ALL = "Build All";
 		public static final String CONTEXT_MENU_DELETE = "Delete";
 		public static final String CONTEXT_MENU_PROPERTIES = "Properties";
-		public static final String CONTEXT_MENU_CLOSE_PROJECT = "Cl	ose Project";
+		public static final String CONTEXT_MENU_CLOSE_PROJECT = "Close Project";
 		public static final String MENU_FILE = "File";
 		public static final String MENU_NEW = "New";
 		public static final String MENU_C_CPP_PROJECT = "Renesas C/C++ Project";
