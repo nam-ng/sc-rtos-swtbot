@@ -2,6 +2,13 @@ package utilities;
 
 import static org.junit.Assert.assertFalse;
 
+import java.awt.Dimension;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -234,22 +241,46 @@ public class Utility {
 		return toolchainCondition && boardCondition;
 	}
 
-	public static void changeRTOSLocation() {
-		bot.menu("Window").menu("Preferences").click();
-		bot.waitUntil(Conditions.shellIsActive("Preferences"));
-		SWTBotShell preferenceShell = bot.shell("Preferences");
-		SWTBot preferBot = preferenceShell.bot();
-		preferBot.text().setText("Module Download");
-		preferBot.tree().getTreeItem("Renesas").select();
-		preferBot.tree().getTreeItem("Renesas").expand();
-		preferBot.tree().getTreeItem("Renesas").getNode("Module Download").select();
+	public static void changeModuleDownloadLocation(Robot robot, String location, boolean isRTOSLocation) {
+		reFocus(robot);
+		copyLocationToClipBoard(location);
+		
+		bot.menu(MenuName.MENU_WINDOW).menu(MenuName.MENU_PREFERENCES).click();
+		bot.tree().getTreeItem("Renesas").expand();
+		bot.tree().getTreeItem("Renesas").getNode("Module Download").doubleClick();
+		bot.shell("Preferences").activate();
+		
+		if(isRTOSLocation) {
+			bot.button("Browse...", 1).click();
+		} else {
+			bot.button("Browse...", 0).click();
 
-		// reset to default
-		preferBot.button("Restore &Defaults").click();
-		preferBot.sleep(1000);
-		preferBot.button("Apply and Close").click();
-		preferBot.sleep(5000);
-		bot.waitUntil(Conditions.shellCloses(preferenceShell));
+		}
+		
+		pressCtrlV(robot);
+		
+		pressEnter(robot);
+		pressEnter(robot);
+		
+		bot.button(ButtonAction.APPLY_AND_CLOSE).click();
+	}
+
+	public static void pressEnter(Robot robot) {
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);		
+	}
+
+	public static void pressCtrlV(Robot robot) {
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_CONTROL);		
+	}
+
+	public static void copyLocationToClipBoard(String location) {
+		StringSelection selection = new StringSelection(location);
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(selection, null);
 	}
 
 	/**
@@ -650,7 +681,6 @@ public class Utility {
 		for (SWTBotTreeItem config : amazonConfigTree) {
 			Utility.changeConfigOfCombobox(config, ProjectParameters.AmazonConfig.REPORT_USAGE, "Disable");
 		}
-		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
@@ -659,7 +689,6 @@ public class Utility {
 		for (SWTBotTreeItem config : amazonConfigTree) {
 			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.JSMN_TOKENS, "128", false);
 		}
-		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
@@ -668,7 +697,6 @@ public class Utility {
 		for (SWTBotTreeItem config : amazonConfigTree) {
 			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.SIZE_ARRAY_FOR_TOKENS, "256", false);
 		}
-		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
@@ -678,7 +706,6 @@ public class Utility {
 			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.DEFAULT_SOCKET_RECEIVE_TIMEOUT,
 					"20000", false);
 		}
-		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
@@ -825,4 +852,13 @@ public class Utility {
 			assertFalse(true);
 		}
 	}
+
+	public static void reFocus(Robot robot) {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		robot.mouseMove((int)screenSize.getWidth() / 2, (int) screenSize.getHeight() / 2);
+		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);		
+	}
+	
+	
 }

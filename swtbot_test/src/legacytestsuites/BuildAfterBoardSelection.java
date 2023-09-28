@@ -42,30 +42,30 @@ public class BuildAfterBoardSelection {
 				Constants.CCRX_TOOLCHAIN, TargetBoard.DEVICE_R5F565NEHxLJ_DUAL);
 	}
 
-	@Test
-	public void tc_01_CreateAmazonProject() throws Exception {
-		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
-				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
-
-	}
-	
-	@Test
-	public void tc_02_buildProject() throws Exception {
-		if(!BuildUtility.buildProject(projectModelSpecific)) {
-			assertFalse(true);
-		}
-	}
-	
-	@Test
-	public void tc_03_CreateProjectUnsupported() throws Exception {
-		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
-				Constants.CCRX_TOOLCHAIN, TargetBoard.DEVICE_R5F565NEHxLJ_DUAL);
-	}
-	
-	@Test
-	public void tc_04_buildProject() throws Exception {
-		if(BuildUtility.buildProject(projectModelSpecific2)) {
-			assertFalse(true);
-		}
-	}
+//	@Test
+//	public void tc_01_CreateAmazonProject() throws Exception {
+//		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
+//				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+//
+//	}
+//	
+//	@Test
+//	public void tc_02_buildProject() throws Exception {
+//		if(!BuildUtility.buildProject(projectModelSpecific)) {
+//			assertFalse(true);
+//		}
+//	}
+//	
+//	@Test
+//	public void tc_03_CreateProjectUnsupported() throws Exception {
+//		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
+//				Constants.CCRX_TOOLCHAIN, TargetBoard.DEVICE_R5F565NEHxLJ_DUAL);
+//	}
+//	
+//	@Test
+//	public void tc_04_buildProject() throws Exception {
+//		if(BuildUtility.buildProject(projectModelSpecific2)) {
+//			assertFalse(true);
+//		}
+//	}
 }

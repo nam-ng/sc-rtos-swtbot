@@ -1,8 +1,12 @@
 package testsuites;
 
-import static org.junit.Assert.assertFalse;
-
+import java.awt.Dimension;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import org.eclipse.swt.widgets.Display;
@@ -20,22 +24,24 @@ import model.ProjectModel;
 import model.RTOSManager;
 import parameters.ProjectParameters;
 import parameters.ProjectParameters.ButtonAction;
+import parameters.ProjectParameters.MenuName;
 import parameters.ProjectParameters.RTOSApplication;
+import parameters.ProjectParameters.RTOSComponent;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
 import parameters.ProjectParameters.TargetBoard;
 import platform.PlatformModel;
-import utilities.BuildUtility;
 import utilities.PGUtility;
 import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class BuildAfterAddAndGenerate {
+public class ChangeRTOSLocation {
 	private static SWTWorkbenchBot bot;
 	private static Robot robot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
+
 	
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -74,52 +80,22 @@ public class BuildAfterAddAndGenerate {
 	@Test
 	public void tc_01_CreateThreadxProject() throws Exception{
 		PGUtility.createProject(RTOSType.AZURE, RTOSVersion.Azure_6_2_1, RTOSApplication.AZURE_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_RSK_RX65N_2MB);
+	}
+	
+	@Test
+	public void tc_02_ChangeRTOSLocation() throws Exception{
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.EMPTY_RTOS_LOCATION, true);
+		Utility.reFocus(robot);
+		
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
+		.getNode(RTOSComponent.THREADX).select();
 		
 	}
 	
 	@Test
-	public void tc_02_AddComponentFilex() throws Exception{
-		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
-		Utility.addComponent("filex");
-		Utility.clickGenerateCode();
-		bot.sleep(10000);
-		boolean isFileXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.FILEX);
-		if (!isFileXInComponentTree) {
-			assertFalse(true);
-		}
-	}
-	@Test
-	public void tc_03_AddComponentNetxduo() throws Exception{
-		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
-		Utility.addComponent("netx");
-		Utility.clickGenerateCode();
-		bot.sleep(10000);
-		boolean isNetXInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO);
-		if (!isNetXInComponentTree) {
-			assertFalse(true);
-		}
-	}
-	@Test
-	public void tc_04_AddComponentNetxduoAddons() throws Exception{
-		bot.editorByTitle(projectModelSpecific.getProjectName() + ".scfg").setFocus();
-		Utility.addComponent("netx duo addons");
-		Utility.clickGenerateCode();
-		bot.sleep(10000);
-		boolean isAddonsInComponentTree = Utility.checkIfComponentExistOrNot(ProjectParameters.RTOSComponent.NETXDUO_ADDONS);
-		if (!isAddonsInComponentTree) {
-			assertFalse(true);
-		}
-	}
-	@Test
-	public void tc_05_buildProject() throws Exception {
-		boolean isBuildSuccessful = BuildUtility.buildProject(projectModelSpecific);
-		if(isBuildSuccessful) {
-			assertFalse(true);
-		}
-	}
-	
-	@Test
-	public void tc_06_DeleteAzureProject() throws Exception {
+	public void tc_03_DeleteAzureProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
 		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
 			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();

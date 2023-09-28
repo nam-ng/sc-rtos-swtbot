@@ -27,8 +27,13 @@ public class ProjectParameters {
 	public static final String WINDOW_CHANGE_VERSION = "Change Version";
 	public static final String SCFG_COMPONENT_TAB = "Components";
 	public static final String GENERAL = "General";
-	public static final CharSequence WINDOW_QUESTION = "Question";
-	public static final Object WINDOW_SAVE_RESOURCES = "Save Resource";
+	public static final String WINDOW_QUESTION = "Question";
+	public static final String WINDOW_SAVE_RESOURCES = "Save Resource";
+	public static final String WINDOW_COPY_RESOURCES = "Copy Resources";
+	public static final String WINDOW_PROGRESS_INFORMATION = "Progress Information";
+	public static final String WINDOW_CONFIRM_NEW_FILE = "Confirm New File";
+	public static final String WINDOW_BOARD_DATA_FILE_UPDATE = "Board Data File Update";
+	public static final String WINDOW_PROJECT_SETTING = "Project Setting";
 	
 
 	public class RTOSType {
@@ -128,6 +133,9 @@ public class ProjectParameters {
 		public static final String BUTTON_DONT_SAVE = "Don't Save";
 		public static final String BUTTON_CLEAR_CONSOLE = "Clear Console";
 		public static final String BUTTON_EXPORT_CONFIG = "Export Configuration";
+		public static final String APPLY_AND_CLOSE = "Apply and Close";
+		public static final String BUTTON_BROWSE = "Browse...";
+		public static final String BUTTON_IMPORT_CONFIG = "Import Configuration";
 	}
 
 	public class LabelName {
@@ -162,6 +170,8 @@ public class ProjectParameters {
 		public static final String CONTEXT_MENU_EXCLUDE = "Exclude";
 		public static final String MENU_SAVE_ALL = "Save All";
 		public static final String CONTEXT_MENU_INCLUDE = "Include";
+		public static final String MEMU_IMPORT = "Import...";
+		public static final String MENU_PREFERENCES = "Preferences";
 	}
 	
 	public class FolderAndFile {
@@ -186,6 +196,11 @@ public class ProjectParameters {
 		public static final String FOLDER_APPLICATION_CODE = "application_code";
 		public static final String FOLDER_RENESAS_CODE = "renesas_code";
 		public static final String FOLDER_CONFIG_FILES = "config_files";
+		public static final String FOLDER_GENERAL = "General";
+		public static final String RENESAS_GITHUB = "Renesas GitHub FreeRTOS (with IoT libraries) Project";
+		public static final String EXISTING_PROJECTS = "Existing Projects into Workspace";
+		public static final String FOLDER_RTOS_SETTING = "RTOS Setting";
+		
 	}
 	
 	public class RTOSComponent {
@@ -202,6 +217,7 @@ public class ProjectParameters {
 		public static final String AWS_GGD = "AWS_ggd";
 		public static final String AWS_SECURE_SOCKET = "AWS_secure_socket";
 		public static final String AWS_TCP_IP = "AWS_tcp_ip";
+		public static final String FREERTOS_APPLICATION = "FreeRTOS_Application";
 	}
 	
 	public class ProjectSettings {
@@ -312,6 +328,21 @@ public class ProjectParameters {
 		public static final String RTOS_SCHEDULER = "RTOS scheduler";
 		public static final String MAXIMUM_PRIORITIES_APPLICATION_TASK = "Maximum number of priorities to the application task";
 		public static final String THE_FREQUENCY_OF_RTOS_TICK_INTERRUPT = "The frequency of the RTOS tick interrupt ";
+		public static final String CONFIGURATIONS = "Configurations ";
 
+	}
+	
+	public class FileLocation{
+		public static final String AZURE_RTOS_LOCATION = "D:\\rtos_package\\Azure\\6.2.1_rel-rx-1.1.0-final";
+		public static final String FIT_MODULES_LOCATION = "D:\\FITModules";
+		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\RDP1.39";
+		public static final String KERNEL_RTOS_LOCATION = "D:\\rtos_package\\Kernel";
+		public static final String AMAZON_RTOS_LOCATION = "D:\\rtos_package\\IoTLegacyNoChange";
+		public static final String EMPTY_RTOS_LOCATION = "D:\\rtos_package\\emptyFolder";
+		public static final String KERNEL_OLD_RTOS_LOCATION = "D:\\rtos_package\\Kernel_For_Regression_Test";
+		public static final String KERNEL_EXPORT = "D:\\Export_Regression\\kernel_export.xml";
+		public static final String AMAZON_EXPORT = "D:\\Export_Regression\\amazon_export.xml";
+		public static final String IOT_EXPORT = "D:\\iot_export\\iot_export.zip";
+		public static final String AMAZON_OLD_RTOS_LOCATION = "D:\\rtos_package\\IoT";
 	}
 }
