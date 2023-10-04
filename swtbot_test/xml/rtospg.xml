@@ -396,6 +396,33 @@
 			</application>
 		</version>
 	</RTOS>
+	<RTOS id="IoTLTS">
+		<version id="202210.01-LTS-rx-1.0.0" skipapp="false">
+			<application id="bare" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>CCRX</toolchain>
+					<board>CK-RX65N</board>
+				</target>
+			</application>
+			<application id="bare_Cplusplus" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<language>CPP</language>
+				<target>
+					<toolchain>CCRX</toolchain>
+					<board>CK-RX65N</board>
+				</target>
+			</application>
+		</version>
+	</RTOS>
 	<RTOS id="RI600V4">
 		<version id="1.06.01" skipapp="true">
 			<application id="RI600v4" order="0">

@@ -31,6 +31,7 @@ import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
 import parameters.ProjectParameters.RTOSApplication;
+import parameters.ProjectParameters.RTOSDisplay;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.ToolchainType;
 import platform.PlatformModel;
@@ -315,15 +316,15 @@ public class PGUtility extends Utility {
 		bot.button(ButtonAction.BUTTON_FINISH).click();
 		bot.sleep(3000);
 
-		if(model.getRtosType().equalsIgnoreCase("Azure RTOS")) {
-			loopForPGAzure();
+		if(model.getRtosType().equalsIgnoreCase(RTOSDisplay.AZURE) || model.getRtosType().equalsIgnoreCase(RTOSDisplay.FREERTOSIOTLTS)) {
+			loopForPGAzureAndLTS();
 		} else {
 			loopForPGOther();
 		}
 
 	}
 	
-	public static void loopForPGAzure() {
+	public static void loopForPGAzureAndLTS() {
 		boolean breakLoop = false;
 		while (true) {
 			SWTBotShell[] shells = bot.shells();

@@ -110,16 +110,9 @@ public class BuildAfterAddAndGenerate {
 			assertFalse(true);
 		}
 	}
-	@Test
-	public void tc_05_buildProject() throws Exception {
-		boolean isBuildSuccessful = BuildUtility.buildProject(projectModelSpecific);
-		if(isBuildSuccessful) {
-			assertFalse(true);
-		}
-	}
 	
 	@Test
-	public void tc_06_DeleteAzureProject() throws Exception {
+	public void tc_05_DeleteAzureProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
 		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
 			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();

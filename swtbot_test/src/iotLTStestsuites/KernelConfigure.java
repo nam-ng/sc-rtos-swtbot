@@ -1,4 +1,4 @@
-package legacytestsuites;
+package iotLTStestsuites;
 
 import static org.junit.Assert.assertFalse;
 
@@ -32,20 +32,21 @@ import utilities.PGUtility;
 import utilities.Utility;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class HeaderFileAfterGenerate {
+public class KernelConfigure {
 	private static SWTWorkbenchBot bot;
 	private static Robot robot;
 	private static ProjectModel projectModelSpecific = new ProjectModel();
 	private static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
 	private static final String RTOS_PG_XML_FILE = "xml/rtospg.xml";
+	private SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1,
-				RTOSApplication.AMAZON_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0,
+				RTOSApplication.KERNEL_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 		robot = new Robot();
 		Display.getDefault().syncExec(new Runnable() {
 
@@ -57,7 +58,6 @@ public class HeaderFileAfterGenerate {
 		SWTBotPreferences.TIMEOUT = 20000;
 		SWTBotPreferences.PLAYBACK_DELAY = 30;
 		closeWelcomePage();
-		changeView();
 	}
 
 	private static void closeWelcomePage() {
@@ -68,22 +68,17 @@ public class HeaderFileAfterGenerate {
 		}
 	}
 	
-	private static void changeView() {
-		bot.defaultPerspective().activate();
+	@Test
+	public void tc_00_ChangeRTOSLocation() throws Exception{
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.IOTLTS_RTOS_LOCATION, true);
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION, false);
+		Utility.reFocus(robot);
 	}
 	
 	@Test
-	public void tc_00_ChangeRTOSLocation() throws Exception{
-		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.AMAZON_RTOS_LOCATION, true);
-		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.FIT_MODULES_LOCATION, false);
-		Utility.reFocus(robot);
-	}
-
-	@Test
-	public void tc_01_CreateAmazonProject() throws Exception {
-		PGUtility.createProject(RTOSType.AMAZONFREERTOS, RTOSVersion.Amazon_202107_1_0_1, RTOSApplication.AMAZON_BARE,
+	public void tc_01_CreateIoTLTSProject() throws Exception {
+		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.KERNEL_BARE,
 				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
-
 	}
 	
 	@Test
@@ -92,17 +87,12 @@ public class HeaderFileAfterGenerate {
 	}
 	
 	@Test
-	public void tc_03_TestRemoveAWSLibs() throws Exception{
-		Utility.testRemoveAWSLibs();
-	}
-	
-	@Test
-	public void tc_04_TestRemoveKernelComponent() throws Exception{
+	public void tc_03_TestRemoveKernelComponent() throws Exception{
 		Utility.testRemoveKernelComponent();
 	}
 	
 	@Test
-	public void tc_05_CheckSwitchOtherViewAndGenCode() throws Exception{
+	public void tc_04_CheckSwitchOtherViewAndGenCode() throws Exception{
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
 		.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
@@ -117,7 +107,7 @@ public class HeaderFileAfterGenerate {
 		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_SAVE).click();
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+				.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
@@ -144,61 +134,26 @@ public class HeaderFileAfterGenerate {
 	}
 	
 	@Test
-	public void tc_06_OpenAndCheckComponent() throws Exception {
+	public void tc_05_OpenAndCheckComponent() throws Exception {
 		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 		
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+				.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
 				.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
 		
 		boolean isConfigViewHasItem = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).isEnabled();
-
-		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
-				.getNode(ProjectParameters.RTOSComponent.AWS_MQTT).select();
 		
-		boolean isConfigViewHasItem2 = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).isEnabled();
-
-
-		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
-				.getNode(ProjectParameters.RTOSComponent.AWS_DEVICE_SHADOW).select();
-		
-		boolean isConfigViewHasItem3 = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).isEnabled();
-
-
-		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
-				.getNode(ProjectParameters.RTOSComponent.AWS_GGD).select();
-		
-		boolean isConfigViewHasItem4 = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).isEnabled();
-
-
-		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
-				.getNode(ProjectParameters.RTOSComponent.AWS_SECURE_SOCKET).select();
-		
-		boolean isConfigViewHasItem5 = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).isEnabled();
-
-
-		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_LIBRARY)
-				.getNode(ProjectParameters.RTOSComponent.AWS_TCP_IP).select();
-		
-		boolean isConfigViewHasItem6 = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).isEnabled();
-		
-		if(!isConfigViewHasItem || !isConfigViewHasItem2 || !isConfigViewHasItem3 || !isConfigViewHasItem4 || !isConfigViewHasItem5 || !isConfigViewHasItem6) {
+		if(!isConfigViewHasItem) {
 			assertFalse(true);
 		}
-
 	}
 	
 	@Test
-	public void tc_07_CheckOutputHeaderFile() throws Exception {
+	public void tc_06_CheckOutputHeaderFile() throws Exception {
 		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
@@ -218,9 +173,13 @@ public class HeaderFileAfterGenerate {
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName()).select();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]").expand();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_CONFIG_FILES).expand();
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC).expand();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_CONFIG_FILES)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_CONFIG).expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_CONFIG)
 				.getNode(ProjectParameters.FolderAndFile.FILE_FREERTOSCONFIG_H).doubleClick();
 		
 		String value = """
@@ -237,12 +196,9 @@ public class HeaderFileAfterGenerate {
 	}
 	
 	@Test
-	public void tc_08_SaveConfigOfAWSLibs() throws Exception{
-		Utility.SaveConfigOfAWSLibs(projectModelSpecific);
-	}
-	
-	@Test
-	public void tc_09_CheckDataIsNotLost() throws Exception{
+	public void tc_07_CheckDataIsNotLost() throws Exception{
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+		
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
 		.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
@@ -256,7 +212,7 @@ public class HeaderFileAfterGenerate {
 		
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+				.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
@@ -282,7 +238,7 @@ public class HeaderFileAfterGenerate {
 	}
 	
 	@Test
-	public void tc_10_HeaderFileGenToCorrectPath() throws Exception{
+	public void tc_08_HeaderFileGenToCorrectPath() throws Exception{
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
 		.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
@@ -300,9 +256,13 @@ public class HeaderFileAfterGenerate {
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName()).select();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]").expand();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_CONFIG_FILES).expand();
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC).expand();
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
-				.getNode(ProjectParameters.FolderAndFile.FOLDER_CONFIG_FILES)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_CONFIG).expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_CONFIG)
 				.getNode(ProjectParameters.FolderAndFile.FILE_FREERTOSCONFIG_H).doubleClick();
 		
 		String value1 = """
@@ -324,7 +284,7 @@ public class HeaderFileAfterGenerate {
 	}
 	
 	@Test
-	public void tc_11_DeleteAmazonProject() throws Exception {
+	public void tc_09_DeleteIoTLTSProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
 		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
 			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();

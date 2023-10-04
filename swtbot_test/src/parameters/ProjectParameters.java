@@ -41,6 +41,7 @@ public class ProjectParameters {
 		public static final String AMAZONFREERTOS = "AmazonFreeRTOS";
 		public static final String FREERTOSKERNEL = "FreeRTOSKernel";
 		public static final String RI600v4 = "RI600V4";
+		public static final String FREERTOSIOTLTS = "IoTLTS";
 	}
 
 	public class RTOSDisplay {
@@ -48,6 +49,7 @@ public class ProjectParameters {
 		public static final String AMAZONFREERTOS = "FreeRTOS (with IoT libraries)(deprecated structure)";
 		public static final String FREERTOSKERNEL = "FreeRTOS (kernel only)";
 		public static final String RI600v4 = "RI600V4";
+		public static final String FREERTOSIOTLTS = "FreeRTOS (with IoT libraries)";
 	}
 
 	public class RTOSVersion {
@@ -57,6 +59,7 @@ public class ProjectParameters {
 		public static final String RI600_1_06_01 = "1.06.01";
 		public static final String Kernel_1_0_7 = "10.4.3-rx-1.0.7";
 		public static final String Amazon_202107_1_0_1 = "v202107.00-rx-1.0.1";
+		public static final String IoTLTS_202210_1_0_0 = "202210.01-LTS-rx-1.0.0";
 	}
 
 	public class RTOSApplication {
@@ -200,6 +203,7 @@ public class ProjectParameters {
 		public static final String RENESAS_GITHUB = "Renesas GitHub FreeRTOS (with IoT libraries) Project";
 		public static final String EXISTING_PROJECTS = "Existing Projects into Workspace";
 		public static final String FOLDER_RTOS_SETTING = "RTOS Setting";
+		public static final String FOLDER_RTOS_GENERIC = "RTOS Generic";
 		
 	}
 	
@@ -211,6 +215,7 @@ public class ProjectParameters {
 		public static final String THREADX = "threadx";
 		public static final String AZURERTOS_OBJECT = "azurertos_object";
 		public static final String FREERTOS_OBJECT = "FreeRTOS_Object";
+		public static final String IOT_LTS_FREERTOS_OBJECT = "FreeRTOS Object";
 		public static final String FREERTOS_KERNEL = "FreeRTOS_Kernel";
 		public static final String AWS_DEVICE_SHADOW = "AWS_device_shadow";
 		public static final String AWS_MQTT = "AWS_mqtt";
@@ -344,5 +349,7 @@ public class ProjectParameters {
 		public static final String AMAZON_EXPORT = "D:\\Export_Regression\\amazon_export.xml";
 		public static final String IOT_EXPORT = "D:\\iot_export\\iot_export.zip";
 		public static final String AMAZON_OLD_RTOS_LOCATION = "D:\\rtos_package\\IoT";
+		public static final String IOTLTS_EXPORT = "D:\\Export_Regression\\iotlts_export.xml";
+		public static final String IOTLTS_RTOS_LOCATION = "D:\\rtos_package\\IoTNoChange";
 	}
 }
