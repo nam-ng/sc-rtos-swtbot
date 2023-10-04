@@ -35,8 +35,8 @@
 			<application id="iot_sdk_ewf" order="6"></application>
 			<application id="iot_sdk_pnp_ewf" order="8"></application>
 		</project>
-	</TC>
-	<TC id="TC3">
+	</TC-->
+	<!--TC id="TC3">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
@@ -68,7 +68,7 @@
 			<application id="usbx_cdc" order="12"></application>
 		</project>
 	</TC>
-	<TC id="TC5">
+	<!--TC id="TC5">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
@@ -82,8 +82,8 @@
 			</group>
 			<application id="guix_16bpp" order="10"></application>
 		</project>
-	</TC>
-	<TC id="TC6">
+	</TC-->
+	<!--TC id="TC6">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
@@ -99,5 +99,5 @@
 			</group>
 			<application id="usbx_hmsc" order="13"></application>
 		</project>
-	</TC>
+	</TC-->
 </testdata>

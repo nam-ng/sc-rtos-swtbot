@@ -40,9 +40,12 @@ import model.ProjectModel;
 import model.TC;
 import parameters.ProjectParameters;
 import parameters.ProjectParameters.ButtonAction;
+import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
 import parameters.ProjectParameters.RTOSDisplay;
 import parameters.ProjectParameters.RTOSType;
+import parameters.ProjectParameters.RTOSVersion;
+import parameters.ProjectParameters.TargetBoard;
 
 public class Utility {
 	protected static SWTWorkbenchBot bot = new SWTWorkbenchBot();
@@ -148,6 +151,8 @@ public class Utility {
 			return RTOSDisplay.FREERTOSKERNEL;
 		} else if (rtosType.equalsIgnoreCase(RTOSType.RI600v4)) {
 			return RTOSDisplay.RI600v4;
+		} else if (rtosType.equalsIgnoreCase(RTOSType.FREERTOSIOTLTS)) {
+			return RTOSDisplay.FREERTOSIOTLTS;
 		}
 		return "";
 	}
@@ -860,5 +865,397 @@ public class Utility {
 		robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);		
 	}
 	
+	public static void checkDataAfterConfig(ProjectModel projectModelSpecific) {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
+		
+		SWTBotTreeItem[] amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS)
+				.getItems();
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			Utility.changeConfigOfCombobox(config, ProjectParameters.AmazonConfig.RTOS_SCHEDULER, "Cooperative");
+			Utility.changeConfigOfTextBox(config, ProjectParameters.AmazonConfig.MAXIMUM_PRIORITIES_APPLICATION_TASK, "6", false);
+		}
+		bot.closeAllEditors();
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
+			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
+		}
+		
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
+		
+		amazonConfigTree = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS)
+				.getItems();
+		boolean isRightValue1 = false;
+		boolean isRightValue2 = false;
+		for (SWTBotTreeItem config : amazonConfigTree) {
+			if (config.cell(0).contains(ProjectParameters.AmazonConfig.RTOS_SCHEDULER)) {
+				isRightValue1 = config.cell(1).equals("Preemptive");
+			}
+			if (config.cell(0).contains(ProjectParameters.AmazonConfig.MAXIMUM_PRIORITIES_APPLICATION_TASK)) {
+				isRightValue2 = config.cell(1).equals("7");
+			}
+		}
+		
+		if (!isRightValue1 || !isRightValue2) {
+			assertFalse(true);
+		}
+	}
 	
+	public static void testRemoveKernelComponent () {
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+		.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
+		.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
+		
+		boolean canNotBeRemoved1 = !bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_REMOVE_COMPONENT).isEnabled();
+		
+		if(!canNotBeRemoved1) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void CheckEventGroupGUI(ProjectModel projectModelSpecific, boolean isLTSProject) {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		if (isLTSProject) {
+			bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+			.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+			.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
+		} else {
+			bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+					.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+					.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+		}
+		
+		bot.sleep(2000);
+
+		bot.tabItem(ProjectParameters.KernelObjectTab.EVENT_GROUPS).activate();
+		boolean isEventGroupsDisplayCorrectly = false;
+		List<String> columnsList = bot.table(0).columns();
+		if (columnsList.get(0).equals(ProjectParameters.KernelObjectTableColumn.PLUS_MINUS)
+				&& columnsList.get(1).equals(ProjectParameters.KernelObjectTableColumn.EVENT_GROUP_HANDLER)) {
+			isEventGroupsDisplayCorrectly = true;
+		}
+
+		if (!isEventGroupsDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void CheckMsgBufferGUI() {
+		bot.sleep(2000);
+
+		bot.tabItem(ProjectParameters.KernelObjectTab.MESSAGE_BUFFERS).activate();
+
+		boolean isMsgBufferDisplayCorrectly = false;
+		List<String> columnsList = bot.table(0).columns();
+		if (columnsList.get(0).equals(ProjectParameters.KernelObjectTableColumn.PLUS_MINUS)
+				&& columnsList.get(1).equals(ProjectParameters.KernelObjectTableColumn.MSG_BUFFER_HANDLER)
+				&& columnsList.get(2).equals(ProjectParameters.KernelObjectTableColumn.MSG_BUFFER_SIZE)) {
+			isMsgBufferDisplayCorrectly = true;
+		}
+
+		if (!isMsgBufferDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void CheckQueueGUI() {
+		bot.sleep(2000);
+
+		bot.tabItem(ProjectParameters.KernelObjectTab.QUEUES).activate();
+
+		boolean isQueueDisplayCorrectly = false;
+		List<String> columnsList = bot.table(0).columns();
+		if (columnsList.get(0).equals(ProjectParameters.KernelObjectTableColumn.PLUS_MINUS)
+				&& columnsList.get(1).equals(ProjectParameters.KernelObjectTableColumn.QUEUE_HANDLER)
+				&& columnsList.get(2).equals(ProjectParameters.KernelObjectTableColumn.QUEUE_LENGTH)
+				&& columnsList.get(3).equals(ProjectParameters.KernelObjectTableColumn.ITEMS_SIZE)) {
+			isQueueDisplayCorrectly = true;
+		}
+
+		if (!isQueueDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+
+	public static void CheckSemaphoreGUI() {
+		bot.sleep(2000);
+
+		bot.tabItem(ProjectParameters.KernelObjectTab.SEMAPHORES).activate();
+
+		boolean isSemaphoreDisplayCorrectly = false;
+		List<String> columnsList = bot.table(0).columns();
+		if (columnsList.get(0).equals(ProjectParameters.KernelObjectTableColumn.PLUS_MINUS)
+				&& columnsList.get(1).equals(ProjectParameters.KernelObjectTableColumn.SEMAPHORE_TYPE)
+				&& columnsList.get(2).equals(ProjectParameters.KernelObjectTableColumn.SEMAPHORE_HANDLER)) {
+			isSemaphoreDisplayCorrectly = true;
+		}
+
+		if (!isSemaphoreDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+
+	public static void CheckStreamBufferGUI() {
+		bot.sleep(2000);
+
+		bot.tabItem(ProjectParameters.KernelObjectTab.STREAM_BUFFERS).activate();
+
+		boolean isStreamBufferDisplayCorrectly = false;
+		List<String> columnsList = bot.table(0).columns();
+		if (columnsList.get(0).equals(ProjectParameters.KernelObjectTableColumn.PLUS_MINUS)
+				&& columnsList.get(1).equals(ProjectParameters.KernelObjectTableColumn.STREAM_BUFFER_HANDLER)
+				&& columnsList.get(2).equals(ProjectParameters.KernelObjectTableColumn.STREAM_BUFFER_SIZE)
+				&& columnsList.get(3).equals(ProjectParameters.KernelObjectTableColumn.TRIGGER_LEVEL)) {
+			isStreamBufferDisplayCorrectly = true;
+		}
+
+		if (!isStreamBufferDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void checkSWTimerGUI() {
+		bot.sleep(2000);
+
+		bot.tabItem(ProjectParameters.KernelObjectTab.SOFTWARE_TIMERS).activate();
+
+		boolean isSWTimerDisplayCorrectly = false;
+		List<String> columnsList = bot.table(0).columns();
+		if (columnsList.get(0).equals(ProjectParameters.KernelObjectTableColumn.PLUS_MINUS)
+				&& columnsList.get(1).equals(ProjectParameters.KernelObjectTableColumn.SWTIMER_HANDLER)
+				&& columnsList.get(2).equals(ProjectParameters.KernelObjectTableColumn.SWTIMER_NAME)
+				&& columnsList.get(3).equals(ProjectParameters.KernelObjectTableColumn.SWTIMER_PERIOD)
+				&& columnsList.get(4).equals(ProjectParameters.KernelObjectTableColumn.AUTO_RELOAD)
+				&& columnsList.get(5).equals(ProjectParameters.KernelObjectTableColumn.SWTIMER_ID)
+				&& columnsList.get(6).equals(ProjectParameters.KernelObjectTableColumn.CALLBACK_FUNCTION)) {
+			isSWTimerDisplayCorrectly = true;
+		}
+
+		if (!isSWTimerDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void checkTaskGUI() {
+		bot.sleep(2000);
+
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+
+		boolean isTaskDisplayCorrectly = false;
+		List<String> columnsList = bot.table(0).columns();
+		if (columnsList.get(0).equals(ProjectParameters.KernelObjectTableColumn.PLUS_MINUS)
+				&& columnsList.get(1).equals(ProjectParameters.KernelObjectTableColumn.INITIALIZE)
+				&& columnsList.get(2).equals(ProjectParameters.KernelObjectTableColumn.TASK_CODE)
+				&& columnsList.get(3).equals(ProjectParameters.KernelObjectTableColumn.TASK_NAME)
+				&& columnsList.get(4).equals(ProjectParameters.KernelObjectTableColumn.STACK_SIZE)
+				&& columnsList.get(5).equals(ProjectParameters.KernelObjectTableColumn.TASK_HANDLER)
+				&& columnsList.get(6).equals(ProjectParameters.KernelObjectTableColumn.PARAMETER)
+				&& columnsList.get(7).equals(ProjectParameters.KernelObjectTableColumn.PRIORITY)) {
+			isTaskDisplayCorrectly = true;
+		}
+
+		if (!isTaskDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void MustNotBeANumber(ProjectModel projectModelSpecific, boolean isLTSProject) {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		if (isLTSProject) {
+			bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+			.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+			.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
+		} else {
+			bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+					.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+					.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+		}
+		
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.clickClearConsole();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.sleep(3000);
+		bot.text(1).setText("1");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(1).setText("task_1");
+		Utility.clickClearConsole();
+
+		bot.text(4).setText("1");
+
+		boolean check3 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check4 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(4).setText("NULL");
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2 || !check3 || !check4) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void OutOfSizeQueues() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.QUEUES).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.text(2).setText("4294967296");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050006);
+
+		bot.text(2).setText("100");
+
+		Utility.clickClearConsole();
+
+		if (!check1) {
+			assertFalse(true);
+		}
+	}
+
+	public static void OutOfSizeSWTimer() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.SOFTWARE_TIMERS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+		bot.text(3).setText("4294967296");
+		boolean check1 = Utility.isConsoleHasString("E04050006: The value must be from 1 to 4294967295");
+
+		bot.text(3).setText("100");
+
+		Utility.clickClearConsole();
+
+		bot.text(4).setText("4294967296");
+		boolean check2 = Utility.isConsoleHasString("E04050006: The value must be from 0 to 4294967295");
+
+		bot.text(4).setText("0");
+
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
+	}
+
+	public static void ParameterMustNotBeADigit() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		
+		bot.text(5).setText("1");
+		
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(5).setText("NULL");
+		Utility.clickClearConsole();
+		
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void RemovedDuplicatedValues() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
+		
+		bot.text(1+6*1).setText("task_1");
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(1+6*1).setText("task_2");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		bot.text(1+6*2).setText("task_1");
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(1+6*2).setText("task_3");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		bot.text(2+6*1).setText("task_1");
+		boolean check3 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(2+6*1).setText("task_2");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+
+		bot.text(2+6*2).setText("task_1");
+		boolean check4 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(2+6*2).setText("task_3");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		bot.text(4+6*0).setText("test");
+		bot.text(4+6*1).setText("test");
+		boolean check5 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(4+6*1).setText("NULL");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		bot.text(4+6*2).setText("test");
+		boolean check6 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(4+6*2).setText("NULL");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		if (!check1 || !check2 || !check3 || !check4 || !check5 || !check6) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void DownloadAFRPackage(boolean isLTSProject) {
+		bot.sleep(3000);
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_NEW)
+		.menu(MenuName.MENU_C_CPP_PROJECT).menu(MenuName.MENU_RENESAS_RX).click();
+		bot.table().select(2);
+		
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.waitUntil(Conditions.waitForWidget(WidgetMatcherFactory.withText(LabelName.LABEL_PROJECT_NAME)), 10000);
+		bot.textWithLabel(LabelName.LABEL_PROJECT_NAME).setText("DownloadAFR");
+		bot.waitUntil(Conditions.widgetIsEnabled(bot.button(ButtonAction.BUTTON_NEXT)), 10000);
+		
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.radio(0).click();
+		
+		if(isLTSProject) {
+			bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(RTOSDisplay.FREERTOSIOTLTS);
+		}else {
+			bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(RTOSDisplay.AMAZONFREERTOS);
+		}
+		
+		
+		bot.link("<a>Manage RTOS Versions...</a>").click();
+		bot.sleep(40000);
+
+		if(isLTSProject) {
+			bot.table().getTableItem(bot.table().indexOf("v202210.01-LTS-rx-1.0.0-rc2", "Rev.")).check();
+		}else {
+			bot.table().getTableItem(bot.table().indexOf(RTOSVersion.Amazon_202107_1_0_1, "Rev.")).check();
+		}
+		bot.button("Download").click();
+		bot.button("Accept").click();
+		
+		bot.comboBoxWithLabel(LabelName.LABEL_TARGET_BOARD).setSelection(TargetBoard.BOARD_CK_RX65N);
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.button(ButtonAction.BUTTON_FINISH).click();
+		
+		
+		if(isLTSProject) {
+			PGUtility.loopForPGAzureAndLTS();
+		}else {
+			PGUtility.loopForPGOther();
+		}
+	}
 }
