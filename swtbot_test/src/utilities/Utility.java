@@ -44,6 +44,7 @@ import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
 import parameters.ProjectParameters.RTOSDisplay;
 import parameters.ProjectParameters.RTOSType;
+import parameters.ProjectParameters.RTOSVersion;
 import parameters.ProjectParameters.TargetBoard;
 
 public class Utility {
@@ -1238,8 +1239,11 @@ public class Utility {
 		bot.link("<a>Manage RTOS Versions...</a>").click();
 		bot.sleep(40000);
 
-		bot.table().getTableItem(0).check();
-		
+		if(isLTSProject) {
+			bot.table().getTableItem(bot.table().indexOf("v202210.01-LTS-rx-1.0.0-rc2", "Rev.")).check();
+		}else {
+			bot.table().getTableItem(bot.table().indexOf(RTOSVersion.Amazon_202107_1_0_1, "Rev.")).check();
+		}
 		bot.button("Download").click();
 		bot.button("Accept").click();
 		
