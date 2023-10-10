@@ -46,6 +46,20 @@ public class PGUtility extends Utility {
 		projNames.put("CloudKitRX65N", "ckitrx65n");
 		projNames.put("RSKRX671", "rsk671");
 		projNames.put("EnvisionKitRX72N", "ekrx72n");
+		
+		projNames.put("RSKRX65N-2MB(DUAL)", "rsk65n");
+		projNames.put("RSKRX65N-2MB(TSIP)(DUAL)", "rsk65ntsip");
+		projNames.put("CK-RX65N(DUAL)", "ckrx65n");
+		projNames.put("CloudKitRX65N(DUAL)", "ckitrx65n");
+		projNames.put("RSKRX671(DUAL)", "rsk671");
+		projNames.put("EnvisionKitRX72N(DUAL)", "ekrx72n");
+		
+		projNames.put("TargetBoardRX130", "targetboard130");
+		projNames.put("RSKRX140", "rsk140");
+		projNames.put("RSKRX660", "rsk660");
+		projNames.put("RSKRX66T", "rsk66t");
+		projNames.put("MCB-RX26T Type A", "mcb26tA");
+		projNames.put("MCB-RX26T Type B", "mcb26tB");
 	}
 
 	public static void createProject(String rtosType, String version, String appId) {
@@ -127,7 +141,7 @@ public class PGUtility extends Utility {
 					model.setApplicationOrder(app.getApplicationOrder());
 					model.setToolchain(toolchain.getName());
 					model.setProjectName(
-							appId + "_" + toolchain.getName() + "_" + getProjectNameByBoard(board.getBoard()));
+							(appId + "_" + toolchain.getName() + "_" + getProjectNameByBoard(board.getBoard())).replaceAll("-", "_"));
 					model.setSkipApplication(version.isSkipAppSelection());
 					ProjectConfiguration filtered = getProjectConfiguration(app.getProjectConfiguration(), toolchain.getName(), board.getBoard());
 					if (filtered == null) {
@@ -166,7 +180,7 @@ public class PGUtility extends Utility {
 		model.setApplicationOrder(app.getApplicationOrder());
 		model.setToolchain(toolchain);
 		model.setProjectName(
-				appId + "_" + toolchain + "_" + getProjectNameByBoard(board));
+				(appId + "_" + toolchain + "_" + getProjectNameByBoard(board)).replaceAll("-", "_"));
 		model.setSkipApplication(version.isSkipAppSelection());
 		ProjectConfiguration filtered = getProjectConfiguration(app.getProjectConfiguration(), toolchain, board);
 		if (filtered == null) {
@@ -213,8 +227,8 @@ public class PGUtility extends Utility {
 						} else {
 							model.setBuildType(BuildType.HARDWARE, true);
 						}
-						model.setProjectName(app.getApplicationId() + "_" + toolchain.getName() + "_"
-								+ getProjectNameByBoard(board.getBoard()));
+						model.setProjectName((app.getApplicationId() + "_" + toolchain.getName() + "_"
+								+ getProjectNameByBoard(board.getBoard())).replaceAll("-", "_"));
 						model.setApplication(app.getApplicationId());
 						model.setApplicationOrder(app.getApplicationOrder());
 						model.setSkipApplication(app.isSkipApp());
@@ -240,17 +254,17 @@ public class PGUtility extends Utility {
 			// extension process for IoT ADU and Bootloader project
 			// currently hard-code these applications by name and order
 			// will find better way for the improvement
-			if ((model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU) || model.getApplicationOrder() == 16)
-					|| (model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)
-							|| model.getApplicationOrder() == 17)) {
-				Utility.changeBoard(model, "", "", true, false);
-				if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
-					Utility.updateGCCLinkerScriptFile(model);
-				} else if (model.getToolchain().equals(ToolchainType.CCRX_TOOLCHAIN)
-						&& !model.getRXCLinkerFile().isEmpty()) {
-					Utility.updateRXCLinkerSection(model, model.getRXCLinkerFile());
-				}
-			}
+//			if ((model.getApplication().equals(RTOSApplication.AZURE_IOT_ADU) || model.getApplicationOrder() == 16)
+//					|| (model.getApplication().equals(RTOSApplication.AZURE_BOOTLOADER)
+//							|| model.getApplicationOrder() == 17)) {
+//				Utility.changeBoard(model, "", "", true, false);
+//				if (model.getToolchain().equals(ToolchainType.GCC_TOOLCHAIN)) {
+//					Utility.updateGCCLinkerScriptFile(model);
+//				} else if (model.getToolchain().equals(ToolchainType.CCRX_TOOLCHAIN)
+//						&& !model.getRXCLinkerFile().isEmpty()) {
+//					Utility.updateRXCLinkerSection(model, model.getRXCLinkerFile());
+//				}
+//			}
 			Utility.getProjectTreeItem(model).collapse();
 			bot.closeAllEditors();
 		} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RZ)) {

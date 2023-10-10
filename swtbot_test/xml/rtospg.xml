@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rtospg>
 	<RTOS id="AzureRTOS">
-		<version id="6.2.1_rel-rx-1.1.0" skipapp="false">
+		<version id="6.2.1_rel-rx-1.3.0" skipapp="false">
 			<application id="bare" order="0">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
@@ -21,7 +21,10 @@
 					<board>RSKRX66T</board>
 					<board>RSKRX671</board>
 					<board>EnvisionKitRX72N</board>
+					<board>MCB-RX26T Type A</board>
+					<board>MCB-RX26T Type B</board>
 					<board custom="true">R5F5651EDxFC</board>
+					<board custom="true">R5F523E6NxFP</board>
 					<board custom="true">R5F565NCDxBG</board>
 				</target>
 				<language id="CPP">
@@ -40,6 +43,33 @@
 					<board>RSKRX65N-2MB</board>
 				</target>
 			</application>
+			
+			<application id="minimal" order="1">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>GCC</toolchain>
+					<toolchain>CCRX</toolchain>
+					<board>TargetBoardRX130</board>
+					<board>RSKRX140</board>
+					<board>RSKRX65N-2MB</board>
+					<board>RSKRX65N-2MB(TSIP)</board>
+					<board>CloudKitRX65N</board>
+					<board>CK-RX65N</board>
+					<board>RSKRX660</board>
+					<board>RSKRX66T</board>
+					<board>RSKRX671</board>
+					<board>EnvisionKitRX72N</board>
+					<board>MCB-RX26T Type A</board>
+					<board>MCB-RX26T Type B</board>
+					<board custom="true">R5F5651EDxFC</board>
+					<board custom="true">R5F523E6NxFP</board>
+				</target>
+			</application>
+			
 			<application id="ramdisk" order="2">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
@@ -59,7 +89,10 @@
 					<board>RSKRX66T</board>
 					<board>RSKRX671</board>
 					<board>EnvisionKitRX72N</board>
+					<board>MCB-RX26T Type A</board>
+					<board>MCB-RX26T Type B</board>
 					<board custom="true">R5F5651EDxFC</board>
+					<board custom="true">R5F523E6NxFP</board>
 				</target>
 			</application>
 			<application id="ping" order="3">
@@ -241,10 +274,10 @@
 					<board>CloudKitRX65N</board>
 					<board>CK-RX65N</board>
 					<board>RSKRX660</board>
-					<board>RSKRX66T</board>
 					<board>RSKRX671</board>
 					<board>EnvisionKitRX72N</board>
 					<board custom="true">R5F5651EDxFC</board>
+					<board custom="true">R5F523E6NxFP</board>
 				</target>
 			</application>
 			<application id="iot_adu" order="15">
@@ -256,35 +289,13 @@
 				<target>
 					<toolchain>GCC</toolchain>
 					<toolchain>CCRX</toolchain>
-					<board>RSKRX65N-2MB</board>
-					<board>RSKRX65N-2MB(TSIP)</board>
-					<board>CloudKitRX65N</board>
-					<board>CK-RX65N</board>
-					<board>RSKRX671</board>
-					<board>EnvisionKitRX72N</board>
+					<board>RSKRX65N-2MB(DUAL)</board>
+					<board>RSKRX65N-2MB(TSIP)(DUAL)</board>
+					<board>CloudKitRX65N(DUAL)</board>
+					<board>CK-RX65N(DUAL)</board>
+					<board>RSKRX671(DUAL)</board>
+					<board>EnvisionKitRX72N(DUAL)</board>
 				</target>
-				<rxclinkerfile>
-					<toolchain>CCRX</toolchain>
-					<board>RSKRX65N-2MB</board>
-					<board>RSKRX65N-2MB(TSIP)</board>
-					<board>CK-RX65N</board>
-					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F565NE_ether.xmi.fragment</path>
-				</rxclinkerfile>
-				<rxclinkerfile>
-					<toolchain>CCRX</toolchain>
-					<board>CloudKitRX65N</board>
-					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F565NE_wifi.xmi.fragment</path>
-				</rxclinkerfile>
-				<rxclinkerfile>
-					<toolchain>CCRX</toolchain>
-					<board>RSKRX671</board>
-					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F5671E.xmi.fragment</path>
-				</rxclinkerfile>
-				<rxclinkerfile>
-					<toolchain>CCRX</toolchain>
-					<board>EnvisionKitRX72N</board>
-					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/iot_adu/R5F572NN.xmi.fragment</path>
-				</rxclinkerfile>
 			</application>
 			<application id="bootloader" order="16">
 				<projectconfiguration>
@@ -295,31 +306,13 @@
 				<target>
 					<toolchain>GCC</toolchain>
 					<toolchain>CCRX</toolchain>
-					<board>RSKRX65N-2MB</board>
-					<board>RSKRX65N-2MB(TSIP)</board>
-					<board>CloudKitRX65N</board>
-					<board>CK-RX65N</board>
-					<board>RSKRX671</board>
-					<board>EnvisionKitRX72N</board>
+					<board>RSKRX65N-2MB(DUAL)</board>
+					<board>RSKRX65N-2MB(TSIP)(DUAL)</board>
+					<board>CloudKitRX65N(DUAL)</board>
+					<board>CK-RX65N(DUAL)</board>
+					<board>RSKRX671(DUAL)</board>
+					<board>EnvisionKitRX72N(DUAL)</board>
 				</target>
-				<rxclinkerfile>
-					<toolchain>CCRX</toolchain>
-					<board>RSKRX65N-2MB</board>
-					<board>RSKRX65N-2MB(TSIP)</board>
-					<board>CloudKitRX65N</board>
-					<board>CK-RX65N</board>
-					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F565NE.xmi.fragment</path>
-				</rxclinkerfile>
-				<rxclinkerfile>
-					<toolchain>CCRX</toolchain>
-					<board>RSKRX671</board>
-					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F5671E.xmi.fragment</path>
-				</rxclinkerfile>
-				<rxclinkerfile>
-					<toolchain>CCRX</toolchain>
-					<board>EnvisionKitRX72N</board>
-					<path>D:/RegressionTest/SwtBot/rxcLinkerfiles/bootloader/R5F572NN.xmi.fragment</path>
-				</rxclinkerfile>
 			</application>
 		</version>
 	</RTOS>

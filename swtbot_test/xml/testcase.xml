@@ -6,7 +6,7 @@
 				<toolchain>GCC</toolchain>
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
@@ -27,7 +27,7 @@
 				<toolchain>GCC</toolchain>
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
@@ -42,7 +42,7 @@
 				<toolchain>GCC</toolchain>
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
@@ -52,13 +52,13 @@
 			<application id="iperf" order="4"></application>
 		</project>
 	</TC-->
-	<TC id="TC4">
+	<!--TC id="TC4">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
@@ -67,14 +67,14 @@
 			</group>
 			<application id="usbx_cdc" order="12"></application>
 		</project>
-	</TC>
+	</TC-->
 	<!--TC id="TC5">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>RSKRX65N-2MB</board>
@@ -89,7 +89,7 @@
 				<toolchain>GCC</toolchain>
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
-				<RTOSVersion>6.2.1_rel-rx-1.1.0</RTOSVersion>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
@@ -98,6 +98,77 @@
 				<board>RSKRX671</board>
 			</group>
 			<application id="usbx_hmsc" order="13"></application>
+		</project>
+	</TC-->
+	<TC id="TC7">
+		<project id="pg">
+			<group id="toolchain">
+				<toolchain>GCC</toolchain>
+				<toolchain>CCRX</toolchain>
+				<RTOSType>AzureRTOS</RTOSType>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
+			</group>
+			<group id="device">
+				<!--board>TargetBoardRX130</board>
+				<board>RSKRX140</board>
+				<board>RSKRX65N-2MB</board>
+				<board>RSKRX65N-2MB(TSIP)</board>
+				<board>CloudKitRX65N</board>
+				<board>CK-RX65N</board>
+				<board>RSKRX660</board>
+				<board>RSKRX66T</board-->
+				<board>RSKRX671</board>
+				<board>EnvisionKitRX72N</board>
+				<!--board>MCB-RX26T Type A</board>
+				<board>MCB-RX26T Type B</board>
+				<board custom="true">R5F5651EDxFC</board>
+				<board custom="true">R5F523E6NxFP</board-->
+			</group>
+			<application id="bare" order="0"></application>
+			<!--application id="minimal" order="1"></application-->
+			<!--application id="ramdisk" order="2"></application-->
+		</project>
+	</TC>
+	<!--TC id="TC8">
+		<project id="pg">
+			<group id="toolchain">
+				<toolchain>GCC</toolchain>
+				<toolchain>CCRX</toolchain>
+				<RTOSType>AzureRTOS</RTOSType>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
+			</group>
+			<group id="device">
+				<board>TargetBoardRX130</board>
+				<board>RSKRX140</board>
+				<board>RSKRX65N-2MB</board>
+				<board>RSKRX65N-2MB(TSIP)</board>
+				<board>CloudKitRX65N</board>
+				<board>CK-RX65N</board>
+				<board>RSKRX660</board>
+				<board>RSKRX671</board>
+				<board>EnvisionKitRX72N</board>
+				<board custom="true">R5F5651EDxFC</board>
+				<board custom="true">R5F523E6NxFP</board>
+			</group>
+			<application id="lowpower" order="14"></application>
+		</project>
+	</TC-->
+	<!--TC id="TC9">
+		<project id="pg">
+			<group id="toolchain">
+				<toolchain>GCC</toolchain>
+				<toolchain>CCRX</toolchain>
+				<RTOSType>AzureRTOS</RTOSType>
+				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
+			</group>
+			<group id="device">
+				<board>CK-RX65N(DUAL)</board>
+				<board>RSKRX65N-2MB(DUAL)</board>
+				<board>EnvisionKitRX72N(DUAL)</board>
+				<board>RSKRX671(DUAL)</board>
+				<board>CloudKitRX65N(DUAL)</board>
+			</group>
+			<application id="iot_adu" order="15"></application>
 		</project>
 	</TC-->
 </testdata>

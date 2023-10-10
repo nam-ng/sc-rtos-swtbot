@@ -7,14 +7,22 @@
 		<board group="rx140">RSKRX140</board>
 		<board group="rx231">RSKRX231</board>
 		<board group="rx65n">RSKRX65N-2MB</board>
+		<board group="rx65n">RSKRX65N-2MB(DUAL)</board>
 		<board group="rx65n">RSKRX65N-2MB(TSIP)</board>
+		<board group="rx65n">RSKRX65N-2MB(TSIP)(DUAL)</board>
 		<board group="rx65n">CloudKitRX65N</board>
+		<board group="rx65n">CloudKitRX65N(DUAL)</board>
 		<board group="rx65n">CK-RX65N</board>
+		<board group="rx65n">CK-RX65N(DUAL)</board>
 		<board group="rx66t">RSKRX66T</board>
 		<board group="rx660">RSKRX660</board>
 		<board group="rx671">RSKRX671</board>
+		<board group="rx671">RSKRX671(DUAL)</board>
 		<board group="rx72n">EnvisionKitRX72N</board>
+		<board group="rx72n">EnvisionKitRX72N(DUAL)</board>
 		<board group="rx72n">RSKRX72N</board>
+		<board group="rx26t">MCB-RX26T Type A</board>
+		<board group="rx26t">MCB-RX26T Type B</board>
 		<board custom="true">
 			<group id="RX65N">
 				<device>R5F565NEHxFC</device>
@@ -41,6 +49,9 @@
 				<device>R5F572NNHxBG_DUAL</device>
 				<device>R5F572NNHxFC</device>
 				<device>R5F572NNHxFC_DUAL</device>
+			</group>
+			<group id="RX23E-B">
+				<device>R5F523E6NxFP</device>
 			</group>
 		</board>
 	</family>

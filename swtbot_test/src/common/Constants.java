@@ -13,4 +13,6 @@ public class Constants {
 	public static final String TC_XML_FILE = "xml/testcase.xml";
 	
 	public static final String CONFIGURATION_ERROR_CHECK_FILE = "output/ConfigurationErrorCheckFile.txt";
+	public static final String WARNING_NUMBER_FILE = "output/WarningNumber.txt";
+	public static final String PG_AND_BUILD_TIME_FILE = "output/PGAndBuildTime.txt";
 }

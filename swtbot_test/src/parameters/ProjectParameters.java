@@ -53,7 +53,7 @@ public class ProjectParameters {
 	}
 
 	public class RTOSVersion {
-		public static final String Azure_6_2_1 = "6.2.1_rel-rx-1.1.0";
+		public static final String Azure_6_2_1 = "6.2.1_rel-rx-1.3.0";
 		public static final String Azure_6_2_0 = "6.2.0_rel-rx-1.0.0";
 		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
 		public static final String RI600_1_06_01 = "1.06.01";
@@ -64,6 +64,7 @@ public class ProjectParameters {
 
 	public class RTOSApplication {
 		public static final String AZURE_BARE = "bare";
+		public static final String AZURE_MINIMAL = "minimal";
 		public static final String AZURE_RAM = "ramdisk";
 		public static final String AZURE_PING = "ping";
 		public static final String AZURE_IPERF = "iperf";
