@@ -1,0 +1,41 @@
+Records of PG and Build Time on check build run on Tue Oct 10 12:01:35 ICT 2023 is:
+	_PG time for bare_CCRX_rsk671: 59.845s
+	_PG time for bare_CCRX_ekrx72n: 57.187s
+	_Overall PG time for bare, CCRX is 117.032s
+	_Average PG time for bare, CCRX is 58.516s
+	_PG time for bare_GCC_rsk671: 45.62s
+	_PG time for bare_GCC_ekrx72n: 25.309s
+	_Overall PG time for bare, GCC is 70.929s
+	_Average PG time for bare, GCC is 35.4645s
+	_Build time for bare_CCRX_ekrx72n [HardwareDebug]: 65.457s
+	_Build time for bare_CCRX_rsk671 [HardwareDebug]: 67.56s
+	_Overall Build time for bare, CCRX is 133.017s
+	_Average Build time for bare, CCRX is 66.5085s
+	_Build time for bare_GCC_ekrx72n [HardwareDebug]: 28.951s
+	_Build time for bare_GCC_rsk671 [HardwareDebug]: 22.578s
+	_Overall Build time for bare, GCC is 51.528999999999996s
+	_Average Build time for bare, GCC is 25.764499999999998s
+	_PG time: 187.964 seconds
+	_Build time: 184.546 seconds
+	_Overall time: 372.51 seconds
+
+Records of PG and Build Time on check build run on Tue Oct 10 12:31:47 ICT 2023 is:
+	_PG time for bare_CCRX_rsk671: 55.196s
+	_PG time for bare_CCRX_ekrx72n: 64.078s
+	_Overall PG time for bare, CCRX is 119.274s
+	_Average PG time for bare, CCRX is 59.637s
+	_PG time for bare_GCC_rsk671: 43.521s
+	_PG time for bare_GCC_ekrx72n: 29.86s
+	_Overall PG time for bare, GCC is 73.381s
+	_Average PG time for bare, GCC is 36.6905s
+	_Build time for bare_CCRX_ekrx72n [HardwareDebug]: 80.889s
+	_Build time for bare_CCRX_rsk671 [HardwareDebug]: 66.868s
+	_Overall Build time for bare, CCRX is 147.757s
+	_Average Build time for bare, CCRX is 73.8785s
+	_Build time for bare_GCC_ekrx72n [HardwareDebug]: 32.76s
+	_Build time for bare_GCC_rsk671 [HardwareDebug]: 22.74s
+	_Overall Build time for bare, GCC is 55.5s
+	_Average Build time for bare, GCC is 27.75s
+	_PG time: 192.657 seconds
+	_Build time: 203.257 seconds
+	_Overall time: 395.914 seconds
