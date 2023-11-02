@@ -151,7 +151,7 @@
 				<board custom="true">R5F5651EDxFC</board>
 				<board custom="true">R5F523E6NxFP</board>
 			</group>
-			<application id="lowpower" order="14"></application>
+			<application id="lowpower" order="15"></application>
 		</project>
 	</TC-->
 	<!--TC id="TC9">
