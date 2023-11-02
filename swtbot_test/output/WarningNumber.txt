@@ -9,3 +9,9 @@ Records of number of warnings on check build run on Tue Oct 10 12:31:47 ICT 2023
 	_Project bare_CCRX_rsk671 [HardwareDebug] has 11 warnings.
 	_Project bare_GCC_ekrx72n [HardwareDebug] has 2 warnings.
 	_Project bare_GCC_rsk671 [HardwareDebug] has 2 warnings.
+
+Records of number of warnings on check build run on Tue Oct 10 16:37:56 ICT 2023 is:
+	_Project bare_CCRX_ekrx72n [HardwareDebug] has 11 warnings.
+	_Project bare_CCRX_rsk671 [HardwareDebug] has 11 warnings.
+	_Project bare_GCC_ekrx72n [HardwareDebug] has 2 warnings.
+	_Project bare_GCC_rsk671 [HardwareDebug] has 2 warnings.

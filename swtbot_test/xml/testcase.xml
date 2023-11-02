@@ -15,8 +15,8 @@
 				<board>RSKRX671</board>
 				<board>CloudKitRX65N</board>
 			</group>
-			<application id="iot_adu" order="15"></application>
-			<application id="bootloader" order="16"></application>
+			<application id="iot_adu" order="16"></application>
+			<application id="bootloader" order="17"></application>
 			<application id="iot_sdk" order="5"></application>
 			<application id="ping" order="3"></application>
 		</project>
@@ -83,7 +83,7 @@
 			<application id="guix_16bpp" order="10"></application>
 		</project>
 	</TC-->
-	<!--TC id="TC6">
+	<TC id="TC6">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
@@ -97,10 +97,11 @@
 				<board>EnvisionKitRX72N</board>
 				<board>RSKRX671</board>
 			</group>
-			<application id="usbx_hmsc" order="13"></application>
+			<!--application id="usbx_hmsc" order="13"></application-->
+			<application id="usbx_hcdc" order="14"></application>
 		</project>
-	</TC-->
-	<TC id="TC7">
+	</TC>
+	<!--TC id="TC7">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
@@ -109,26 +110,26 @@
 				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
 			</group>
 			<group id="device">
-				<!--board>TargetBoardRX130</board>
+				<board>TargetBoardRX130</board>
 				<board>RSKRX140</board>
 				<board>RSKRX65N-2MB</board>
 				<board>RSKRX65N-2MB(TSIP)</board>
 				<board>CloudKitRX65N</board>
 				<board>CK-RX65N</board>
 				<board>RSKRX660</board>
-				<board>RSKRX66T</board-->
+				<board>RSKRX66T</board>
 				<board>RSKRX671</board>
 				<board>EnvisionKitRX72N</board>
-				<!--board>MCB-RX26T Type A</board>
+				<board>MCB-RX26T Type A</board>
 				<board>MCB-RX26T Type B</board>
 				<board custom="true">R5F5651EDxFC</board>
-				<board custom="true">R5F523E6NxFP</board-->
+				<board custom="true">R5F523E6NxFP</board>
 			</group>
 			<application id="bare" order="0"></application>
-			<!--application id="minimal" order="1"></application-->
-			<!--application id="ramdisk" order="2"></application-->
+			<application id="minimal" order="1"></application>
+			<application id="ramdisk" order="2"></application>
 		</project>
-	</TC>
+	</TC-->
 	<!--TC id="TC8">
 		<project id="pg">
 			<group id="toolchain">
