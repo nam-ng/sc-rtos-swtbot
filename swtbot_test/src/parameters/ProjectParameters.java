@@ -77,6 +77,7 @@ public class ProjectParameters {
 		public static final String AZURE_GUIX_16BPP_DRAW = "guix_16bpp_draw";
 		public static final String AZURE_USBX_CDC = "usbx_cdc";
 		public static final String AZURE_USBX_HMSC = "usbx_hmsc";
+		public static final String AZURE_USBX_HCDC = "usbx_hcdc";
 		public static final String AZURE_LOW_POWER = "low_power";
 		public static final String AZURE_IOT_ADU = "iot_adu";
 		public static final String AZURE_BOOTLOADER = "bootloader";
