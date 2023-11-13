@@ -86,16 +86,16 @@
 	<TC id="TC6">
 		<project id="pg">
 			<group id="toolchain">
-				<toolchain>GCC</toolchain>
+				<!--toolchain>GCC</toolchain-->
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
 				<RTOSVersion>6.2.1_rel-rx-1.3.0</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
-				<board>RSKRX65N-2MB</board>
+				<!--board>RSKRX65N-2MB</board>
 				<board>EnvisionKitRX72N</board>
-				<board>RSKRX671</board>
+				<board>RSKRX671</board-->
 			</group>
 			<!--application id="usbx_hmsc" order="13"></application-->
 			<application id="usbx_hcdc" order="14"></application>
