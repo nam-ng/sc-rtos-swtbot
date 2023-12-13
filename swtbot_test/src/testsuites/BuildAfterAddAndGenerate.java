@@ -65,7 +65,7 @@ public class BuildAfterAddAndGenerate {
 	}
 	
 	@Test
-	public void tc_00_ChangeRTOSLocation() throws Exception {
+	public void tc_00_ChangeRTOSLocation() throws Exception{
 		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.AZURE_RTOS_LOCATION, true);
 		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION, false);
 		Utility.reFocus(robot);

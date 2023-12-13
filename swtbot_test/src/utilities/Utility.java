@@ -270,8 +270,6 @@ public class Utility {
 		boolean boardCondition = (boards.isEmpty() || boards.contains(selectedBoard));
 		return toolchainCondition && boardCondition;
 	}
-	
-	
 
 	public static void changeModuleDownloadLocation(Robot robot, String location, boolean isRTOSLocation) {
 		reFocus(robot);
