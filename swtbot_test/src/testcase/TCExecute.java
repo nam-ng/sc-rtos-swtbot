@@ -2,6 +2,7 @@ package testcase;
 
 import static org.junit.Assert.assertFalse;
 
+import java.awt.Robot;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -26,6 +27,8 @@ import common.Constants;
 import common.LogUtil;
 import model.Project;
 import model.ProjectModel;
+import model.ProjectSettings;
+import model.ProjectSettingsManager;
 import model.RTOSManager;
 import model.TC;
 import model.TCManager;
@@ -39,17 +42,21 @@ import utilities.Utility;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TCExecute {
 	private static SWTWorkbenchBot bot;
+	private static Robot robot;
 	private static SWTBotShell workbenchShell;
 	private static Collection<TC> tces;
+	private static Collection<ProjectSettings> projectSetting;
 	private static String pathToConfigurationErrorFile = "";
 	private static String pathToWarningNumberFile = "";
 	private static String pathToPGAndBuildTimeFile = "";
+	private static String pathToCheckProjectSettingFile = "";
 	private static Map<String, String> timeRecordOverall = new HashMap<>();
 	public static Map<String, Map<String, String>> PGTimeForCCRX = new HashMap<>();
 	public static Map<String, Map<String, String>> PGTimeForGCC = new HashMap<>();
 	public static Map<String, Map<String, String>> BuildTimeforCCRX = new HashMap<>();
 	public static Map<String, Map<String, String>> BuildTimeforGCC = new HashMap<>();
 	public static Collection<ProjectModel> projectModelList = new ArrayList<>();
+
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -58,10 +65,15 @@ public class TCExecute {
 				.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.RTOS_PG_XML_FILE)));
 		TCManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.TC_XML_FILE)));
+		ProjectSettingsManager.loadProjectSettingModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.PROJECT_SETTING_XML_FILE)));
 		pathToConfigurationErrorFile = Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.CONFIGURATION_ERROR_CHECK_FILE);
 		pathToWarningNumberFile = Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.WARNING_NUMBER_FILE);
 		pathToPGAndBuildTimeFile = Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.PG_AND_BUILD_TIME_FILE);
+		pathToCheckProjectSettingFile = Utility.getBundlePath(LogUtil.PLUGIN_ID, Constants.CHECK_PROJECT_SETTING_FILE);
+		
 		tces = TCManager.getAllTCes();
+		projectSetting = ProjectSettingsManager.getAllProjectSettings();
+		robot = new Robot();
 
 		// initialize the SWTBot
 		bot = new SWTWorkbenchBot();
@@ -97,7 +109,9 @@ public class TCExecute {
 	@Test
 	public void TC_00_execute() throws Exception {
 		workbenchShell.setFocus();
-		// Utility.changeRTOSLocation();
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.AZURE_RTOS_LOCATION, true);
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION, false);
+		Utility.reFocus(robot);
 		long start = System.currentTimeMillis();
 		for (TC tc : tces) {
 			Utility.executeTCStep(tc, workbenchShell);
@@ -109,7 +123,18 @@ public class TCExecute {
 	}
 
 	@Test
-	public void TC_01_checkConfigurationError() throws Exception {
+	public void TC_01_checkProjectSetting() throws Exception {
+		long start = System.currentTimeMillis();
+		Date currentDate = new Date(start); 
+		PrintWriter writer = new PrintWriter(pathToCheckProjectSettingFile, "UTF-8");
+		writer.print("Records of project setting error on run on " + currentDate.toString() +" is:");
+		writer.print(Utility.checkForLinkerSection(projectSetting, writer));
+		
+		writer.close();
+	}
+	
+	@Test
+	public void TC_02_checkConfigurationError() throws Exception {
 		int index = 0;
 		int length = bot.tree().visibleRowCount();
 		String currentProjectName = "";
@@ -156,7 +181,7 @@ public class TCExecute {
 	}
 
 	@Test
-	public void TC_02_checkBuild() throws Exception {
+	public void TC_03_checkBuild() throws Exception {
 		BuildUtility.buildAll(workbenchShell);
 		SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
 		long start = System.currentTimeMillis();
@@ -183,9 +208,10 @@ public class TCExecute {
 					|| consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_FAILED)) {
 				String finalConsole = consoleView.bot().styledText().getText();
 				String warningsAndErrorString = finalConsole.substring(finalConsole.lastIndexOf("d"));
+				String numberOfErrorinString = warningsAndErrorString.substring(warningsAndErrorString.indexOf(".")+2, warningsAndErrorString.indexOf(","));
 				String numberOfWarninginString = warningsAndErrorString.substring(warningsAndErrorString.indexOf(",")+2, warningsAndErrorString.indexOf("w")-1);
 				numberOfWarnings=Integer.parseInt(numberOfWarninginString);
-				writer.println("\t_Project "+ currentProject+ " has "+ numberOfWarnings +" warnings.");
+				writer.println("\t_Project "+ currentProject+ " has "+ numberOfErrorinString+ " " + numberOfWarnings +" warnings.");
 				index++;
 				checkPointEnd = System.currentTimeMillis();
 				timeExecutedCheckPoint = checkPointEnd - checkPointStart;

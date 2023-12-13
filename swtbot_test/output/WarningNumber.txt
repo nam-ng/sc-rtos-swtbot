@@ -1,17 +1,57 @@
-Records of number of warnings on check build run on Tue Oct 10 12:01:35 ICT 2023 is:
-	_Project bare_CCRX_ekrx72n [HardwareDebug] has 11 warnings.
-	_Project bare_CCRX_rsk671 [HardwareDebug] has 11 warnings.
-	_Project bare_GCC_ekrx72n [HardwareDebug] has 2 warnings.
-	_Project bare_GCC_rsk671 [HardwareDebug] has 2 warnings.
 
-Records of number of warnings on check build run on Tue Oct 10 12:31:47 ICT 2023 is:
-	_Project bare_CCRX_ekrx72n [HardwareDebug] has 11 warnings.
-	_Project bare_CCRX_rsk671 [HardwareDebug] has 11 warnings.
-	_Project bare_GCC_ekrx72n [HardwareDebug] has 2 warnings.
-	_Project bare_GCC_rsk671 [HardwareDebug] has 2 warnings.
 
-Records of number of warnings on check build run on Tue Oct 10 16:37:56 ICT 2023 is:
-	_Project bare_CCRX_ekrx72n [HardwareDebug] has 11 warnings.
-	_Project bare_CCRX_rsk671 [HardwareDebug] has 11 warnings.
-	_Project bare_GCC_ekrx72n [HardwareDebug] has 2 warnings.
-	_Project bare_GCC_rsk671 [HardwareDebug] has 2 warnings.
+Records of number of warnings on check build run on Wed Nov 29 22:42:31 ICT 2023 is:
+	_Project iot_sdk_ewf_CCRX_ckrx65n [HardwareDebug] has 14 errors 14 warnings.
+	_Project iot_sdk_ewf_GCC_ckrx65n [HardwareDebug] has 3 errors 2 warnings.
+	_Project iot_sdk_pnp_ewf_CCRX_ckrx65n [HardwareDebug] has 14 errors 1 warnings.
+	_Project iot_sdk_pnp_ewf_GCC_ckrx65n [HardwareDebug] has 3 errors 2 warnings.
+	_Project iperf_CCRX_ckrx65n [HardwareDebug] has 0 errors 14 warnings.
+	_Project iperf_CCRX_ekrx72n [HardwareDebug] has 0 errors 15 warnings.
+	_Project iperf_CCRX_rsk65n [HardwareDebug] has 0 errors 15 warnings.
+	_Project iperf_GCC_ckrx65n [HardwareDebug] has 0 errors 145 warnings.
+	_Project iperf_GCC_ekrx72n [HardwareDebug] has 0 errors 145 warnings.
+	_Project iperf_GCC_rsk65n [HardwareDebug] has 0 errors 145 warnings.
+
+Records of number of warnings on check build run on Thu Nov 30 04:56:31 ICT 2023 is:
+	_Project bootloader_CCRX_ckitrx65n [HardwareDebug] has 0 errors 3 warnings.
+	_Project bootloader_CCRX_ckrx65n [HardwareDebug] has 0 errors 7 warnings.
+	_Project bootloader_CCRX_ekrx72n [HardwareDebug] has 0 errors 4 warnings.
+	_Project bootloader_CCRX_rsk65n [HardwareDebug] has 0 errors 3 warnings.
+	_Project bootloader_CCRX_rsk671 [HardwareDebug] has 0 errors 4 warnings.
+	_Project bootloader_GCC_ckitrx65n [HardwareDebug] has 0 errors 15 warnings.
+	_Project bootloader_GCC_ckrx65n [HardwareDebug] has 0 errors 21 warnings.
+	_Project bootloader_GCC_ekrx72n [HardwareDebug] has 0 errors 15 warnings.
+	_Project bootloader_GCC_rsk65n [HardwareDebug] has 0 errors 15 warnings.
+	_Project bootloader_GCC_rsk671 [HardwareDebug] has 0 errors 15 warnings.
+	_Project iot_adu_CCRX_ckitrx65n [HardwareDebug] has 0 errors 19 warnings.
+	_Project iot_adu_CCRX_ckrx65n [HardwareDebug] has 0 errors 18 warnings.
+	_Project iot_adu_CCRX_ekrx72n [HardwareDebug] has 0 errors 15 warnings.
+	_Project iot_adu_CCRX_rsk65n [HardwareDebug] has 0 errors 15 warnings.
+	_Project iot_adu_CCRX_rsk671 [HardwareDebug] has 0 errors 19 warnings.
+	_Project iot_adu_GCC_ckitrx65n [HardwareDebug] has 0 errors 157 warnings.
+	_Project iot_adu_GCC_ckrx65n [HardwareDebug] has 0 errors 129 warnings.
+	_Project iot_adu_GCC_ekrx72n [HardwareDebug] has 0 errors 157 warnings.
+	_Project iot_adu_GCC_rsk65n [HardwareDebug] has 0 errors 157 warnings.
+	_Project iot_adu_GCC_rsk671 [HardwareDebug] has 0 errors 157 warnings.
+
+Records of number of warnings on check build run on Thu Nov 30 17:35:39 ICT 2023 is:
+	_Project bootloader_CCRX_ckitrx65n [HardwareDebug] has 0 errors 3 warnings.
+	_Project bootloader_CCRX_ckrx65n [HardwareDebug] has 0 errors 7 warnings.
+	_Project bootloader_CCRX_ekrx72n [HardwareDebug] has 0 errors 4 warnings.
+	_Project bootloader_CCRX_rsk65n [HardwareDebug] has 0 errors 3 warnings.
+	_Project bootloader_CCRX_rsk671 [HardwareDebug] has 0 errors 4 warnings.
+	_Project bootloader_GCC_ckitrx65n [HardwareDebug] has 0 errors 15 warnings.
+	_Project bootloader_GCC_ckrx65n [HardwareDebug] has 0 errors 21 warnings.
+	_Project bootloader_GCC_ekrx72n [HardwareDebug] has 0 errors 15 warnings.
+	_Project bootloader_GCC_rsk65n [HardwareDebug] has 0 errors 15 warnings.
+	_Project bootloader_GCC_rsk671 [HardwareDebug] has 0 errors 15 warnings.
+	_Project iot_adu_CCRX_ckitrx65n [HardwareDebug] has 0 errors 19 warnings.
+	_Project iot_adu_CCRX_ckrx65n [HardwareDebug] has 0 errors 18 warnings.
+	_Project iot_adu_CCRX_ekrx72n [HardwareDebug] has 0 errors 15 warnings.
+	_Project iot_adu_CCRX_rsk65n [HardwareDebug] has 0 errors 15 warnings.
+	_Project iot_adu_CCRX_rsk671 [HardwareDebug] has 0 errors 19 warnings.
+	_Project iot_adu_GCC_ckitrx65n [HardwareDebug] has 0 errors 179 warnings.
+	_Project iot_adu_GCC_ckrx65n [HardwareDebug] has 0 errors 129 warnings.
+	_Project iot_adu_GCC_ekrx72n [HardwareDebug] has 0 errors 179 warnings.
+	_Project iot_adu_GCC_rsk65n [HardwareDebug] has 0 errors 179 warnings.
+	_Project iot_adu_GCC_rsk671 [HardwareDebug] has 0 errors 179 warnings.

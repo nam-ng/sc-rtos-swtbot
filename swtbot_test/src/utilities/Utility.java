@@ -10,6 +10,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,8 +36,10 @@ import org.osgi.framework.Bundle;
 
 import model.AbstractNode;
 import model.Action;
+import model.LinkerSections;
 import model.Project;
 import model.ProjectModel;
+import model.ProjectSettings;
 import model.TC;
 import parameters.ProjectParameters;
 import parameters.ProjectParameters.ButtonAction;
@@ -49,6 +52,7 @@ import parameters.ProjectParameters.TargetBoard;
 
 public class Utility {
 	protected static SWTWorkbenchBot bot = new SWTWorkbenchBot();
+	protected static Collection<ProjectModel> allProjectModels = new ArrayList<>();
 
 	public static void waitForProcess(int sleepMili) {
 		bot.sleep(sleepMili);
@@ -226,6 +230,27 @@ public class Utility {
 		return isComponentInComponentTree;
 	}
 
+	public static <T> Collection<T> filterXMLModelProjectSettings(Collection<T> model, String selectedToolchain, String selectedBoard, String selectedApplication) {
+		Collection<T> filtered = new ArrayList<>();
+
+		for (T node : model) {
+			if (node instanceof ProjectSettings) {
+				ProjectSettings nodeModel = (ProjectSettings) node;
+				if (isSupport(nodeModel.getToolchains(), nodeModel.getBoards(), nodeModel.getApplications(), selectedToolchain, selectedBoard, selectedApplication)) {
+					filtered.add(node);
+				}
+			}
+		}
+		return filtered;
+	}
+
+	private static boolean isSupport(Collection<String> toolchains, Collection<String> boards, Collection<String> application,  String selectedToolchain, String selectedBoard, String selectedApplication) {
+		boolean toolchainCondition = (toolchains.isEmpty() || toolchains.contains(selectedToolchain));
+		boolean boardCondition = (boards.isEmpty() || boards.contains(selectedBoard));
+		boolean applicationCondition = (application.isEmpty() || application.contains(selectedApplication));
+		return toolchainCondition && boardCondition && applicationCondition;
+	}
+	
 	public static <T> Collection<T> filterXMLData(Collection<T> model, String selectedToolchain, String selectedBoard) {
 		Collection<T> filtered = new ArrayList<>();
 
@@ -446,6 +471,95 @@ public class Utility {
 		dialogBot.waitUntil(Conditions.shellCloses(reDialog));
 	}
 
+	//TCExecute.java will call this function
+	public static String checkForLinkerSection(Collection<ProjectSettings> projectSettings, PrintWriter writer) {
+		StringBuilder stringBuilder2 = new StringBuilder("");
+		for (ProjectModel model : allProjectModels) {
+			if (!model.getToolchain().equals("CCRX")) {
+				continue;
+			}
+			Collection<ProjectSettings> filteredProjectSettings = filterXMLModelProjectSettings(projectSettings, model.getToolchain(), model.getBoard(), model.getApplication());
+			Collection<LinkerSections> linkerSections = createLinkerSectionList(filteredProjectSettings);
+			SWTBotTreeItem projectItem=null;
+			if(!isItemSelected(model.getProjectName())) {
+				projectItem = bot.tree().getTreeItem(model.getProjectName()).select();
+				projectItem.select();
+			} else {
+				projectItem = Utility.getProjectTreeItem(model);
+				projectItem.select();
+			}
+
+			// open project setting dialog
+			projectItem.contextMenu("C/C++ Project Settings").click();
+			bot.cTabItem("Tool Settings").activate();
+
+			// check Linker/Section/Symbol file option
+			bot.treeWithLabel("Settings").getTreeItem("Linker").getNode("Section").click();
+			bot.button("...").click();
+			for (LinkerSections aSection: linkerSections) {
+				boolean isSectionExist = checkForSectionExist(aSection);
+				if (!isSectionExist) {
+					StringBuilder stringBuilder = new StringBuilder("");
+					for (String name: aSection.getName()) {
+						stringBuilder.append(name);
+						stringBuilder.append(" ");
+					}
+					stringBuilder2.append("\nProject "+ model.getProjectName()+ " does not satisfy sections: "+ stringBuilder + " in address "+ aSection.getAddress());
+				}
+			}
+			
+			bot.button("Cancel").click();
+			bot.button("Cancel").click();
+		}
+		return stringBuilder2.toString();
+	}
+	
+	
+	
+	private static boolean isItemSelected(String projectName) {
+		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
+		boolean isItemSelected = true;
+		for (SWTBotTreeItem treeItem : allItems) {
+			if (projectName.equals(treeItem.getText())) {
+				isItemSelected=false;
+			}
+		}
+		// TODO Auto-generated method stub
+		return isItemSelected;
+	}
+
+	private static boolean checkForSectionExist(LinkerSections aSection) {
+		boolean isSatisfied = false;
+		for (String name: aSection.getName()) {
+			boolean startSearching = false;
+			for (int i=0; i<bot.table().rowCount(); i++) {
+				if(bot.table().getTableItem(i).getText(0).equals(aSection.getAddress())){
+					startSearching = true;
+				}
+				if(startSearching) {
+					if ((!bot.table().getTableItem(i).getText(0).equals(aSection.getAddress())&&(!bot.table().getTableItem(i).getText(0).equals("")))){
+						isSatisfied =false;
+						return isSatisfied;
+					}
+					if(name.equals(bot.table().getTableItem(i).getText(1))){
+						isSatisfied = true;
+						break;
+					}
+				}
+			}
+		}
+		return isSatisfied;
+	}
+
+	private static Collection<LinkerSections> createLinkerSectionList(
+			Collection<ProjectSettings> filteredProjectSettings) {
+		Collection<LinkerSections> linkersections = new ArrayList<>();
+		for (ProjectSettings projectsetting: filteredProjectSettings) {
+			linkersections.addAll(projectsetting.getLinkerSections());
+		}
+		return linkersections;
+	}
+
 	public static void executeTCStep(TC tc, SWTBotShell shell) throws ParseException {
 		// create project or import project or using current project
 		Collection<ProjectModel> result = null;
@@ -477,6 +591,7 @@ public class Utility {
 				}
 			}
 		}
+		allProjectModels.addAll(result);
 	}
 	
 	public static void addOrRemoveKernelObject (boolean isAdd, int index) {

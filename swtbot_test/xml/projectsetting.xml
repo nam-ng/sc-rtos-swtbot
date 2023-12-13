@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<projectsettings>
+	<checksettings>
+		<toolchain>CCRX</toolchain>
+		<board>CK-RX65N</board>
+		<!--board>RSKRX65N-2MB</board-->
+		<application>usbx_hmsc</application>
+		<incdir>
+			<path></path>
+		</incdir>
+		<options>
+			<toolid></toolid>
+			<groupid></groupid>
+			<optionid></optionid>
+			<value></value>
+		</options>
+		<sections>
+			<name>B</name>
+			<name>FREEMEM</name>
+			<address>0x00004000</address>
+		</sections>
+		<sections>
+			<name>PResetPRG</name>
+			<name>C_2</name>
+			<address>0x00800000</address>
+		</sections>
+	</checksettings>
+	<checksettings>
+		<toolchain>CCRX</toolchain>
+		<board>CK-RX65N</board>
+		<board>RSKRX65N-2MB</board>
+		<application>usbx_hmsc</application>
+		<sections>
+			<name>BEXRAM_2</name>
+			<address>0x00800000</address>
+		</sections>
+		<sections>
+			<name>REXRAM</name>
+			<address>0xFFE00000</address>
+		</sections>
+		<sections>
+			<name>C$*</name>
+			<address>0x00000004</address>
+		</sections>
+	</checksettings>
+</projectsettings>
