@@ -59,7 +59,7 @@ public class ProjectParameters {
 		public static final String RI600_1_06_01 = "1.06.01";
 		public static final String Kernel_1_0_7 = "10.4.3-rx-1.0.7";
 		public static final String Amazon_202107_1_0_1 = "v202107.00-rx-1.0.1";
-		public static final String IoTLTS_202210_1_0_0 = "202210.01-LTS-rx-1.0.0";
+		public static final String IoTLTS_202210_1_0_0 = "202210.01-LTS-rx-1.0.1";
 	}
 
 	public class RTOSApplication {
@@ -340,9 +340,9 @@ public class ProjectParameters {
 	}
 	
 	public class FileLocation{
-		public static final String AZURE_RTOS_LOCATION = "D:\\rtos_package\\Azure\\6.2.1_rel-rx-1.1.0-final";
+		public static final String AZURE_RTOS_LOCATION = "D:\\rtos_package\\Azure\\6.2.1-rx-2.0.0";
 		public static final String FIT_MODULES_LOCATION = "D:\\FITModules";
-		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\RDP1.39";
+		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\RDP1.41";
 		public static final String KERNEL_RTOS_LOCATION = "D:\\rtos_package\\Kernel";
 		public static final String AMAZON_RTOS_LOCATION = "D:\\rtos_package\\IoTLegacyNoChange";
 		public static final String EMPTY_RTOS_LOCATION = "D:\\rtos_package\\emptyFolder";
@@ -352,6 +352,6 @@ public class ProjectParameters {
 		public static final String IOT_EXPORT = "D:\\iot_export\\iot_export.zip";
 		public static final String AMAZON_OLD_RTOS_LOCATION = "D:\\rtos_package\\IoT";
 		public static final String IOTLTS_EXPORT = "D:\\Export_Regression\\iotlts_export.xml";
-		public static final String IOTLTS_RTOS_LOCATION = "D:\\rtos_package\\IoTNoChange";
+		public static final String IOTLTS_RTOS_LOCATION = "D:\\rtos_package\\IoT_LTS_Official_NoChange";
 	}
 }

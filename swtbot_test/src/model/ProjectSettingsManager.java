@@ -27,7 +27,7 @@ public class ProjectSettingsManager {
 		// do nothing
 	}
 
-	public static void loadRTOSModel(File xmlFile) {
+	public static void loadProjectSettingModel(File xmlFile) {
 		if (xmlFile == null || !xmlFile.exists()) {
 			return;
 		}
@@ -56,7 +56,7 @@ public class ProjectSettingsManager {
 			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element childElement = (Element) childNode;
 				String name = childElement.getTagName();
-				if ("projectsettings".equalsIgnoreCase(name)) {
+				if ("checksettings".equalsIgnoreCase(name)) {
 					projectsettings.add(new ProjectSettings(childElement));
 				}
 			}

@@ -1,1 +1,0 @@
-Project usbx_hcdc_CCRX_ckrx65n [HardwareDebug] has configuration error on component: usbx_hcdc(configuration error)

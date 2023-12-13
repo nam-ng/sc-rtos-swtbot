@@ -13,8 +13,8 @@ public class ProjectSettings {
 	private Collection<String> applications = new ArrayList<>();
 	
 	private IncludeDirectory incdirs;
-	private Collection<LinkerSections> sections;
-	private Collection<Options> options;
+	private Collection<LinkerSections> sections = new ArrayList<>();
+	private Collection<Options> options = new ArrayList<>();
 	
 	public ProjectSettings(Element element) {
 		NodeList children = element.getChildNodes();

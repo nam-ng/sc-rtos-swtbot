@@ -10,6 +10,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -473,15 +474,22 @@ public class Utility {
 	}
 
 	//TCExecute.java will call this function
-	public static void checkForLinkerSection(Collection<ProjectSettings> projectSettings) {
+	public static String checkForLinkerSection(Collection<ProjectSettings> projectSettings, PrintWriter writer) {
+		StringBuilder stringBuilder2 = new StringBuilder("");
 		for (ProjectModel model : allProjectModels) {
 			if (!model.getToolchain().equals("CCRX")) {
 				continue;
 			}
 			Collection<ProjectSettings> filteredProjectSettings = filterXMLModelProjectSettings(projectSettings, model.getToolchain(), model.getBoard(), model.getApplication());
 			Collection<LinkerSections> linkerSections = createLinkerSectionList(filteredProjectSettings);
-			SWTBotTreeItem projectItem = Utility.getProjectTreeItem(model);
-			projectItem.select();
+			SWTBotTreeItem projectItem=null;
+			if(!isItemSelected(model.getProjectName())) {
+				projectItem = bot.tree().getTreeItem(model.getProjectName()).select();
+				projectItem.select();
+			} else {
+				projectItem = Utility.getProjectTreeItem(model);
+				projectItem.select();
+			}
 
 			// open project setting dialog
 			projectItem.contextMenu("C/C++ Project Settings").click();
@@ -490,16 +498,38 @@ public class Utility {
 			// check Linker/Section/Symbol file option
 			bot.treeWithLabel("Settings").getTreeItem("Linker").getNode("Section").click();
 			bot.button("...").click();
-			
 			for (LinkerSections aSection: linkerSections) {
 				boolean isSectionExist = checkForSectionExist(aSection);
 				if (!isSectionExist) {
-					//TODO: print section to file output/checkProjectSetting.txt
+					StringBuilder stringBuilder = new StringBuilder("");
+					for (String name: aSection.getName()) {
+						stringBuilder.append(name);
+						stringBuilder.append(" ");
+					}
+					stringBuilder2.append("\nProject "+ model.getProjectName()+ " does not satisfy sections: "+ stringBuilder + " in address "+ aSection.getAddress());
 				}
 			}
+			
+			bot.button("Cancel").click();
+			bot.button("Cancel").click();
 		}
+		return stringBuilder2.toString();
 	}
 	
+	
+	
+	private static boolean isItemSelected(String projectName) {
+		SWTBotTreeItem[] allItems = bot.tree().getAllItems();
+		boolean isItemSelected = true;
+		for (SWTBotTreeItem treeItem : allItems) {
+			if (projectName.equals(treeItem.getText())) {
+				isItemSelected=false;
+			}
+		}
+		// TODO Auto-generated method stub
+		return isItemSelected;
+	}
+
 	private static boolean checkForSectionExist(LinkerSections aSection) {
 		boolean isSatisfied = false;
 		for (String name: aSection.getName()) {
@@ -509,13 +539,13 @@ public class Utility {
 					startSearching = true;
 				}
 				if(startSearching) {
-					if(name.equals(bot.table().getTableItem(i).getText(1))){
-						isSatisfied = true;
-						break;
-					}
 					if ((!bot.table().getTableItem(i).getText(0).equals(aSection.getAddress())&&(!bot.table().getTableItem(i).getText(0).equals("")))){
 						isSatisfied =false;
 						return isSatisfied;
+					}
+					if(name.equals(bot.table().getTableItem(i).getText(1))){
+						isSatisfied = true;
+						break;
 					}
 				}
 			}
