@@ -1,132 +1,34 @@
 
+Records of PG and Build Time on check build run on Thu Dec 14 17:44:19 ICT 2023 is:
+	_PG time for fleetps_cell_CCRX_ckrx65n: 24.2s
+	_Overall PG time for fleetps_cell, CCRX is 24.2s
+	_Average PG time for fleetps_cell, CCRX is 24.2s
+	_PG time for fleetps_ether_CCRX_ckrx65n: 22.524s
+	_Overall PG time for fleetps_ether, CCRX is 22.524s
+	_Average PG time for fleetps_ether, CCRX is 22.524s
+	_PG time for pubsub_cell_CCRX_ckrx65n: 25.593s
+	_Overall PG time for pubsub_cell, CCRX is 25.593s
+	_Average PG time for pubsub_cell, CCRX is 25.593s
+	_PG time for pubsub_ether_CCRX_ckrx65n: 40.753s
+	_Overall PG time for pubsub_ether, CCRX is 40.753s
+	_Average PG time for pubsub_ether, CCRX is 40.753s
+	_PG time: 113.074 seconds
+	_Build time: 312.869 seconds
+	_Overall time: 425.94300000000004 seconds
 
-Records of PG and Build Time on check build run on Wed Nov 29 22:42:31 ICT 2023 is:
-	_PG time for iot_sdk_pnp_ewf_CCRX_ckrx65n: 50.94s
-	_Overall PG time for iot_sdk_pnp_ewf, CCRX is 50.94s
-	_Average PG time for iot_sdk_pnp_ewf, CCRX is 50.94s
-	_PG time for iot_sdk_ewf_CCRX_ckrx65n: 51.606s
-	_Overall PG time for iot_sdk_ewf, CCRX is 51.606s
-	_Average PG time for iot_sdk_ewf, CCRX is 51.606s
-	_PG time for iperf_CCRX_rsk65n: 48.734s
-	_PG time for iperf_CCRX_ckrx65n: 53.481s
-	_PG time for iperf_CCRX_ekrx72n: 48.699s
-	_Overall PG time for iperf, CCRX is 150.914s
-	_Average PG time for iperf, CCRX is 50.30466666666666s
-	_PG time for iot_sdk_pnp_ewf_GCC_ckrx65n: 31.407s
-	_Overall PG time for iot_sdk_pnp_ewf, GCC is 31.407s
-	_Average PG time for iot_sdk_pnp_ewf, GCC is 31.407s
-	_PG time for iot_sdk_ewf_GCC_ckrx65n: 40.844s
-	_Overall PG time for iot_sdk_ewf, GCC is 40.844s
-	_Average PG time for iot_sdk_ewf, GCC is 40.844s
-	_PG time for iperf_GCC_rsk65n: 28.288s
-	_PG time for iperf_GCC_ckrx65n: 26.032s
-	_PG time for iperf_GCC_ekrx72n: 29.722s
-	_Overall PG time for iperf, GCC is 84.042s
-	_Average PG time for iperf, GCC is 28.014s
-	_Build time for iperf_CCRX_rsk65n [HardwareDebug]: 295.592s
-	_Build time for iperf_CCRX_ekrx72n [HardwareDebug]: 383.39s
-	_Build time for iperf_CCRX_ckrx65n [HardwareDebug]: 288.015s
-	_Overall Build time for iperf, CCRX is 966.997s
-	_Average Build time for iperf, CCRX is 322.33233333333334s
-	_Build time for iperf_GCC_rsk65n [HardwareDebug]: 240.977s
-	_Build time for iperf_GCC_ekrx72n [HardwareDebug]: 212.08s
-	_Build time for iperf_GCC_ckrx65n [HardwareDebug]: 215.821s
-	_Overall Build time for iperf, GCC is 668.878s
-	_Average Build time for iperf, GCC is 222.95933333333335s
-	_PG time: 409.754 seconds
-	_Build time: 2061.861 seconds
-	_Overall time: 2471.615 seconds
-
-Records of PG and Build Time on check build run on Thu Nov 30 04:56:31 ICT 2023 is:
-	_PG time for iot_adu_CCRX_ckitrx65n: 48.59s
-	_PG time for iot_adu_CCRX_rsk671: 51.435s
-	_PG time for iot_adu_CCRX_rsk65n: 50.12s
-	_PG time for iot_adu_CCRX_ckrx65n: 49.254s
-	_PG time for iot_adu_CCRX_ekrx72n: 50.178s
-	_Overall PG time for iot_adu, CCRX is 249.577s
-	_Average PG time for iot_adu, CCRX is 49.9154s
-	_PG time for bootloader_CCRX_ckitrx65n: 26.353s
-	_PG time for bootloader_CCRX_rsk671: 24.205s
-	_PG time for bootloader_CCRX_rsk65n: 25.59s
-	_PG time for bootloader_CCRX_ckrx65n: 26.727s
-	_PG time for bootloader_CCRX_ekrx72n: 24.779s
-	_Overall PG time for bootloader, CCRX is 127.654s
-	_Average PG time for bootloader, CCRX is 25.5308s
-	_PG time for iot_adu_GCC_ckitrx65n: 26.33s
-	_PG time for iot_adu_GCC_rsk671: 26.314s
-	_PG time for iot_adu_GCC_rsk65n: 28.299s
-	_PG time for iot_adu_GCC_ckrx65n: 41.218s
-	_PG time for iot_adu_GCC_ekrx72n: 28.395s
-	_Overall PG time for iot_adu, GCC is 150.556s
-	_Average PG time for iot_adu, GCC is 30.111200000000004s
-	_PG time for bootloader_GCC_ckitrx65n: 19.03s
-	_PG time for bootloader_GCC_rsk671: 17.567s
-	_PG time for bootloader_GCC_rsk65n: 18.975s
-	_PG time for bootloader_GCC_ckrx65n: 23.226s
-	_PG time for bootloader_GCC_ekrx72n: 18.713s
-	_Overall PG time for bootloader, GCC is 97.511s
-	_Average PG time for bootloader, GCC is 19.5022s
-	_Build time for bootloader_CCRX_rsk65n [HardwareDebug]: 15.76s
-	_Build time for bootloader_CCRX_ckitrx65n [HardwareDebug]: 20.67s
-	_Build time for bootloader_CCRX_ekrx72n [HardwareDebug]: 65.067s
-	_Build time for bootloader_CCRX_rsk671 [HardwareDebug]: 15.766s
-	_Build time for bootloader_CCRX_ckrx65n [HardwareDebug]: 15.758s
-	_Overall Build time for bootloader, CCRX is 133.021s
-	_Average Build time for bootloader, CCRX is 26.6042s
-	_Build time for bootloader_GCC_rsk65n [HardwareDebug]: 10.927s
-	_Build time for bootloader_GCC_ckitrx65n [HardwareDebug]: 13.326s
-	_Build time for bootloader_GCC_ekrx72n [HardwareDebug]: 10.918s
-	_Build time for bootloader_GCC_rsk671 [HardwareDebug]: 9.703s
-	_Build time for bootloader_GCC_ckrx65n [HardwareDebug]: 9.689s
-	_Overall Build time for bootloader, GCC is 54.562999999999995s
-	_Average Build time for bootloader, GCC is 10.9126s
-	_PG time: 625.302 seconds
-	_Build time: 2732.444 seconds
-	_Overall time: 3357.746 seconds
-
-Records of PG and Build Time on check build run on Thu Nov 30 17:35:39 ICT 2023 is:
-	_PG time for iot_adu_CCRX_ckitrx65n: 56.349s
-	_PG time for iot_adu_CCRX_rsk671: 56.203s
-	_PG time for iot_adu_CCRX_rsk65n: 60.412s
-	_PG time for iot_adu_CCRX_ckrx65n: 59.28s
-	_PG time for iot_adu_CCRX_ekrx72n: 56.372s
-	_Overall PG time for iot_adu, CCRX is 288.616s
-	_Average PG time for iot_adu, CCRX is 57.7232s
-	_PG time for bootloader_CCRX_ckitrx65n: 28.738s
-	_PG time for bootloader_CCRX_rsk671: 26.268s
-	_PG time for bootloader_CCRX_rsk65n: 27.763s
-	_PG time for bootloader_CCRX_ckrx65n: 32.988s
-	_PG time for bootloader_CCRX_ekrx72n: 26.712s
-	_Overall PG time for bootloader, CCRX is 142.469s
-	_Average PG time for bootloader, CCRX is 28.4938s
-	_PG time for iot_adu_GCC_ckitrx65n: 27.544s
-	_PG time for iot_adu_GCC_rsk671: 30.547s
-	_PG time for iot_adu_GCC_rsk65n: 30.419s
-	_PG time for iot_adu_GCC_ckrx65n: 45.185s
-	_PG time for iot_adu_GCC_ekrx72n: 32.341s
-	_Overall PG time for iot_adu, GCC is 166.036s
-	_Average PG time for iot_adu, GCC is 33.2072s
-	_PG time for bootloader_GCC_ckitrx65n: 19.022s
-	_PG time for bootloader_GCC_rsk671: 19.202s
-	_PG time for bootloader_GCC_rsk65n: 22.462s
-	_PG time for bootloader_GCC_ckrx65n: 23.062s
-	_PG time for bootloader_GCC_ekrx72n: 19.144s
-	_Overall PG time for bootloader, GCC is 102.892s
-	_Average PG time for bootloader, GCC is 20.5784s
-	_Build time for bootloader_CCRX_rsk65n [HardwareDebug]: 17.03s
-	_Build time for bootloader_CCRX_ckitrx65n [HardwareDebug]: 26.733s
-	_Build time for bootloader_CCRX_ekrx72n [HardwareDebug]: 19.491s
-	_Build time for bootloader_CCRX_rsk671 [HardwareDebug]: 18.263s
-	_Build time for bootloader_CCRX_ckrx65n [HardwareDebug]: 18.219s
-	_Overall Build time for bootloader, CCRX is 99.73600000000002s
-	_Average Build time for bootloader, CCRX is 19.947200000000002s
-	_Build time for bootloader_GCC_rsk65n [HardwareDebug]: 12.165s
-	_Build time for bootloader_GCC_ckitrx65n [HardwareDebug]: 16.976s
-	_Build time for bootloader_GCC_ekrx72n [HardwareDebug]: 12.213s
-	_Build time for bootloader_GCC_rsk671 [HardwareDebug]: 12.219s
-	_Build time for bootloader_GCC_ckrx65n [HardwareDebug]: 10.965s
-	_Overall Build time for bootloader, GCC is 64.538s
-	_Average Build time for bootloader, GCC is 12.907599999999999s
-	_PG time: 700.017 seconds
-	_Build time: 3205.65 seconds
-	_Overall time: 3905.6670000000004 seconds
+Records of PG and Build Time on check build run on Fri Dec 15 14:53:33 ICT 2023 is:
+	_PG time for fleetps_cell_CCRX_ckrx65n: 22.713s
+	_Overall PG time for fleetps_cell, CCRX is 22.713s
+	_Average PG time for fleetps_cell, CCRX is 22.713s
+	_PG time for fleetps_ether_CCRX_ckrx65n: 21.077s
+	_Overall PG time for fleetps_ether, CCRX is 21.077s
+	_Average PG time for fleetps_ether, CCRX is 21.077s
+	_PG time for pubsub_cell_CCRX_ckrx65n: 24.017s
+	_Overall PG time for pubsub_cell, CCRX is 24.017s
+	_Average PG time for pubsub_cell, CCRX is 24.017s
+	_PG time for pubsub_ether_CCRX_ckrx65n: 35.139s
+	_Overall PG time for pubsub_ether, CCRX is 35.139s
+	_Average PG time for pubsub_ether, CCRX is 35.139s
+	_PG time: 102.949 seconds
+	_Build time: 282.792 seconds
+	_Overall time: 385.741 seconds

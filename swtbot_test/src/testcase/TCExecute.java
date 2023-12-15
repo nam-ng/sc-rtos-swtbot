@@ -109,7 +109,7 @@ public class TCExecute {
 	@Test
 	public void TC_00_execute() throws Exception {
 		workbenchShell.setFocus();
-		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.AZURE_RTOS_LOCATION, true);
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.IOTLTS_RTOS_LOCATION, true);
 		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION, false);
 		Utility.reFocus(robot);
 		long start = System.currentTimeMillis();
@@ -128,7 +128,8 @@ public class TCExecute {
 		Date currentDate = new Date(start); 
 		PrintWriter writer = new PrintWriter(pathToCheckProjectSettingFile, "UTF-8");
 		writer.print("Records of project setting error on run on " + currentDate.toString() +" is:");
-		writer.print(Utility.checkForLinkerSection(projectSetting, writer));
+		writer.print(Utility.checkForLinkerSection(projectSetting));
+		writer.print(Utility.checkForIncludeDir(projectSetting));
 		
 		writer.close();
 	}
