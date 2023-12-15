@@ -36,6 +36,7 @@ import org.osgi.framework.Bundle;
 
 import model.AbstractNode;
 import model.Action;
+import model.IncludeDirectory;
 import model.LinkerSections;
 import model.Project;
 import model.ProjectModel;
@@ -471,8 +472,47 @@ public class Utility {
 		dialogBot.waitUntil(Conditions.shellCloses(reDialog));
 	}
 
+	public static String checkForIncludeDir(Collection<ProjectSettings> projectSettings) {
+		StringBuilder stringBuilder2 = new StringBuilder("");
+		for (ProjectModel model: allProjectModels) {
+			Collection<ProjectSettings> filteredProjectSettings = filterXMLModelProjectSettings(projectSettings, model.getToolchain(), model.getBoard(), model.getApplication());
+			Collection<IncludeDirectory> includeDirs= createIncDirList(filteredProjectSettings);
+			SWTBotTreeItem projectItem=null;
+			if(!isItemSelected(model.getProjectName())) {
+				projectItem = bot.tree().getTreeItem(model.getProjectName()).select();
+				projectItem.select();
+			} else {
+				projectItem = Utility.getProjectTreeItem(model);
+				projectItem.select();
+			}
+			
+			projectItem.contextMenu("C/C++ Project Settings").click();
+			bot.cTabItem("Tool Settings").activate();
+			
+			bot.treeWithLabel("Settings").getTreeItem("Compiler").getNode("Source").click();
+			String[] currentListOfIncDirs = bot.list(0).getItems();
+
+			for (IncludeDirectory aIncDir: includeDirs) {
+				for (String path: aIncDir.getPaths()) {
+					boolean isFound = false;
+					for (String currentPath: currentListOfIncDirs) {
+						if (currentPath.contains(path)) {
+							isFound = true;
+						}
+					}
+					if(!isFound) {
+						stringBuilder2.append("\nProject "+ model.getProjectName()+ " does not have path: "+ path + " in include directory");
+
+					}
+				}
+			}
+			
+			bot.button("Cancel").click();
+		}
+		return stringBuilder2.toString();
+	}
 	//TCExecute.java will call this function
-	public static String checkForLinkerSection(Collection<ProjectSettings> projectSettings, PrintWriter writer) {
+	public static String checkForLinkerSection(Collection<ProjectSettings> projectSettings) {
 		StringBuilder stringBuilder2 = new StringBuilder("");
 		for (ProjectModel model : allProjectModels) {
 			if (!model.getToolchain().equals("CCRX")) {
@@ -558,6 +598,14 @@ public class Utility {
 			linkersections.addAll(projectsetting.getLinkerSections());
 		}
 		return linkersections;
+	}
+	
+	private static Collection<IncludeDirectory> createIncDirList(Collection<ProjectSettings> filteredProjectSettings){
+		Collection<IncludeDirectory> includeDir = new ArrayList<>();
+		for (ProjectSettings projectsetting: filteredProjectSettings) {
+			includeDir.add(projectsetting.getIncludeDirectory());
+		}
+		return includeDir;
 	}
 
 	public static void executeTCStep(TC tc, SWTBotShell shell) throws ParseException {

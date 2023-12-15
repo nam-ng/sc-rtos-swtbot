@@ -103,10 +103,10 @@
 			<application id="guix_16bpp" order="10"></application>
 		</project>
 	</TC-->
-	<TC id="TC6">
+	<!--TC id="TC6">
 		<project id="pg">
 			<group id="toolchain">
-				<!--toolchain>GCC</toolchain-->
+				<toolchain>GCC</toolchain>
 				<toolchain>CCRX</toolchain>
 				<RTOSType>AzureRTOS</RTOSType>
 				<RTOSVersion>6.2.1_rel-rx-2.0.0</RTOSVersion>
@@ -114,11 +114,29 @@
 			<group id="device">
 				<board>CK-RX65N</board>
 				<board>RSKRX65N-2MB</board>
-				<!--board>EnvisionKitRX72N</board>
-				<board>RSKRX671</board-->
+				<board>EnvisionKitRX72N</board>
+				<board>RSKRX671</board>
 			</group>
 			<application id="usbx_hmsc" order="13"></application>
-			<!--application id="usbx_hcdc" order="14"></application-->
+			<application id="usbx_hcdc" order="14"></application>
+		</project>
+	</TC-->
+	<TC id="TC6">
+		<project id="pg">
+			<group id="toolchain">
+				<!--toolchain>GCC</toolchain-->
+				<toolchain>CCRX</toolchain>
+				<RTOSType>IoTLTS</RTOSType>
+				<RTOSVersion>202210.01-LTS-rx-1.0.1</RTOSVersion>
+			</group>
+			<group id="device">
+				<board>CK-RX65N</board>
+				<!--board>CK-RX65N(DUAL)</board-->
+			</group>
+			<application id="pubsub_ether" order="0"></application>
+			<application id="pubsub_cell" order="1"></application>
+			<application id="fleetps_ether" order="2"></application>
+			<application id="fleetps_cell" order="3"></application>
 		</project>
 	</TC>
 	<!--TC id="TC7">

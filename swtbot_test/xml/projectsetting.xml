@@ -3,10 +3,13 @@
 	<checksettings>
 		<toolchain>CCRX</toolchain>
 		<board>CK-RX65N</board>
-		<!--board>RSKRX65N-2MB</board-->
-		<application>usbx_hmsc</application>
+		<application>pubsub_ether</application>
 		<incdir>
-			<path></path>
+			<path>src/smc_gen/r_byteq</path>
+			<path>src/smc_gen/r_byteq/src</path>
+			<path>src/smc_gen/r_s12ad_rx</path>
+			<path>src/smc_gen/r_s12ad_rx/src</path>
+			<path>Middleware/3rdparty/justTesting</path>
 		</incdir>
 		<options>
 			<toolid></toolid>
@@ -14,33 +17,19 @@
 			<optionid></optionid>
 			<value></value>
 		</options>
-		<sections>
-			<name>B</name>
-			<name>FREEMEM</name>
-			<address>0x00004000</address>
-		</sections>
-		<sections>
-			<name>PResetPRG</name>
-			<name>C_2</name>
-			<address>0x00800000</address>
-		</sections>
+		
 	</checksettings>
 	<checksettings>
 		<toolchain>CCRX</toolchain>
 		<board>CK-RX65N</board>
 		<board>RSKRX65N-2MB</board>
-		<application>usbx_hmsc</application>
-		<sections>
-			<name>BEXRAM_2</name>
-			<address>0x00800000</address>
-		</sections>
-		<sections>
-			<name>REXRAM</name>
-			<address>0xFFE00000</address>
-		</sections>
-		<sections>
-			<name>C$*</name>
-			<address>0x00000004</address>
-		</sections>
+		<application>fleetps_cell</application>
+		<incdir>
+			<path>Demos/common/justTesting</path>
+			<path>src/smc_gen/r_byteq</path>
+			<path>src/smc_gen/r_byteq/src</path>
+			<path>src/smc_gen/r_s12ad_rx</path>
+			<path>src/smc_gen/r_s12ad_rx/src</path>
+		</incdir>
 	</checksettings>
 </projectsettings>

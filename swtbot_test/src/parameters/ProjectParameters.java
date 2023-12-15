@@ -89,6 +89,13 @@ public class ProjectParameters {
 		
 		public static final String AMAZON_BARE = "bare";
 		public static final String AMAZON_BARE_CPLUSPLUS = "bare_Cplusplus";
+		
+		public static final String IOT_LTS_ETHER_PUBSUB = "pubsub_ether";
+		public static final String IOT_LTS_ETHER_PUBSUB_CPLUSPLUS = "pubsub_ether_Cplusplus";
+
+		public static final String IOT_LTS_CELL_PUBSUB = "pubsub_cell";
+		public static final String IOT_LTS_FLEETPS_ETHER = "fleetps_ether";
+		public static final String IOT_LTS_FLEETPS_CELL = "fleetps_cell";
 	}
 
 	public class TargetBoard {
