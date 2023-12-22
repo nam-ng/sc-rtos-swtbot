@@ -31,16 +31,12 @@ import parameters.ProjectParameters.BuildType;
 import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
-import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSDisplay;
-import parameters.ProjectParameters.RTOSType;
-import parameters.ProjectParameters.ToolchainType;
 import platform.PlatformModel;
 import testcase.TCExecute;
 
 public class PGUtility extends Utility {
 	public static Map<String, String> projNames = new HashMap<>();
-
 	static {
 		projNames.put("RSKRX65N-2MB", "rsk65n");
 		projNames.put("RSKRX65N-2MB(TSIP)", "rsk65ntsip");
