@@ -62,7 +62,7 @@
 				<RTOSVersion>6.2.1_rel-rx-2.0.0</RTOSVersion>
 			</group>
 			<group id="device">
-				<board>CK-RX65N(DUAL)</board>
+				<board>CK-RX65N</board>
 				<board>RSKRX65N-2MB(DUAL)</board>
 				<board>EnvisionKitRX72N(DUAL)</board>
 				<board>RSKRX671(DUAL)</board>

@@ -1,5 +1,6 @@
 package utilities;
 
+import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,10 +31,7 @@ import parameters.ProjectParameters.BuildType;
 import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
-import parameters.ProjectParameters.RTOSApplication;
 import parameters.ProjectParameters.RTOSDisplay;
-import parameters.ProjectParameters.RTOSType;
-import parameters.ProjectParameters.ToolchainType;
 import platform.PlatformModel;
 import testcase.TCExecute;
 
@@ -78,11 +76,12 @@ public class PGUtility extends Utility {
 		internalCreateProject(model);
 	}
 
-	public static Collection<ProjectModel> createProjectByTC(TC tc) {
+	public static Collection<ProjectModel> createProjectByTC(TC tc, Robot robot) {
 		Collection<ProjectModel> list = prepareProjectModel(tc);
 		// create project
 		Map<String,String> boardAndTime;
 		for (ProjectModel model : list) {
+			changeRTOSLocation(model, robot);
 			long start = System.currentTimeMillis();
 			internalCreateProject(model);
 			long end = System.currentTimeMillis();
@@ -107,6 +106,32 @@ public class PGUtility extends Utility {
 		return list;
 	}
 	
+	private static void changeRTOSLocation(ProjectModel model, Robot robot) {
+		if (model.getRtosType().equals(RTOSDisplay.AZURE)) {
+			Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.AZURE_RTOS_LOCATION, true);
+			Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION,
+					false);
+			Utility.reFocus(robot);
+		} else if (model.getRtosType().equals(RTOSDisplay.FREERTOSIOTLTS)) {
+			Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.IOTLTS_RTOS_LOCATION, true);
+			Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION,
+					false);
+			Utility.reFocus(robot);
+		} else if (model.getRtosType().equals(RTOSDisplay.FREERTOSKERNEL)) {
+			Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.KERNEL_RTOS_LOCATION, true);
+			Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION,
+					false);
+			Utility.reFocus(robot);
+		} else if (model.getRtosType().equals(RTOSDisplay.AMAZONFREERTOS)) {
+			Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.AMAZON_RTOS_LOCATION, true);
+			Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.NEWEST_FIT_MODULES_LOCATION,
+					false);
+			Utility.reFocus(robot);
+		}
+
+	}
+
+
 	public static void createProjectByAllTC(Collection<TC> tces) {
 		for (TC tc : tces) {
 			Collection<ProjectModel> list = prepareProjectModel(tc);

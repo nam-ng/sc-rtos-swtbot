@@ -8,12 +8,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Options {
+	
+	private String optionType = "";
 	private String toolid = "";
 	private String groupid = "";
 	private String optionid= "";
 	private String value = "";
 	
 	public Options(Element element) {
+		optionType = element.getAttribute("optionType");
 		NodeList children = element.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			Node childNode = children.item(i);
@@ -31,6 +34,14 @@ public class Options {
 				}
 			}
 		}
+	}
+	
+	public String getOptionType() {
+		return optionType;
+	}
+
+	public void setOptionType(String optionType) {
+		this.optionType = optionType;
 	}
 
 	public String getToolid() {

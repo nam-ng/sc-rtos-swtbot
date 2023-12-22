@@ -32,3 +32,72 @@ Records of PG and Build Time on check build run on Fri Dec 15 14:53:33 ICT 2023 
 	_PG time: 102.949 seconds
 	_Build time: 282.792 seconds
 	_Overall time: 385.741 seconds
+
+Records of PG and Build Time on check build run on Tue Dec 19 12:04:03 ICT 2023 is:
+	_PG time for iot_adu_CCRX_ckrx65n: 32.349s
+	_Overall PG time for iot_adu, CCRX is 32.349s
+	_Average PG time for iot_adu, CCRX is 32.349s
+	_PG time for bootloader_CCRX_ckrx65n: 19.902s
+	_Overall PG time for bootloader, CCRX is 19.902s
+	_Average PG time for bootloader, CCRX is 19.902s
+	_PG time for iot_adu_GCC_ckrx65n: 50.236s
+	_Overall PG time for iot_adu, GCC is 50.236s
+	_Average PG time for iot_adu, GCC is 50.236s
+	_PG time for bootloader_GCC_ckrx65n: 26.636s
+	_Overall PG time for bootloader, GCC is 26.636s
+	_Average PG time for bootloader, GCC is 26.636s
+	_Build time for bootloader_CCRX_ckrx65n [HardwareDebug]: 78.861s
+	_Overall Build time for bootloader, CCRX is 78.861s
+	_Average Build time for bootloader, CCRX is 78.861s
+	_Build time for bootloader_GCC_ckrx65n [HardwareDebug]: 12.14s
+	_Overall Build time for bootloader, GCC is 12.14s
+	_Average Build time for bootloader, GCC is 12.14s
+	_PG time: 129.126 seconds
+	_Build time: 646.016 seconds
+	_Overall time: 775.1419999999999 seconds
+
+Records of PG and Build Time on check build run on Tue Dec 19 15:39:58 ICT 2023 is:
+	_PG time for iot_adu_CCRX_ckrx65n: 29.693s
+	_Overall PG time for iot_adu, CCRX is 29.693s
+	_Average PG time for iot_adu, CCRX is 29.693s
+	_PG time for bootloader_CCRX_ckrx65n: 19.178s
+	_Overall PG time for bootloader, CCRX is 19.178s
+	_Average PG time for bootloader, CCRX is 19.178s
+	_PG time for iot_adu_GCC_ckrx65n: 47.677s
+	_Overall PG time for iot_adu, GCC is 47.677s
+	_Average PG time for iot_adu, GCC is 47.677s
+	_PG time for bootloader_GCC_ckrx65n: 24.556s
+	_Overall PG time for bootloader, GCC is 24.556s
+	_Average PG time for bootloader, GCC is 24.556s
+	_Build time for bootloader_CCRX_ckrx65n [HardwareDebug]: 20.663s
+	_Overall Build time for bootloader, CCRX is 20.663s
+	_Average Build time for bootloader, CCRX is 20.663s
+	_Build time for bootloader_GCC_ckrx65n [HardwareDebug]: 12.182s
+	_Overall Build time for bootloader, GCC is 12.182s
+	_Average Build time for bootloader, GCC is 12.182s
+	_PG time: 121.106 seconds
+	_Build time: 474.837 seconds
+	_Overall time: 595.943 seconds
+
+Records of PG and Build Time on check build run on Wed Dec 20 15:39:42 ICT 2023 is:
+	_PG time for iot_adu_CCRX_ckrx65n: 33.006s
+	_Overall PG time for iot_adu, CCRX is 33.006s
+	_Average PG time for iot_adu, CCRX is 33.006s
+	_PG time for bootloader_CCRX_ckrx65n: 20.326s
+	_Overall PG time for bootloader, CCRX is 20.326s
+	_Average PG time for bootloader, CCRX is 20.326s
+	_PG time for iot_adu_GCC_ckrx65n: 49.571s
+	_Overall PG time for iot_adu, GCC is 49.571s
+	_Average PG time for iot_adu, GCC is 49.571s
+	_PG time for bootloader_GCC_ckrx65n: 24.643s
+	_Overall PG time for bootloader, GCC is 24.643s
+	_Average PG time for bootloader, GCC is 24.643s
+	_Build time for bootloader_CCRX_ckrx65n [HardwareDebug]: 23.109s
+	_Overall Build time for bootloader, CCRX is 23.109s
+	_Average Build time for bootloader, CCRX is 23.109s
+	_Build time for bootloader_GCC_ckrx65n [HardwareDebug]: 15.814s
+	_Overall Build time for bootloader, GCC is 15.814s
+	_Average Build time for bootloader, GCC is 15.814s
+	_PG time: 127.548 seconds
+	_Build time: 504.959 seconds
+	_Overall time: 632.5070000000001 seconds

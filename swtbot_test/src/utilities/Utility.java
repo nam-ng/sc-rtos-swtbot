@@ -38,6 +38,7 @@ import model.AbstractNode;
 import model.Action;
 import model.IncludeDirectory;
 import model.LinkerSections;
+import model.Options;
 import model.Project;
 import model.ProjectModel;
 import model.ProjectSettings;
@@ -471,6 +472,84 @@ public class Utility {
 		reBot.button("Rebuild Index").click();
 		dialogBot.waitUntil(Conditions.shellCloses(reDialog));
 	}
+	
+	public static String checkForOptions(Collection<ProjectSettings> projectSettings) {
+		StringBuilder stringBuilder2 = new StringBuilder("");
+		for (ProjectModel model: allProjectModels) {
+			Collection<ProjectSettings> filteredProjectSettings = filterXMLModelProjectSettings(projectSettings, model.getToolchain(), model.getBoard(), model.getApplication());
+			Collection<Options> options= createOptionsList(filteredProjectSettings);
+			SWTBotTreeItem projectItem=null;
+			if(!isItemSelected(model.getProjectName())) {
+				projectItem = bot.tree().getTreeItem(model.getProjectName()).select();
+				projectItem.select();
+			} else {
+				projectItem = Utility.getProjectTreeItem(model);
+				projectItem.select();
+			}
+			
+			projectItem.contextMenu("C/C++ Project Settings").click();
+			bot.cTabItem("Tool Settings").activate();
+			
+			for (Options option : options) {
+				boolean isOptionExist = checkForOptionExist(option);
+				if (!isOptionExist) {
+					stringBuilder2.append("\nProject " + model.getProjectName() + " does not satisfy options: "
+							+ option.getOptionid() + " with value " + option.getValue() + " in " + option.getToolid()
+							+ ", " + option.getGroupid());
+				}
+			}
+			bot.button("Cancel").click();
+		}
+		return stringBuilder2.toString();
+	}
+
+	private static boolean checkForOptionExist(Options option) {
+		String groupId = option.getGroupid();
+		SWTBotTreeItem item = bot.treeWithLabel("Settings").getTreeItem(option.getToolid());
+		if (groupId.contains("-")) {
+			String[] group = groupId.split("-");
+			for (int i = 0; i < group.length; i++) {
+				item = item.getNode(group[i]);
+				if (i==group.length-1) {
+					item.click();
+				}
+			}
+		}else {
+			item.getNode(groupId).click();
+		}
+		switch (option.getOptionType()) {
+		case "checkbox":
+			if(bot.checkBox(option.getOptionid()).isVisible()) {
+				if (option.getValue().equals("true")) {
+					return bot.checkBox(option.getOptionid()).isChecked();
+				} else if (option.getValue().equals("false")){
+					return !bot.checkBox(option.getOptionid()).isChecked();
+				} else {
+					return false;
+				}
+			}
+			break;
+		case "combobox":
+			if(bot.comboBoxWithLabel(option.getOptionid()).isVisible()) {
+				if (bot.comboBoxWithLabel(option.getOptionid()).getText().equals(option.getValue())) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			break;
+		case "textbox":
+			if(bot.textWithLabel(option.getOptionid()).isVisible()) {
+				if (bot.textWithLabel(option.getOptionid()).getText().equals(option.getValue())) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			break;
+		}
+		return false;
+	}
 
 	public static String checkForIncludeDir(Collection<ProjectSettings> projectSettings) {
 		StringBuilder stringBuilder2 = new StringBuilder("");
@@ -488,8 +567,11 @@ public class Utility {
 			
 			projectItem.contextMenu("C/C++ Project Settings").click();
 			bot.cTabItem("Tool Settings").activate();
-			
-			bot.treeWithLabel("Settings").getTreeItem("Compiler").getNode("Source").click();
+			if (model.getToolchain().equals("CCRX")) {
+				bot.treeWithLabel("Settings").getTreeItem("Compiler").getNode("Source").click();
+			} else {
+				bot.treeWithLabel("Settings").getTreeItem("Compiler").getNode("Includes").click();
+			}
 			String[] currentListOfIncDirs = bot.list(0).getItems();
 
 			for (IncludeDirectory aIncDir: includeDirs) {
@@ -600,6 +682,15 @@ public class Utility {
 		return linkersections;
 	}
 	
+	private static Collection<Options> createOptionsList(
+			Collection<ProjectSettings> filteredProjectSettings) {
+		Collection<Options> options = new ArrayList<>();
+		for (ProjectSettings projectsetting: filteredProjectSettings) {
+			options.addAll(projectsetting.getOptions());
+		}
+		return options;
+	}
+	
 	private static Collection<IncludeDirectory> createIncDirList(Collection<ProjectSettings> filteredProjectSettings){
 		Collection<IncludeDirectory> includeDir = new ArrayList<>();
 		for (ProjectSettings projectsetting: filteredProjectSettings) {
@@ -608,12 +699,12 @@ public class Utility {
 		return includeDir;
 	}
 
-	public static void executeTCStep(TC tc, SWTBotShell shell) throws ParseException {
+	public static void executeTCStep(TC tc, SWTBotShell shell, Robot robot) throws ParseException {
 		// create project or import project or using current project
 		Collection<ProjectModel> result = null;
 		for (Project project : tc.getProjects()) {
 			if (project.getProjectId().equalsIgnoreCase("pg")) {
-				result = PGUtility.createProjectByTC(tc);
+				result = PGUtility.createProjectByTC(tc, robot);
 			} else if (project.getProjectId().equalsIgnoreCase("import")) {
 				
 			} else {
