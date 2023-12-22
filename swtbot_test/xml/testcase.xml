@@ -53,7 +53,7 @@
 			<application id="iperf" order="4"></application>
 		</project>
 	</TC-->
-	<TC id="TC4">
+	<!--TC id="TC4">
 		<project id="pg">
 			<group id="toolchain">
 				<toolchain>GCC</toolchain>
@@ -63,15 +63,15 @@
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
-				<!--board>RSKRX65N-2MB(DUAL)</board>
+				<board>RSKRX65N-2MB(DUAL)</board>
 				<board>EnvisionKitRX72N(DUAL)</board>
 				<board>RSKRX671(DUAL)</board>
-				<board>CloudKitRX65N(DUAL)</board-->
+				<board>CloudKitRX65N(DUAL)</board>
 			</group>
 			<application id="iot_adu" order="16"></application>
 			<application id="bootloader" order="17"></application>
 		</project>
-	</TC>
+	</TC-->
 	<!--TC id="TC4">
 		<project id="pg">
 			<group id="toolchain">
@@ -121,24 +121,24 @@
 			<application id="usbx_hcdc" order="14"></application>
 		</project>
 	</TC-->
-	<!--TC id="TC6">
+	<TC id="TC6">
 		<project id="pg">
 			<group id="toolchain">
-				<toolchain>GCC</toolchain>
+				<!--toolchain>GCC</toolchain-->
 				<toolchain>CCRX</toolchain>
 				<RTOSType>IoTLTS</RTOSType>
 				<RTOSVersion>202210.01-LTS-rx-1.0.1</RTOSVersion>
 			</group>
 			<group id="device">
 				<board>CK-RX65N</board>
-				<board>CK-RX65N(DUAL)</board>
+				<!--board>CK-RX65N(DUAL)</board-->
 			</group>
 			<application id="pubsub_ether" order="0"></application>
 			<application id="pubsub_cell" order="1"></application>
 			<application id="fleetps_ether" order="2"></application>
 			<application id="fleetps_cell" order="3"></application>
 		</project>
-	</TC-->
+	</TC>
 	<!--TC id="TC7">
 		<project id="pg">
 			<group id="toolchain">

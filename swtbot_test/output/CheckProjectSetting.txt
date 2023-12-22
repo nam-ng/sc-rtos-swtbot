@@ -1,7 +1,5 @@
-Records of project setting error on run on Fri Dec 22 11:20:38 ICT 2023 is:
-Project bootloader_GCC_ckrx65n does not have path: Demos/common/justTesting in include directory
-Project iot_adu_CCRX_ckrx65n does not have path: Middleware/3rdparty/justTesting in include directory
-Project bootloader_GCC_ckrx65n does not satisfy options: Include Symbol Table(s) with value true in Assembler, List
-Project iot_adu_CCRX_ckrx65n does not satisfy options: Address setting for unused vector area (-vect) with value _undefined_interrupt_source in Linker, Output
-Project iot_adu_CCRX_ckrx65n does not satisfy options: Output the external variable allocation information file (-map) with value Yes in Linker, Output
-Project iot_adu_CCRX_ckrx65n does not satisfy options: Use custom linkage order with value true in Linker, Input-Advanced
+Records of project setting error on run on Fri Dec 22 16:06:06 ICT 2023 is:
+Project pubsub_ether_CCRX_ckrx65n does not have path: Middleware/3rdparty/justTesting in include directory
+Project pubsub_ether_CCRX_ckrx65n does not satisfy options: Address setting for unused vector area (-vect) with value _undefined_interrupt_source in Linker, Output
+Project pubsub_ether_CCRX_ckrx65n does not satisfy options: Output the external variable allocation information file (-map) with value Yes in Linker, Output
+Project pubsub_ether_CCRX_ckrx65n does not satisfy options: Use custom linkage order with value true in Linker, Input-Advanced

@@ -699,12 +699,12 @@ public class Utility {
 		return includeDir;
 	}
 
-	public static void executeTCStep(TC tc, SWTBotShell shell) throws ParseException {
+	public static void executeTCStep(TC tc, SWTBotShell shell, Robot robot) throws ParseException {
 		// create project or import project or using current project
 		Collection<ProjectModel> result = null;
 		for (Project project : tc.getProjects()) {
 			if (project.getProjectId().equalsIgnoreCase("pg")) {
-				result = PGUtility.createProjectByTC(tc);
+				result = PGUtility.createProjectByTC(tc, robot);
 			} else if (project.getProjectId().equalsIgnoreCase("import")) {
 				
 			} else {

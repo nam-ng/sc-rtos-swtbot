@@ -3,7 +3,7 @@
 	<checksettings>
 		<toolchain>CCRX</toolchain>
 		<board>CK-RX65N</board>
-		<application>iot_adu</application>
+		<application>pubsub_ether</application>
 		<incdir>
 			<path>src/smc_gen/r_byteq</path>
 			<path>src/smc_gen/r_byteq/src</path>
@@ -44,28 +44,6 @@
 			<groupid>Input-Advanced</groupid>
 			<optionid>Use custom linkage order</optionid>
 			<value>false</value>
-		</options>
-	</checksettings>
-	<checksettings>
-		<toolchain>GCC</toolchain>
-		<board>CK-RX65N</board>
-		<application>bootloader</application>
-		<incdir>
-			<path>Demos/common/justTesting</path>
-			<path>src/smc_gen/r_byteq</path>
-			<path>src/smc_gen/r_byteq/src</path>
-		</incdir>
-		<options optionType="checkbox">
-			<toolid>Assembler</toolid>
-			<groupid>List</groupid>
-			<optionid>Omit Debugging Directives(d)</optionid>
-			<value>true</value>
-		</options>
-		<options optionType="checkbox">
-			<toolid>Assembler</toolid>
-			<groupid>List</groupid>
-			<optionid>Include Symbol Table(s)</optionid>
-			<value>true</value>
 		</options>
 	</checksettings>
 </projectsettings>
