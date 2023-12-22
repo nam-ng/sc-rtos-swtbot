@@ -3,33 +3,69 @@
 	<checksettings>
 		<toolchain>CCRX</toolchain>
 		<board>CK-RX65N</board>
-		<application>pubsub_ether</application>
+		<application>iot_adu</application>
 		<incdir>
 			<path>src/smc_gen/r_byteq</path>
 			<path>src/smc_gen/r_byteq/src</path>
-			<path>src/smc_gen/r_s12ad_rx</path>
-			<path>src/smc_gen/r_s12ad_rx/src</path>
 			<path>Middleware/3rdparty/justTesting</path>
 		</incdir>
-		<options>
-			<toolid></toolid>
-			<groupid></groupid>
-			<optionid></optionid>
-			<value></value>
+		<options optionType="textbox">
+			<toolid>Linker</toolid>
+			<groupid>Output</groupid>
+			<optionid>Address setting for unused vector area (-vect)</optionid>
+			<value>_undefined_interrupt_source_isr</value>
 		</options>
-		
+		<options optionType="textbox">
+			<toolid>Linker</toolid>
+			<groupid>Output</groupid>
+			<optionid>Address setting for unused vector area (-vect)</optionid>
+			<value>_undefined_interrupt_source</value>
+		</options>
+		<options optionType="combobox">
+			<toolid>Linker</toolid>
+			<groupid>Output</groupid>
+			<optionid>Output file type (-form)</optionid>
+			<value>Output absolute file</value>
+		</options>
+		<options optionType="combobox">
+			<toolid>Linker</toolid>
+			<groupid>Output</groupid>
+			<optionid>Output the external variable allocation information file (-map)</optionid>
+			<value>Yes</value>
+		</options>
+		<options optionType="checkbox">
+			<toolid>Linker</toolid>
+			<groupid>Input-Advanced</groupid>
+			<optionid>Use custom linkage order</optionid>
+			<value>true</value>
+		</options>
+		<options optionType="checkbox">
+			<toolid>Linker</toolid>
+			<groupid>Input-Advanced</groupid>
+			<optionid>Use custom linkage order</optionid>
+			<value>false</value>
+		</options>
 	</checksettings>
 	<checksettings>
-		<toolchain>CCRX</toolchain>
+		<toolchain>GCC</toolchain>
 		<board>CK-RX65N</board>
-		<board>RSKRX65N-2MB</board>
-		<application>fleetps_cell</application>
+		<application>bootloader</application>
 		<incdir>
 			<path>Demos/common/justTesting</path>
 			<path>src/smc_gen/r_byteq</path>
 			<path>src/smc_gen/r_byteq/src</path>
-			<path>src/smc_gen/r_s12ad_rx</path>
-			<path>src/smc_gen/r_s12ad_rx/src</path>
 		</incdir>
+		<options optionType="checkbox">
+			<toolid>Assembler</toolid>
+			<groupid>List</groupid>
+			<optionid>Omit Debugging Directives(d)</optionid>
+			<value>true</value>
+		</options>
+		<options optionType="checkbox">
+			<toolid>Assembler</toolid>
+			<groupid>List</groupid>
+			<optionid>Include Symbol Table(s)</optionid>
+			<value>true</value>
+		</options>
 	</checksettings>
 </projectsettings>

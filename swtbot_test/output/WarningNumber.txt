@@ -11,3 +11,21 @@ Records of number of warnings on check build run on Fri Dec 15 14:53:33 ICT 2023
 	_Project fleetps_ether_CCRX_ckrx65n [HardwareDebug] has 0 errors 483 warnings.
 	_Project pubsub_cell_CCRX_ckrx65n [HardwareDebug] has 0 errors 109 warnings.
 	_Project pubsub_ether_CCRX_ckrx65n [HardwareDebug] has 2 errors 474 warnings.
+
+Records of number of warnings on check build run on Tue Dec 19 12:04:03 ICT 2023 is:
+	_Project bootloader_CCRX_ckrx65n [HardwareDebug] has 0 errors 6 warnings.
+	_Project bootloader_GCC_ckrx65n [HardwareDebug] has 0 errors 6 warnings.
+	_Project iot_adu_CCRX_ckrx65n [HardwareDebug] has 0 errors 18 warnings.
+	_Project iot_adu_GCC_ckrx65n [HardwareDebug] has 0 errors 129 warnings.
+
+Records of number of warnings on check build run on Tue Dec 19 15:39:58 ICT 2023 is:
+	_Project bootloader_CCRX_ckrx65n [HardwareDebug] has 0 errors 6 warnings.
+	_Project bootloader_GCC_ckrx65n [HardwareDebug] has 0 errors 6 warnings.
+	_Project iot_adu_CCRX_ckrx65n [HardwareDebug] has 0 errors 18 warnings.
+	_Project iot_adu_GCC_ckrx65n [HardwareDebug] has 0 errors 129 warnings.
+
+Records of number of warnings on check build run on Wed Dec 20 15:39:42 ICT 2023 is:
+	_Project bootloader_CCRX_ckrx65n [HardwareDebug] has 0 errors 6 warnings.
+	_Project bootloader_GCC_ckrx65n [HardwareDebug] has 0 errors 6 warnings.
+	_Project iot_adu_CCRX_ckrx65n [HardwareDebug] has 0 errors 18 warnings.
+	_Project iot_adu_GCC_ckrx65n [HardwareDebug] has 0 errors 129 warnings.
