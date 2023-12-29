@@ -1,4 +1,4 @@
-Records of project setting error on run on Fri Dec 22 16:06:06 ICT 2023 is:
+Records of project setting error on run on Fri Dec 22 16:20:44 ICT 2023 is:
 Project pubsub_ether_CCRX_ckrx65n does not have path: Middleware/3rdparty/justTesting in include directory
 Project pubsub_ether_CCRX_ckrx65n does not satisfy options: Address setting for unused vector area (-vect) with value _undefined_interrupt_source in Linker, Output
 Project pubsub_ether_CCRX_ckrx65n does not satisfy options: Output the external variable allocation information file (-map) with value Yes in Linker, Output

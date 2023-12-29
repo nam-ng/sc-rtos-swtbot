@@ -34,6 +34,8 @@ public class ProjectParameters {
 	public static final String WINDOW_CONFIRM_NEW_FILE = "Confirm New File";
 	public static final String WINDOW_BOARD_DATA_FILE_UPDATE = "Board Data File Update";
 	public static final String WINDOW_PROJECT_SETTING = "Project Setting";
+	public static final String WINDOW_CONFIGURATION_PROBLEMS = "Configuration Problems";
+	public static final String SMART_CONFIGURATOR = "Smart Configurator";
 	
 
 	public class RTOSType {
@@ -53,7 +55,7 @@ public class ProjectParameters {
 	}
 
 	public class RTOSVersion {
-		public static final String Azure_6_2_1 = "6.2.1_rel-rx-1.3.0";
+		public static final String Azure_6_2_1 = "6.2.1_rel-rx-2.0.0";
 		public static final String Azure_6_2_0 = "6.2.0_rel-rx-1.0.0";
 		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
 		public static final String RI600_1_06_01 = "1.06.01";
@@ -213,6 +215,8 @@ public class ProjectParameters {
 		public static final String EXISTING_PROJECTS = "Existing Projects into Workspace";
 		public static final String FOLDER_RTOS_SETTING = "RTOS Setting";
 		public static final String FOLDER_RTOS_GENERIC = "RTOS Generic";
+		public static final String FOLDER_DRIVERS = "Drivers";
+		public static final String FOLDER_COMMUNICATIONS = "Communications";
 		
 	}
 	
@@ -232,6 +236,7 @@ public class ProjectParameters {
 		public static final String AWS_SECURE_SOCKET = "AWS_secure_socket";
 		public static final String AWS_TCP_IP = "AWS_tcp_ip";
 		public static final String FREERTOS_APPLICATION = "FreeRTOS_Application";
+		public static final String R_ETHER_RX = "r_ether_rx";
 	}
 	
 	public class ProjectSettings {
@@ -330,6 +335,7 @@ public class ProjectParameters {
 		public static final String SIZE_OF_STACK_IDLE_TASK = "The size of the stack used by the idle task ";
 		public static final String MAXIMUM_PRIORITIES_APPLICATION_TASK = "Maximum number of priorities to the application task";
 		public static final String MAXIMUM_PRIORITIES_APPLICATION_CO_ROUTINE = "Maximum number of priorities to the application co-routines";
+		public static final String GROUP_AL1_INTERRUPT = "Group AL1 interrupt priority level";
 	}
 
 	public class AmazonConfig{
