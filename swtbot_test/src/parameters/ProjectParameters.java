@@ -59,9 +59,9 @@ public class ProjectParameters {
 		public static final String Azure_6_2_0 = "6.2.0_rel-rx-1.0.0";
 		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
 		public static final String RI600_1_06_01 = "1.06.01";
-		public static final String Kernel_1_0_7 = "10.4.3-rx-1.0.7";
+		public static final String Kernel_1_0_7 = "10.4.3-rx-1.0.8";
 		public static final String Amazon_202107_1_0_1 = "v202107.00-rx-1.0.1";
-		public static final String IoTLTS_202210_1_0_0 = "202210.01-LTS-rx-1.0.1";
+		public static final String IoTLTS_202210_1_0_0 = "202210.01-LTS-rx-1.1.3";
 	}
 
 	public class RTOSApplication {
@@ -91,7 +91,7 @@ public class ProjectParameters {
 		
 		public static final String AMAZON_BARE = "bare";
 		public static final String AMAZON_BARE_CPLUSPLUS = "bare_Cplusplus";
-		
+
 		public static final String IOT_LTS_ETHER_PUBSUB = "pubsub_ether";
 		public static final String IOT_LTS_ETHER_PUBSUB_CPLUSPLUS = "pubsub_ether_Cplusplus";
 
@@ -353,12 +353,12 @@ public class ProjectParameters {
 	}
 	
 	public class FileLocation{
-		public static final String AZURE_RTOS_LOCATION = "D:\\rtos_package\\Azure\\6.2.1-rx-2.0.0";
-		public static final String FIT_MODULES_LOCATION = "D:\\FITModules";
+		public static final String AZURE_RTOS_LOCATION = "D:\\rtos_package\\Azure_Final_NoChange";
+		public static final String FIT_MODULES_LOCATION = "D:\\RDP1.39";
 		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\RDP1.41";
 		public static final String KERNEL_RTOS_LOCATION = "D:\\rtos_package\\Kernel";
 		public static final String AMAZON_RTOS_LOCATION = "D:\\rtos_package\\IoTLegacyNoChange";
-		public static final String EMPTY_RTOS_LOCATION = "D:\\rtos_package\\emptyFolder";
+		public static final String EMPTY_RTOS_LOCATION = "D:\\rtos_package\\EmptyFolder";
 		public static final String KERNEL_OLD_RTOS_LOCATION = "D:\\rtos_package\\Kernel_For_Regression_Test";
 		public static final String KERNEL_EXPORT = "D:\\Export_Regression\\kernel_export.xml";
 		public static final String AMAZON_EXPORT = "D:\\Export_Regression\\amazon_export.xml";
