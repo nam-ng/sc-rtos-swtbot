@@ -43,7 +43,7 @@ public class DownloadMissingPackage {
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0,
-				RTOSApplication.IOT_LTS_ETHER_PUBSUB, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+				RTOSApplication.KERNEL_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 		robot = new Robot();
 		Display.getDefault().syncExec(new Runnable() {
 
@@ -74,12 +74,13 @@ public class DownloadMissingPackage {
 	
 	@Test
 	public void tc_01_CreateIoTLTSProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
+		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.KERNEL_BARE,
 				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	
 	@Test
-	public void tc_02_DownloadMissingPackage() throws Exception {
+	public void tc_02_CheckComponentGreyOff() throws Exception{
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.EMPTY_RTOS_LOCATION, true);
 		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
 		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
@@ -87,6 +88,31 @@ public class DownloadMissingPackage {
 				.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
 		
 		boolean isConfigViewHasItem = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).isEnabled();
+		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.IOTLTS_RTOS_LOCATION, true);
+		if (!isConfigViewHasItem) {
+			assertFalse(true);
+		}
+	}
+
+	@Test
+	public void tc_03_DownloadMissingPackage() throws Exception {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_KERNEL)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_KERNEL).select();
+		
+		boolean isConfigViewHasItem = bot.tree(2).getTreeItem(ProjectParameters.KernelConfig.CONFIGURATIONS).isEnabled();
+		
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName()).select();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " ["+ projectModelSpecific.getActiveBuildConfiguration() +"]").contextMenu(ProjectParameters.ProjectSettings.C_CPLUSPLUS_PROJECT_SETTINGS).click();
+		bot.tree().getTreeItem("Resource").expand();
+		bot.tree().getTreeItem("Resource").getNode("Linked Resources").click();
+		bot.table().select(0);
+		bot.button("Edit...").click();
+		bot.text(0).setText("AWS_IOT_MCU_ROOT_2");
+		bot.button(ButtonAction.BUTTON_OK).click();
+		bot.button(ButtonAction.APPLY_AND_CLOSE).click();
 		
 		Utility.changeModuleDownloadLocation(robot, ProjectParameters.FileLocation.EMPTY_RTOS_LOCATION, true);
 		
@@ -129,7 +155,7 @@ public class DownloadMissingPackage {
 	}
 	
 	@Test
-	public void tc_03_DeleteIoTLTSProject() throws Exception {
+	public void tc_04_DeleteIoTLTSProject() throws Exception {
 		Utility.deleteProject(projectModelSpecific.getProjectName(), true);
 		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
 			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();

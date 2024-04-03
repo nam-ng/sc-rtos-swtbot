@@ -43,7 +43,7 @@ public class MessageConsole {
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0,
-				RTOSApplication.IOT_LTS_ETHER_PUBSUB, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+				RTOSApplication.KERNEL_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 		robot = new Robot();
 		Display.getDefault().syncExec(new Runnable() {
 
@@ -74,7 +74,7 @@ public class MessageConsole {
 	
 	@Test
 	public void tc_01_CreateIoTLTSProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
+		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.KERNEL_BARE,
 				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	
@@ -103,7 +103,7 @@ public class MessageConsole {
 		bot.sleep(5000);
 		boolean check2 = Utility.isConsoleHasString("M04050001: File generated:src\\frtos_startup\\freertos_object_init.c");
 		boolean check3 = Utility.isConsoleHasString("M04050001: File generated:src\\frtos_skeleton\\task_function.h");
-		boolean check4 = Utility.isConsoleHasString("M04050001: File generated:src\\frtos_skeleton\\task_1.c");
+		boolean check4 = Utility.isConsoleHasString("M04050001: File generated:src\\frtos_skeleton\\task_2.c");
 		
 		if (!check2 || !check3 || !check4) {
 			assertFalse(true);

@@ -43,7 +43,7 @@ public class ObjectGUIAddRemoveObject {
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0,
-				RTOSApplication.IOT_LTS_ETHER_PUBSUB, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+				RTOSApplication.KERNEL_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 		robot = new Robot();
 		Display.getDefault().syncExec(new Runnable() {
 
@@ -74,7 +74,7 @@ public class ObjectGUIAddRemoveObject {
 	
 	@Test
 	public void tc_01_CreateIoTLTSProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
+		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.KERNEL_BARE,
 				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	
@@ -116,7 +116,23 @@ public class ObjectGUIAddRemoveObject {
 	
 	@Test
 	public void tc_08_checkTaskUI() throws Exception {
-		Utility.CheckTaskUI();
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isTasksObjectDisplayCorrectly = false;
+		if (bot.ccomboBox(1).getText().equals(ProjectParameters.KernelObject.KERNEL_START)
+				&& bot.text(7).getText().equals(ProjectParameters.KernelObject.TASK_2)
+				&& bot.text(8).getText().equals(ProjectParameters.KernelObject.TASK_2)
+				&& bot.text(9).getText().equals(ProjectParameters.KernelObject.NUMBER_512)
+				&& bot.text(10).getText().equals(ProjectParameters.KernelObject.NULL)
+				&& bot.text(11).getText().equals(ProjectParameters.KernelObject.NULL)
+				&& bot.text(12).getText().equals(ProjectParameters.KernelObject.NUMBER_1)) {
+			isTasksObjectDisplayCorrectly = true;
+		}
+
+		if (!isTasksObjectDisplayCorrectly) {
+			assertFalse(true);
+		}
 	}
 	
 	@Test

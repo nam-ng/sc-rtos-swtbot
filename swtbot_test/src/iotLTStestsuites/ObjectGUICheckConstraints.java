@@ -1,5 +1,7 @@
 package iotLTStestsuites;
 
+import static org.junit.Assert.assertFalse;
+
 import java.awt.Robot;
 import java.io.File;
 
@@ -41,7 +43,7 @@ public class ObjectGUICheckConstraints {
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
 		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0,
-				RTOSApplication.IOT_LTS_ETHER_PUBSUB, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+				RTOSApplication.KERNEL_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 		robot = new Robot();
 		Display.getDefault().syncExec(new Runnable() {
 
@@ -72,13 +74,42 @@ public class ObjectGUICheckConstraints {
 	
 	@Test
 	public void tc_01_CreateIoTLTSProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
+		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.KERNEL_BARE,
 				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	
 	@Test
 	public void tc_02_MustNotBeANumber() throws Exception {
-		Utility.MustNotBeANumber(projectModelSpecific, true);
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+			.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+			.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
+		
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.clickClearConsole();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.sleep(3000);
+		bot.text(7).setText("1");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(7).setText("task_2");
+		Utility.clickClearConsole();
+
+		bot.text(10).setText("1");
+
+		boolean check3 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check4 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(10).setText("NULL");
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2 || !check3 || !check4) {
+			assertFalse(true);
+		}
 	}
 	
 	@Test
@@ -93,12 +124,74 @@ public class ObjectGUICheckConstraints {
 
 	@Test
 	public void tc_05_ParameterMustNotBeADigit() throws Exception{
-		Utility.ParameterMustNotBeADigit();
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		
+		bot.text(11).setText("1");
+		
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(11).setText("NULL");
+		Utility.clickClearConsole();
+		
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
 	}
 	
 	@Test
 	public void tc_06_RemovedDuplicatedValues() throws Exception {
-		Utility.RemovedDuplicatedValues();
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
+		
+		bot.text(1+6*2).setText("task_2");
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(1+6*2).setText("task_3");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		bot.text(1+6*3).setText("task_2");
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(1+6*3).setText("task_4");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		bot.text(2+6*2).setText("task_2");
+		boolean check3 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(2+6*2).setText("task_3");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+
+		bot.text(2+6*3).setText("task_2");
+		boolean check4 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(2+6*3).setText("task_4");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		bot.text(4+6*1).setText("test");
+		bot.text(4+6*2).setText("test");
+		boolean check5 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(4+6*2).setText("NULL");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		bot.text(4+6*3).setText("test");
+		boolean check6 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(4+6*3).setText("NULL");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+		
+		if (!check1 || !check2 || !check3 || !check4 || !check5 || !check6) {
+			assertFalse(true);
+		}
 	}
 	
 	@Test
