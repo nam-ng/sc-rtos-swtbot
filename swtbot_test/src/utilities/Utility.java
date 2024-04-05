@@ -734,13 +734,10 @@ public class Utility {
 	}
 	
 	public static void addOrRemoveKernelObject (boolean isAdd, int index) {
-		SWTBotCanvas filterCanvas;
 		if (isAdd) {
-			filterCanvas = new SWTBotCanvas(bot.widget(WidgetMatcherFactory.withTooltip("Add new object"), index));
-	        filterCanvas.click();
+			bot.labelWithTooltip("Add new object", index).click();
 		} else {
-			filterCanvas = new SWTBotCanvas(bot.widget(WidgetMatcherFactory.withTooltip("Remove object"), index));
-	        filterCanvas.click();
+			bot.labelWithTooltip("Remove object", index).click();
 		}
 	}
 	
@@ -1611,7 +1608,7 @@ public class Utility {
 		bot.sleep(40000);
 
 		if(isLTSProject) {
-			bot.table().getTableItem(bot.table().indexOf("v202210.01-LTS-rx-1.0.0-rc2", "Rev.")).check();
+			bot.table().getTableItem(bot.table().indexOf(RTOSVersion.IoTLTS_202210_1_1_3_with_v, "Rev.")).check();
 		}else {
 			bot.table().getTableItem(bot.table().indexOf(RTOSVersion.Amazon_202107_1_0_1, "Rev.")).check();
 		}
