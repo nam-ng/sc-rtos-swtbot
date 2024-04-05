@@ -116,23 +116,7 @@ public class ObjectGUIAddRemoveObject {
 	
 	@Test
 	public void tc_08_checkTaskUI() throws Exception {
-		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
-		Utility.addOrRemoveKernelObject(true, 0);
-
-		boolean isTasksObjectDisplayCorrectly = false;
-		if (bot.ccomboBox(1).getText().equals(ProjectParameters.KernelObject.KERNEL_START)
-				&& bot.text(7).getText().equals(ProjectParameters.KernelObject.TASK_2)
-				&& bot.text(8).getText().equals(ProjectParameters.KernelObject.TASK_2)
-				&& bot.text(9).getText().equals(ProjectParameters.KernelObject.NUMBER_512)
-				&& bot.text(10).getText().equals(ProjectParameters.KernelObject.NULL)
-				&& bot.text(11).getText().equals(ProjectParameters.KernelObject.NULL)
-				&& bot.text(12).getText().equals(ProjectParameters.KernelObject.NUMBER_1)) {
-			isTasksObjectDisplayCorrectly = true;
-		}
-
-		if (!isTasksObjectDisplayCorrectly) {
-			assertFalse(true);
-		}
+		Utility.CheckTaskUIForLTS();
 	}
 	
 	@Test

@@ -82,7 +82,7 @@ public class ObjectGUICheckConstraints {
 	}
 	@Test
 	public void tc_02_MustNotBeANumber() throws Exception {
-		Utility.MustNotBeANumber(projectModelSpecific, false);
+		Utility.MustNotBeANumber(projectModelSpecific);
 	}
 	
 	@Test

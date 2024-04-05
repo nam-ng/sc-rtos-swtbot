@@ -929,6 +929,26 @@ public class Utility {
 		}
 	}
 	
+	public static void CheckTaskUIForLTS() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		boolean isTasksObjectDisplayCorrectly = false;
+		if (bot.ccomboBox(1).getText().equals(ProjectParameters.KernelObject.KERNEL_START)
+				&& bot.text(7).getText().equals(ProjectParameters.KernelObject.TASK_2)
+				&& bot.text(8).getText().equals(ProjectParameters.KernelObject.TASK_2)
+				&& bot.text(9).getText().equals(ProjectParameters.KernelObject.NUMBER_512)
+				&& bot.text(10).getText().equals(ProjectParameters.KernelObject.NULL)
+				&& bot.text(11).getText().equals(ProjectParameters.KernelObject.NULL)
+				&& bot.text(12).getText().equals(ProjectParameters.KernelObject.NUMBER_1)) {
+			isTasksObjectDisplayCorrectly = true;
+		}
+
+		if (!isTasksObjectDisplayCorrectly) {
+			assertFalse(true);
+		}
+	}
+	
 	public static void SaveConfigOfAWSLibs(ProjectModel projectModelSpecific) {
 		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
@@ -1321,19 +1341,46 @@ public class Utility {
 		}
 	}
 	
-	public static void MustNotBeANumber(ProjectModel projectModelSpecific, boolean isLTSProject) {
+	public static void MustNotBeANumberForLTS(ProjectModel projectModelSpecific) {
 		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
 
-		if (isLTSProject) {
-			bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
 			.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
 			.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
-		} else {
-			bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
-					.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
-					.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
-		}
 		
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+		Utility.clickClearConsole();
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.sleep(3000);
+		bot.text(7).setText("1");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(7).setText("task_2");
+		Utility.clickClearConsole();
+
+		bot.text(10).setText("1");
+
+		boolean check3 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check4 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(10).setText("NULL");
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2 || !check3 || !check4) {
+			assertFalse(true);
+		}
+	}
+	
+	public static void MustNotBeANumber(ProjectModel projectModelSpecific) {
+		Utility.openSCFGEditor(projectModelSpecific, ProjectParameters.SCFG_COMPONENT_TAB);
+
+		bot.tree(1).getTreeItem(ProjectParameters.FolderAndFile.FOLDER_RTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_RTOS_OBJECT)
+				.getNode(ProjectParameters.RTOSComponent.FREERTOS_OBJECT).select();
+
 		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
 		Utility.clickClearConsole();
 		Utility.addOrRemoveKernelObject(true, 0);
@@ -1399,6 +1446,22 @@ public class Utility {
 		}
 	}
 
+	public static void ParameterMustNotBeADigitForLTS() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+
+		bot.text(11).setText("1");
+
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050001);
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050003);
+
+		bot.text(11).setText("NULL");
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2) {
+			assertFalse(true);
+		}
+	}
+
 	public static void ParameterMustNotBeADigit() {
 		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
 		
@@ -1415,6 +1478,60 @@ public class Utility {
 		}
 	}
 	
+	public static void RemovedDuplicatedValuesForLTS() {
+		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
+
+		Utility.addOrRemoveKernelObject(true, 0);
+		Utility.addOrRemoveKernelObject(true, 0);
+
+		bot.text(1 + 6 * 2).setText("task_2");
+		boolean check1 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(1 + 6 * 2).setText("task_3");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+
+		bot.text(1 + 6 * 3).setText("task_2");
+		boolean check2 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(1 + 6 * 3).setText("task_4");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+
+		bot.text(2 + 6 * 2).setText("task_2");
+		boolean check3 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(2 + 6 * 2).setText("task_3");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+
+		bot.text(2 + 6 * 3).setText("task_2");
+		boolean check4 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(2 + 6 * 3).setText("task_4");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+
+		bot.text(4 + 6 * 1).setText("test");
+		bot.text(4 + 6 * 2).setText("test");
+		boolean check5 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(4 + 6 * 2).setText("NULL");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+
+		bot.text(4 + 6 * 3).setText("test");
+		boolean check6 = Utility.isConsoleHasString(ProjectParameters.MessageCode.E04050007);
+		bot.text(4 + 6 * 3).setText("NULL");
+
+		bot.sleep(2000);
+		Utility.clickClearConsole();
+
+		if (!check1 || !check2 || !check3 || !check4 || !check5 || !check6) {
+			assertFalse(true);
+		}
+	}
+
 	public static void RemovedDuplicatedValues() {
 		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
 		
