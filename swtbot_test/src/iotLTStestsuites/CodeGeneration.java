@@ -44,7 +44,7 @@ public class CodeGeneration {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0,
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_1_3,
 				RTOSApplication.IOT_LTS_ETHER_PUBSUB, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 		robot = new Robot();
 		Display.getDefault().syncExec(new Runnable() {
@@ -76,7 +76,7 @@ public class CodeGeneration {
 	
 	@Test
 	public void tc_01_CreateIoTLTSProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
+		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_1_3, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
 				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	
@@ -111,7 +111,7 @@ public class CodeGeneration {
 
 		Utility.clickGenerateCode();
 
-		String task = "ret = xTaskCreate(task_1, \"task_1\", 512, NULL, 1, NULL)";
+		String task = "ret = xTaskCreate(task_2, \"task_2\", 512, NULL, 1, NULL)";
 		String semaphore = "semaphore_handle_1 = xSemaphoreCreateBinary()";
 		String queue = "queue_handle_1 = xQueueCreate(100, sizeof(uint32_t))";
 		String swtimer = "swt_handle_1 = xTimerCreate(\"Timer_1\", 100, pdFALSE, 0, NULL)";
@@ -154,7 +154,7 @@ public class CodeGeneration {
 				{
 				    /************** task creation ****************************/
 
-				    ret = xTaskCreate(task_1, "task_1", 512, NULL, 1, NULL);
+				    ret = xTaskCreate(task_2, "task_2", 512, NULL, 1, NULL);
 				    if (pdPASS != ret)
 				    {
 				        while (1)
@@ -171,7 +171,7 @@ public class CodeGeneration {
 				.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
 
 		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
-		bot.ccomboBox(0).setSelection("kernel start");
+		bot.ccomboBox(1).setSelection("kernel start");
 
 		Utility.clickGenerateCode();
 
@@ -208,7 +208,7 @@ public class CodeGeneration {
 				void Object_init_manual (void)
 				{
 				    /************** task creation ****************************/
-				    ret = xTaskCreate(task_1, "task_1", 512, NULL, 1, NULL);
+				    ret = xTaskCreate(task_2, "task_2", 512, NULL, 1, NULL);
 				    if (pdPASS != ret)
 				    {
 				        while (1)
@@ -226,7 +226,7 @@ public class CodeGeneration {
 				.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
 
 		bot.tabItem(ProjectParameters.KernelObjectTab.TASKS).activate();
-		bot.ccomboBox(0).setSelection(ProjectParameters.KernelObject.MANUAL);
+		bot.ccomboBox(1).setSelection(ProjectParameters.KernelObject.MANUAL);
 
 		Utility.clickGenerateCode();
 
@@ -264,7 +264,7 @@ public class CodeGeneration {
 				/* Start user code for import. Do not edit comment generated here */
 				/* End user code. Do not edit comment generated here */
 
-				void task_1(void * pvParameters)
+				void task_2(void * pvParameters)
 				{
 				/* Start user code for function. Do not edit comment generated here */
 				/* End user code. Do not edit comment generated here */
@@ -280,7 +280,7 @@ public class CodeGeneration {
 				.getNode(ProjectParameters.RTOSComponent.IOT_LTS_FREERTOS_OBJECT).select();
 
 		bot.tabItem("Tasks").activate();
-		bot.ccomboBox(0).setSelection("kernel start");
+		bot.ccomboBox(1).setSelection("kernel start");
 
 		Utility.clickGenerateCode();
 
@@ -295,9 +295,9 @@ public class CodeGeneration {
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_SKELETON)
-				.getNode(ProjectParameters.FolderAndFile.FILE_TASK_1_C).doubleClick();
+				.getNode(ProjectParameters.FolderAndFile.FILE_TASK_2_C).doubleClick();
 
-		SWTBotEclipseEditor task1Editor = bot.editorByTitle(ProjectParameters.FolderAndFile.FILE_TASK_1_C)
+		SWTBotEclipseEditor task1Editor = bot.editorByTitle(ProjectParameters.FolderAndFile.FILE_TASK_2_C)
 				.toTextEditor();
 
 		task1Editor.setFocus();
@@ -314,9 +314,9 @@ public class CodeGeneration {
 		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
 				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_SKELETON)
-				.getNode(ProjectParameters.FolderAndFile.FILE_TASK_1_C).doubleClick();
+				.getNode(ProjectParameters.FolderAndFile.FILE_TASK_2_C).doubleClick();
 
-		SWTBotEclipseEditor task1Editor2 = bot.editorByTitle(ProjectParameters.FolderAndFile.FILE_TASK_1_C)
+		SWTBotEclipseEditor task1Editor2 = bot.editorByTitle(ProjectParameters.FolderAndFile.FILE_TASK_2_C)
 				.toTextEditor();
 		String textOfCFile2 = task1Editor2.getText();
 		boolean isFileContainsText2 = false;

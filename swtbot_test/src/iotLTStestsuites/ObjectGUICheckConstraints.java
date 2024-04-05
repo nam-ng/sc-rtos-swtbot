@@ -1,5 +1,7 @@
 package iotLTStestsuites;
 
+import static org.junit.Assert.assertFalse;
+
 import java.awt.Robot;
 import java.io.File;
 
@@ -40,7 +42,7 @@ public class ObjectGUICheckConstraints {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0,
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_1_3,
 				RTOSApplication.IOT_LTS_ETHER_PUBSUB, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 		robot = new Robot();
 		Display.getDefault().syncExec(new Runnable() {
@@ -72,13 +74,13 @@ public class ObjectGUICheckConstraints {
 	
 	@Test
 	public void tc_01_CreateIoTLTSProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
+		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_1_3, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
 				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	
 	@Test
 	public void tc_02_MustNotBeANumber() throws Exception {
-		Utility.MustNotBeANumber(projectModelSpecific, true);
+		Utility.MustNotBeANumberForLTS(projectModelSpecific);
 	}
 	
 	@Test
@@ -93,12 +95,12 @@ public class ObjectGUICheckConstraints {
 
 	@Test
 	public void tc_05_ParameterMustNotBeADigit() throws Exception{
-		Utility.ParameterMustNotBeADigit();
+		Utility.ParameterMustNotBeADigitForLTS();
 	}
 	
 	@Test
 	public void tc_06_RemovedDuplicatedValues() throws Exception {
-		Utility.RemovedDuplicatedValues();
+		Utility.RemovedDuplicatedValuesForLTS();
 	}
 	
 	@Test

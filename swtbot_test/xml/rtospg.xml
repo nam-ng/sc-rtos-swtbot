@@ -311,12 +311,6 @@
 					<board>CK-RX65N(DUAL)</board>
 					<board>RSKRX671(DUAL)</board>
 					<board>EnvisionKitRX72N(DUAL)</board>
-					<board>RSKRX65N-2MB</board>
-					<board>RSKRX65N-2MB(TSIP)</board>
-					<board>CloudKitRX65N</board>
-					<board>CK-RX65N</board>
-					<board>RSKRX671</board>
-					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
 			<application id="bootloader" order="17">
@@ -334,19 +328,13 @@
 					<board>CK-RX65N(DUAL)</board>
 					<board>RSKRX671(DUAL)</board>
 					<board>EnvisionKitRX72N(DUAL)</board>
-					<board>RSKRX65N-2MB</board>
-					<board>RSKRX65N-2MB(TSIP)</board>
-					<board>CloudKitRX65N</board>
-					<board>CK-RX65N</board>
-					<board>RSKRX671</board>
-					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
 		</version>
 	</RTOS>
 	
 	<RTOS id="FreeRTOSKernel">
-		<version id="10.4.3-rx-1.0.7" skipapp="true">
+		<version id="10.4.3-rx-1.0.8" skipapp="true">
 			<application id="bare" order="0">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
@@ -418,8 +406,8 @@
 		</version>
 	</RTOS>
 	<RTOS id="IoTLTS">
-		<version id="202210.01-LTS-rx-1.0.1" skipapp="false">
-			<application id="pubsub_ether" order="0">
+		<version id="202210.01-LTS-rx-1.1.3" skipapp="false">
+			<application id="pubsub_ether" order="1">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -428,10 +416,9 @@
 				<target>
 					<toolchain>CCRX</toolchain>
 					<board>CK-RX65N</board>
-					<board>CK-RX65N(DUAL)</board>
 				</target>
 			</application>
-			<application id="pubsub_ether_Cplusplus" order="0">
+			<application id="pubsub_ether_Cplusplus" order="1">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -441,43 +428,6 @@
 				<target>
 					<toolchain>CCRX</toolchain>
 					<board>CK-RX65N</board>
-					<board>CK-RX65N(DUAL)</board>
-				</target>
-			</application>
-			<application id="pubsub_cell" order="1">
-				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
-					<config id="Release"/>
-				</projectconfiguration>
-				<target>
-					<toolchain>CCRX</toolchain>
-					<board>CK-RX65N</board>
-					<board>CK-RX65N(DUAL)</board>
-				</target>
-			</application>
-			<application id="fleetps_ether" order="2">
-				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
-					<config id="Release"/>
-				</projectconfiguration>
-				<target>
-					<toolchain>CCRX</toolchain>
-					<board>CK-RX65N</board>
-					<board>CK-RX65N(DUAL)</board>
-				</target>
-			</application>
-			<application id="fleetps_cell" order="3">
-				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
-					<config id="Release"/>
-				</projectconfiguration>
-				<target>
-					<toolchain>CCRX</toolchain>
-					<board>CK-RX65N</board>
-					<board>CK-RX65N(DUAL)</board>
 				</target>
 			</application>
 		</version>
