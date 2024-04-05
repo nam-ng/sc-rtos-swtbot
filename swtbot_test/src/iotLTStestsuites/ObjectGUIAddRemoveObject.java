@@ -42,8 +42,8 @@ public class ObjectGUIAddRemoveObject {
 		bot = new SWTWorkbenchBot();
 		PlatformModel.loadPlatformModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, PLATFORM_XML_FILE)));
 		RTOSManager.loadRTOSModel(new File(Utility.getBundlePath(LogUtil.PLUGIN_ID, RTOS_PG_XML_FILE)));
-		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0,
-				RTOSApplication.KERNEL_BARE, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
+		projectModelSpecific = PGUtility.prepareProjectModel(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_1_3,
+				RTOSApplication.IOT_LTS_ETHER_PUBSUB, Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 		robot = new Robot();
 		Display.getDefault().syncExec(new Runnable() {
 
@@ -74,7 +74,7 @@ public class ObjectGUIAddRemoveObject {
 	
 	@Test
 	public void tc_01_CreateIoTLTSProject() throws Exception {
-		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_0_0, RTOSApplication.KERNEL_BARE,
+		PGUtility.createProject(RTOSType.FREERTOSIOTLTS, RTOSVersion.IoTLTS_202210_1_1_3, RTOSApplication.IOT_LTS_ETHER_PUBSUB,
 				Constants.CCRX_TOOLCHAIN, TargetBoard.BOARD_CK_RX65N);
 	}
 	

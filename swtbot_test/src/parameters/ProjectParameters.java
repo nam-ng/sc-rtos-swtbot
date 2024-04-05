@@ -59,9 +59,12 @@ public class ProjectParameters {
 		public static final String Azure_6_2_0 = "6.2.0_rel-rx-1.0.0";
 		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
 		public static final String RI600_1_06_01 = "1.06.01";
-		public static final String Kernel_1_0_7 = "10.4.3-rx-1.0.8";
+		public static final String Kernel_1_0_7 = "10.4.3-rx-1.0.7";
+		public static final String Kernel_1_0_8 = "10.4.3-rx-1.0.8";
 		public static final String Amazon_202107_1_0_1 = "v202107.00-rx-1.0.1";
-		public static final String IoTLTS_202210_1_0_0 = "202210.01-LTS-rx-1.1.3";
+		public static final String IoTLTS_202210_1_0_0 = "202210.01-LTS-rx-1.0.0";
+		public static final String IoTLTS_202210_1_0_1 = "202210.01-LTS-rx-1.0.1";
+		public static final String IoTLTS_202210_1_1_3 = "202210.01-LTS-rx-1.1.3";
 	}
 
 	public class RTOSApplication {
