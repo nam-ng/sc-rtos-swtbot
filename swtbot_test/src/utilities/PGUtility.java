@@ -68,12 +68,12 @@ public class PGUtility extends Utility {
 		}
 	}
 
-	public static void createProject(String rtosType, String version, String appId, String toolchain, String board) {
+	public static boolean createProject(String rtosType, String version, String appId, String toolchain, String board) {
 		ProjectModel model = prepareProjectModel(rtosType, version, appId, toolchain, board);
 		if (model == null) {
-			return;
+			return false;
 		}
-		internalCreateProject(model);
+		return internalCreateProject(model);
 	}
 
 	public static Collection<ProjectModel> createProjectByTC(TC tc, Robot robot) {
@@ -267,14 +267,15 @@ public class PGUtility extends Utility {
 		return results;
 	}
 
-	private static void createRZProject(ProjectModel model) {
-		// not yet implemented
+	private static boolean createRZProject(ProjectModel model) {
+		return false;
 	}
 
-	private static void internalCreateProject(ProjectModel model) {
+	private static boolean internalCreateProject(ProjectModel model) {
 		// create project
+		boolean isThereCodeGenWarningPopUp = false;
 		if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RX)) {
-			createRXProject(model);
+			isThereCodeGenWarningPopUp = createRXProject(model);
 			BuildUtility.setBuildConfiguration(model);
 			// extension process for IoT ADU and Bootloader project
 			// currently hard-code these applications by name and order
@@ -293,11 +294,12 @@ public class PGUtility extends Utility {
 			Utility.getProjectTreeItem(model).collapse();
 			bot.closeAllEditors();
 		} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RZ)) {
-			createRZProject(model);
+			isThereCodeGenWarningPopUp = createRZProject(model);
 		}
+		return isThereCodeGenWarningPopUp;
 	}
 
-	private static void createRXProject(ProjectModel model) {
+	private static boolean createRXProject(ProjectModel model) {
 		bot.sleep(3000);
 		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_NEW)
 				.menu(MenuName.MENU_C_CPP_PROJECT).menu(MenuName.MENU_RENESAS_RX).click();
@@ -354,17 +356,18 @@ public class PGUtility extends Utility {
 		}
 		bot.button(ButtonAction.BUTTON_FINISH).click();
 		bot.sleep(3000);
-
+		boolean isThereCodeGenWarningPopUp=false;
 		if(model.getRtosType().equalsIgnoreCase(RTOSDisplay.AZURE) || model.getRtosType().equalsIgnoreCase(RTOSDisplay.FREERTOSIOTLTS)) {
-			loopForPGAzureAndLTS();
+			isThereCodeGenWarningPopUp = loopForPGAzureAndLTS();
 		} else {
-			loopForPGOther();
+			isThereCodeGenWarningPopUp = loopForPGOther();
 		}
-
+		return isThereCodeGenWarningPopUp;
 	}
 	
-	public static void loopForPGAzureAndLTS() {
+	public static boolean loopForPGAzureAndLTS() {
 		boolean breakLoop = false;
+		boolean isThereCodeGenWarningPopUp = false;
 		while (true) {
 			SWTBotShell[] shells = bot.shells();
 			for (SWTBotShell shell : shells) {
@@ -374,6 +377,7 @@ public class PGUtility extends Utility {
 					}
 					if (shell.getText().contains(ProjectParameters.CODE_GENERATING)) {
 						shell.bot().button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
+						isThereCodeGenWarningPopUp = true;
 					}
 					if (shell.getText().equals(ProjectParameters.WINDOW_MARKETPLACE)) {
 						shell.bot().button(ButtonAction.BUTTON_CANCEL).click();
@@ -393,16 +397,20 @@ public class PGUtility extends Utility {
 				break;
 			}
 		}
+		return isThereCodeGenWarningPopUp;
+		
 	}
 	
-	public static void loopForPGOther() {
+	public static boolean loopForPGOther() {
 		boolean breakLoop = false;
+		boolean isThereCodeGenWarningPopUp = false;
 		while (true) {
 			SWTBotShell[] shells = bot.shells();
 			for (SWTBotShell shell : shells) {
 				if (shell.isActive()) {
 					if (shell.getText().contains(ProjectParameters.CODE_GENERATING)) {
 						shell.bot().button(ProjectParameters.ButtonAction.BUTTON_PROCEED).click();
+						isThereCodeGenWarningPopUp = true;
 					}
 					if (shell.getText().equals(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
 						shell.bot().button(ButtonAction.BUTTON_NO).click();
@@ -422,6 +430,8 @@ public class PGUtility extends Utility {
 				break;
 			}
 		}
+		return isThereCodeGenWarningPopUp;
+
 	}
 
 	private static String getLanguage(Collection<Language> model, String selectedToolchain, String selectedBoard) {
