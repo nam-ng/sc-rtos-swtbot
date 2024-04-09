@@ -379,5 +379,6 @@ public class ProjectParameters {
 		public static final String EMPTY_FOLDER_FOR_IMPORT_RL78="D:\\Workspace\\junit-workspace\\emptyFolderRL78";
 		public static final String EMPTY_FOLDER_FOR_IMPORT_RX="D:\\Workspace\\junit-workspace\\emptyFolderRX";
 		public static final String EMPTY_FOLDER_FOR_IMPORT_LEGACY="D:\\Workspace\\junit-workspace\\emptyFolderLegacy";
+		public static final String EMPTY_FOLDER_FOR_IMPORT_RX_FOR_CHANGE_VERSION="D:\\Workspace\\junit-workspace\\emptyFolderChangeVersion";
 	}
 }
