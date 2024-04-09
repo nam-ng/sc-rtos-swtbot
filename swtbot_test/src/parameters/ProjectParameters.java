@@ -68,6 +68,7 @@ public class ProjectParameters {
 		public static final String IoTLTS_202210_1_1_3 = "202210.01-LTS-rx-1.1.3";
 		public static final String IoTLTS_202210_1_1_3_with_v = "v202210.01-LTS-rx-1.1.3";
 		public static final String IoTLTS_202210_1_2_0_with_v = "v202210.01-LTS-rx-1.2.0";
+		public static final String IoTLTS_202210_rl78_1_0_0_with_v = "v202210.01-LTS-rl78-1.0.0";
 
 	}
 
@@ -169,6 +170,7 @@ public class ProjectParameters {
 		public static final String LABEL_FILTER = "Filter";
 		public static final String LABEL_AVAILABLE_VERSION = "&Available versions:";
 		public static final String LABEL_CURRENT_VERSION = "&Current version:";
+		public static final String LABEL_VERSION = "Version:";
 	}
 
 	public class MenuName {
@@ -373,5 +375,9 @@ public class ProjectParameters {
 		public static final String AMAZON_OLD_RTOS_LOCATION = "D:\\rtos_package\\IoT";
 		public static final String IOTLTS_EXPORT = "D:\\Export_Regression\\iotlts_export.xml";
 		public static final String IOTLTS_RTOS_LOCATION = "D:\\rtos_package\\IoT_LTS_Official_NoChange";
+		public static final String IMPORT_GITHUB_PACKAGE_LOCATION="D:\\rtos_package\\IoTPackageTestImport202404";
+		public static final String EMPTY_FOLDER_FOR_IMPORT_RL78="D:\\Workspace\\junit-workspace\\emptyFolderRL78";
+		public static final String EMPTY_FOLDER_FOR_IMPORT_RX="D:\\Workspace\\junit-workspace\\emptyFolderRX";
+		public static final String EMPTY_FOLDER_FOR_IMPORT_LEGACY="D:\\Workspace\\junit-workspace\\emptyFolderLegacy";
 	}
 }
