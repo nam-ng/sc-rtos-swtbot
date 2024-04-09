@@ -67,6 +67,8 @@ public class ProjectParameters {
 		public static final String IoTLTS_202210_1_0_1 = "202210.01-LTS-rx-1.0.1";
 		public static final String IoTLTS_202210_1_1_3 = "202210.01-LTS-rx-1.1.3";
 		public static final String IoTLTS_202210_1_1_3_with_v = "v202210.01-LTS-rx-1.1.3";
+		public static final String IoTLTS_202210_1_2_0_with_v = "v202210.01-LTS-rx-1.2.0";
+
 	}
 
 	public class RTOSApplication {
