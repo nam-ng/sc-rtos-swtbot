@@ -49,6 +49,8 @@
 				<device>R5F572NNHxBG_DUAL</device>
 				<device>R5F572NNHxFC</device>
 				<device>R5F572NNHxFC_DUAL</device>
+				<device>R5F572NDDxBD</device>
+				<device>R5F572NDDxBG</device>
 			</group>
 			<group id="RX23E-B">
 				<device>R5F523E6NxFP</device>
