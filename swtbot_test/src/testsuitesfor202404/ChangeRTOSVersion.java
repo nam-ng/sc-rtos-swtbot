@@ -111,7 +111,6 @@ public class ChangeRTOSVersion {
 	public void tc_02_ChangeRTOSVersion() throws Exception {
 		Utility.getProjectExplorerView().setFocus();
 		bot.tree().getTreeItem("aws_ether_ck_rx65n (in e2studio_ccrx)").click();
-		bot.tree().getTreeItem("aws_ether_ck_rx65n (in e2studio_ccrx)").click();
 		bot.tree().getTreeItem("aws_ether_ck_rx65n (in e2studio_ccrx) [HardwareDebug]").expand();
 		bot.tree().getTreeItem("aws_ether_ck_rx65n (in e2studio_ccrx) [HardwareDebug]").getNode("aws_ether_ck_rx65n.scfg").doubleClick();
 		bot.sleep(3000);
