@@ -388,6 +388,9 @@ public class ProjectParameters {
 		public static final String TEST_FILTER_PARTNUMBER_TARGET="D:\\rtos_package\\SWTbot_partnumber_package\\target";
 		public static final String TEST_FILTER_PARTNUMBER_APP="D:\\rtos_package\\SWTbot_partnumber_package\\app";
 		public static final String TEST_FILTER_PARTNUMBER_OTHER="D:\\rtos_package\\SWTbot_partnumber_package\\other";
-
+		public static final String TEST_FILTER_SCVERSION_TARGET="D:\\rtos_package\\SWTBot_scversion_package\\target";
+		public static final String TEST_FILTER_SCVERSION_APP="D:\\rtos_package\\SWTBot_scversion_package\\app";
+		public static final String TEST_FILTER_SCVERSION_OTHER="D:\\rtos_package\\SWTBot_scversion_package\\other";
+		public static final String TEST_FILTER_SCVERSION_PASS="D:\\rtos_package\\SWTBot_scversion_package\\pass";
 	}
 }
