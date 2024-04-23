@@ -407,6 +407,20 @@
 	</RTOS>
 	<RTOS id="IoTLTS">
 		<version id="202210.01-LTS-rx-1.1.3" skipapp="false">
+			<application id="bootloader" order="0">
+				<projectconfiguration>
+					<config id="HardwareDebug"/>
+					<config id="Debug" active="true"/>
+					<config id="Release"/>
+				</projectconfiguration>
+				<target>
+					<toolchain>CCRX</toolchain>
+					<board>CK-RX65N</board>
+					<board custom="true">R5F572NDDxBG</board>
+					<board custom="true">R5F572NDDxBD</board>
+					<board custom="true">R5F565NCDxBG</board>
+				</target>
+			</application>
 			<application id="pubsub_ether" order="1">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>

@@ -100,6 +100,7 @@ public class ProjectParameters {
 		public static final String AMAZON_BARE = "bare";
 		public static final String AMAZON_BARE_CPLUSPLUS = "bare_Cplusplus";
 
+		public static final String IOT_LTS_BOOTLOADER = "bootloader";
 		public static final String IOT_LTS_ETHER_PUBSUB = "pubsub_ether";
 		public static final String IOT_LTS_ETHER_PUBSUB_CPLUSPLUS = "pubsub_ether_Cplusplus";
 
@@ -113,6 +114,8 @@ public class ProjectParameters {
 		public static final String BOARD_RSK_RX65N_2MB = "RSKRX65N-2MB";
 		public static final String BOARD_CK_RX65N = "CK-RX65N";
 		public static final String DEVICE_R5F565NCDxBG = "R5F565NCDxBG";
+		public static final String DEVICE_R5F572NDDxBG = "R5F572NDDxBG";
+		public static final String DEVICE_R5F572NDDxBD = "R5F572NDDxBD";
 		public static final String BOARD_RSK_RX130 = "RSKRX130";
 		public static final String BOARD_RSK_RX231 = "RSKRX231";
 		public static final String BOARD_RSK_RX72N = "RSKRX72N";
@@ -144,6 +147,7 @@ public class ProjectParameters {
 		public static final String BUTTON_DOWNLOAD = "Download";
 		public static final String BUTTON_ACCEPT = "Accept";
 		public static final String BUTTON_NEXT = "Next >";
+		public static final String BUTTON_BACK = "< Back";
 		public static final String BUTTON_FINISH = "Finish";
 		public static final String BUTTON_OK = "OK";
 		public static final String BUTTON_CANCEL = "Cancel";
@@ -212,6 +216,7 @@ public class ProjectParameters {
 		public static final String FOLDER_SRC = "src";
 		public static final String FOLDER_FRTOS_CONFIG = "frtos_config";
 		public static final String FILE_FREERTOS_OBJECT_INIT_C = "freertos_object_init.c";
+		public static final String FILE_BOOTLOADER_H = "boot_loader.h";
 		public static final String FOLDER_FRTOS_STARTUP = "frtos_startup";
 		public static final String FOLDER_FRTOS_SKELETON = "frtos_skeleton";
 		public static final String FILE_TASK_1_C = "task_1.c";
@@ -380,5 +385,12 @@ public class ProjectParameters {
 		public static final String EMPTY_FOLDER_FOR_IMPORT_RX="D:\\Workspace\\junit-workspace\\emptyFolderRX";
 		public static final String EMPTY_FOLDER_FOR_IMPORT_LEGACY="D:\\Workspace\\junit-workspace\\emptyFolderLegacy";
 		public static final String EMPTY_FOLDER_FOR_IMPORT_RX_FOR_CHANGE_VERSION="D:\\Workspace\\junit-workspace\\emptyFolderChangeVersion";
+		public static final String TEST_FILTER_PARTNUMBER_TARGET="D:\\rtos_package\\SWTbot_partnumber_package\\target";
+		public static final String TEST_FILTER_PARTNUMBER_APP="D:\\rtos_package\\SWTbot_partnumber_package\\app";
+		public static final String TEST_FILTER_PARTNUMBER_OTHER="D:\\rtos_package\\SWTbot_partnumber_package\\other";
+		public static final String TEST_FILTER_SCVERSION_TARGET="D:\\rtos_package\\SWTBot_scversion_package\\target";
+		public static final String TEST_FILTER_SCVERSION_APP="D:\\rtos_package\\SWTBot_scversion_package\\app";
+		public static final String TEST_FILTER_SCVERSION_OTHER="D:\\rtos_package\\SWTBot_scversion_package\\other";
+		public static final String TEST_FILTER_SCVERSION_PASS="D:\\rtos_package\\SWTBot_scversion_package\\pass";
 	}
 }
