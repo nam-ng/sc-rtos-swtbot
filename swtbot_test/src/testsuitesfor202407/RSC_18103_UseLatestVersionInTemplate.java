@@ -179,6 +179,8 @@ public class RSC_18103_UseLatestVersionInTemplate {
 		String latestBspVersion = bot.table().getTableItem("Board Support Packages.").getText(3);
 		bot.button(ProjectParameters.ButtonAction.BUTTON_CANCEL).click();
 		assertTrue(rBspVersion.equals(latestBspVersion));
+		// remove project out from workspace
+		Utility.deleteProject(projectModelKernelCKRX65N109.getProjectName(), false);
 	}
 
 	@Test
@@ -203,6 +205,8 @@ public class RSC_18103_UseLatestVersionInTemplate {
 		String latestBspVersion = bot.table().getTableItem("Board Support Packages.").getText(3);
 		bot.button(ProjectParameters.ButtonAction.BUTTON_CANCEL).click();
 		assertFalse(rBspVersion.equals(latestBspVersion));
+		// remove project out from workspace
+		Utility.deleteProject(projectModelKernelEKRX72N109.getProjectName(), false);
 	}
 
 	@Test
@@ -227,6 +231,8 @@ public class RSC_18103_UseLatestVersionInTemplate {
 		String latestBspVersion = bot.table().getTableItem("Board Support Packages.").getText(3);
 		bot.button(ProjectParameters.ButtonAction.BUTTON_CANCEL).click();
 		assertTrue(rBspVersion.equals(latestBspVersion));
+		// remove project out from workspace
+		Utility.deleteProject(projectModelKernelRSKRX652MBN108.getProjectName(), false);
 	}
 
 	@Test
@@ -312,5 +318,7 @@ public class RSC_18103_UseLatestVersionInTemplate {
 		String latestBspVersion = bot.table().getTableItem("Board Support Packages.").getText(3);
 		bot.button(ProjectParameters.ButtonAction.BUTTON_CANCEL).click();
 		assertTrue(rBspVersion.equals(latestBspVersion));
+		// remove project out from workspace
+		Utility.deleteProject(projectModelKAzureRSKRX72N.getProjectName(), false);
 	}
 }
