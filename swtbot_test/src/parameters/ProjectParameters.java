@@ -114,6 +114,7 @@ public class ProjectParameters {
 		public static final String CUSTOM = "Custom";
 		public static final String BOARD_RSK_RX65N_2MB = "RSKRX65N-2MB";
 		public static final String BOARD_CK_RX65N = "CK-RX65N";
+		public static final String BOARD_EK_RX72N = "EnvisionKitRX72N";
 		public static final String DEVICE_R5F565NCDxBG = "R5F565NCDxBG";
 		public static final String DEVICE_R5F572NDDxBG = "R5F572NDDxBG";
 		public static final String DEVICE_R5F572NDDxBD = "R5F572NDDxBD";
@@ -370,7 +371,7 @@ public class ProjectParameters {
 	public class FileLocation{
 		public static final String AZURE_RTOS_LOCATION = "D:\\rtos_package\\Azure_Final_NoChange";
 		public static final String FIT_MODULES_LOCATION = "D:\\RDP1.39";
-		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\RDP1.41";
+		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\e2_package\\FITModules";
 		public static final String KERNEL_RTOS_LOCATION = "D:\\rtos_package\\Kernel";
 		public static final String AMAZON_RTOS_LOCATION = "D:\\rtos_package\\IoTLegacyNoChange";
 		public static final String EMPTY_RTOS_LOCATION = "D:\\rtos_package\\EmptyFolder";
