@@ -44,6 +44,7 @@ public class PGUtility extends Utility {
 		projNames.put("CloudKitRX65N", "ckitrx65n");
 		projNames.put("RSKRX671", "rsk671");
 		projNames.put("EnvisionKitRX72N", "ekrx72n");
+		projNames.put("RSKRX72N", "rskrx72n");
 		
 		projNames.put("RSKRX65N-2MB(DUAL)", "rsk65n");
 		projNames.put("RSKRX65N-2MB(TSIP)(DUAL)", "rsk65ntsip");

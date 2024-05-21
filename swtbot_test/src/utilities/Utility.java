@@ -9,9 +9,12 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,6 +25,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.bindings.keys.ParseException;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
@@ -34,6 +38,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 
+import common.LogUtil;
 import model.AbstractNode;
 import model.Action;
 import model.IncludeDirectory;
@@ -79,6 +84,10 @@ public class Utility {
 		}
 		bot.shell(ProjectParameters.WINDOW_DELETE_RESOURCES).bot().button(ButtonAction.BUTTON_OK).click();
 		waitForProcess(5000);
+		// handle the save pop-up dialog
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
+			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
+		}
 	}
 
 	public static SWTBotTreeItem getProjectItemOnProjectExplorer(String projectName) {
@@ -172,6 +181,35 @@ public class Utility {
 			bot.button(ButtonAction.BUTTON_NO).click();
 		}
 		SWTBotEditor scfgEditor = bot.editorByTitle(projectModel.getProjectName()+".scfg");
+		scfgEditor.setFocus();
+		bot.cTabItem(tabOpen).activate();
+	}
+
+	public static void openSCFGEditorByProjectName(String projectName, String tabOpen) {
+		SWTBotView prjExpView = Utility.getProjectExplorerView();
+		prjExpView.setFocus();
+
+		SWTBotTreeItem[] allItems = prjExpView.bot().tree().getAllItems();
+		SWTBotTreeItem itemPrj = null;
+		for (SWTBotTreeItem item : allItems) {
+			if (item.getText().contentEquals(projectName)
+					|| item.getText().contentEquals(projectName + " [HardwareDebug]")
+					|| item.getText().contentEquals(projectName + " [Debug]")
+					|| item.getText().contentEquals(projectName + " [Release]")) {
+				itemPrj = item;
+				break;
+			}
+		}
+		if (itemPrj == null) {
+			return;
+		}
+		itemPrj.expand();
+		itemPrj.getNode(projectName + ".scfg").doubleClick();
+		bot.sleep(3000);
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
+			bot.button(ButtonAction.BUTTON_NO).click();
+		}
+		SWTBotEditor scfgEditor = bot.editorByTitle(projectName + ".scfg");
 		scfgEditor.setFocus();
 		bot.cTabItem(tabOpen).activate();
 	}
@@ -294,6 +332,33 @@ public class Utility {
 		pressEnter(robot);
 		pressEnter(robot);
 		
+		bot.button(ButtonAction.APPLY_AND_CLOSE).click();
+	}
+
+	public static void changeModuleDownloadLocation(Robot robot, String location, int index) {
+		reFocus(robot);
+		copyLocationToClipBoard(location);
+
+		bot.menu(MenuName.MENU_WINDOW).menu(MenuName.MENU_PREFERENCES).click();
+		bot.tree().getTreeItem("Renesas").expand();
+		bot.tree().getTreeItem("Renesas").getNode("Module Download").doubleClick();
+		bot.shell("Preferences").activate();
+		// maximize dialog
+		Display.getDefault().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				bot.getDisplay().getActiveShell().setMaximized(true);
+			}
+		});
+
+		bot.button("Browse...", index).click();
+
+		pressCtrlV(robot);
+
+		pressEnter(robot);
+		pressEnter(robot);
+
 		bot.button(ButtonAction.APPLY_AND_CLOSE).click();
 	}
 
@@ -1625,5 +1690,27 @@ public class Utility {
 		}else {
 			PGUtility.loopForPGOther();
 		}
+	}
+
+	public static boolean insertContentIntoFile(java.nio.file.Path file, String anchorKey, String data) {
+		// try to load the file content
+		try {
+			List<String> fileContent = new ArrayList<>(Files.readAllLines(file, StandardCharsets.UTF_8));
+			for (int i = 0; i < fileContent.size() - 1; i++) {
+				String line = fileContent.get(i);
+				// check whether line contains anchorKey
+				if (line.contains(anchorKey) && !line.contains(data)) {
+					String modifiedLine = line.replace(anchorKey, anchorKey + " " + data);
+					fileContent.set(i, modifiedLine);
+					Files.write(file, fileContent, StandardCharsets.UTF_8);
+					return true;
+				}
+			}
+
+		} catch (IOException e) {
+			LogUtil.logException(e);
+			return false;
+		}
+		return false;
 	}
 }
