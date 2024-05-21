@@ -84,6 +84,10 @@ public class Utility {
 		}
 		bot.shell(ProjectParameters.WINDOW_DELETE_RESOURCES).bot().button(ButtonAction.BUTTON_OK).click();
 		waitForProcess(5000);
+		// handle the save pop-up dialog
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_SAVE_RESOURCES)) {
+			bot.button(ButtonAction.BUTTON_DONT_SAVE).click();
+		}
 	}
 
 	public static SWTBotTreeItem getProjectItemOnProjectExplorer(String projectName) {
