@@ -244,6 +244,7 @@ public class ProjectParameters {
 		public static final String THREADX = "threadx";
 		public static final String AZURERTOS_OBJECT = "azurertos_object";
 		public static final String FREERTOS_OBJECT = "FreeRTOS_Object";
+		public static final String FREERTOS_OBJECT_SPACE = "FreeRTOS Object";
 		public static final String IOT_LTS_FREERTOS_OBJECT = "FreeRTOS Object";
 		public static final String FREERTOS_KERNEL = "FreeRTOS_Kernel";
 		public static final String AWS_DEVICE_SHADOW = "AWS_device_shadow";
@@ -395,5 +396,7 @@ public class ProjectParameters {
 		public static final String TEST_FILTER_SCVERSION_OTHER="D:\\rtos_package\\SWTBot_scversion_package\\other";
 		public static final String TEST_FILTER_SCVERSION_PASS="D:\\rtos_package\\SWTBot_scversion_package\\pass";
 		public static final String TEST_FILTER_SCVERSION_CHANGE_VERSION="D:\\rtos_package\\SWTBot_scversion_package\\change_version"; 
+
+		public static final String TOOLCHAIN_RENESAS_CCRX_V3_05 = "D:\\Toolchain\\CC-RX\\3_5_0";
 	}
 }

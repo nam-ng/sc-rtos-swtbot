@@ -206,7 +206,7 @@ public class PGUtility extends Utility {
 		model.setApplicationOrder(app.getApplicationOrder());
 		model.setToolchain(toolchain);
 		model.setProjectName(
-				(appId + "_" + toolchain + "_" + getProjectNameByBoard(board)).replaceAll("-", "_"));
+				(appId + "_" + toolchain + "_" + rtosType.substring(0, 2) + "_" + getProjectNameByBoard(board)).replaceAll("-", "_"));
 		model.setSkipApplication(version.isSkipAppSelection());
 		ProjectConfiguration filtered = getProjectConfiguration(app.getProjectConfiguration(), toolchain, board);
 		if (filtered == null) {
