@@ -9,9 +9,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -26,16 +24,15 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotCanvas;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.Test;
 import org.osgi.framework.Bundle;
 
 import common.LogUtil;
@@ -1712,5 +1709,30 @@ public class Utility {
 			return false;
 		}
 		return false;
+	}
+
+	public static void setToolchainManagement(Robot robot, String toolchainType, String toolchainLocation) {
+		reFocus(robot);
+		copyLocationToClipBoard(toolchainLocation);
+
+		bot.menu(MenuName.MENU_WINDOW).menu(MenuName.MENU_PREFERENCES).click();
+		bot.tree().getTreeItem("Renesas").expand();
+		bot.tree().getTreeItem("Renesas").getNode("Renesas Toolchain Management").doubleClick();
+		bot.shell("Preferences").activate();
+
+		bot.tree(1).getAllItems();
+		bot.tree(1).getTreeItem(toolchainType).click();
+		bot.button("Add...").click();
+		bot.shell("Add New Toolchain").activate();
+		Display.getDefault().syncExec(() -> {
+			Text text = bot.widget(WidgetMatcherFactory.widgetOfType(Text.class), 0);
+			text.setText(toolchainLocation);
+			text.setDoubleClickEnabled(true);
+			text.setFocus();
+			bot.sleep(2000);
+			pressEnter(robot);
+			pressEnter(robot);
+		});
+		bot.button(ButtonAction.APPLY_AND_CLOSE).click();
 	}
 }
