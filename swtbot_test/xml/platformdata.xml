@@ -61,4 +61,15 @@
 		<customboard>
 		</customboard>
 	</family>
+	<family id="RL78">
+		<board group="g15">RL78G15_FastPrototypingBoard</board>
+		<board group="g16">RL78G16_FastPrototypingBoard</board>
+		<board group="g22">RL78G22_FastPrototypingBoard</board>
+		<board group="g23">RL78G23-128p_FastPrototypingBoard</board>
+		<board group="g23">RL78G23-64p_FastPrototypingBoard</board>
+		<board group="g24">RL78G24_FastPrototypingBoard</board>
+	</family>
+	<family id="RISCV">
+		<board group="g021">FPB-R9A02G021</board>
+	</family>
 </platform>

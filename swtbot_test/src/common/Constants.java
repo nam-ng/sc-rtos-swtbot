@@ -4,8 +4,13 @@ public class Constants {
 
 	public static final String GCC_TOOLCHAIN = "GCC";
 	public static final String CCRX_TOOLCHAIN = "CCRX";
+	public static final String LLVM_RL78_TOOLCHAIN = "LLVMRL78";
+	public static final String CCRL_RL78_TOOLCHAIN = "CCRLRL78";
+	public static final String LLVM_RISCV_TOOLCHAIN = "LLVMRISCV";
 	public static final String FAMILY_DEVICE_RX = "RX";
 	public static final String FAMILY_DEVICE_RZ = "RZ";
+	public static final String FAMILY_DEVICE_RL78 = "RL78";
+	public static final String FAMILY_DEVICE_RISCV = "RISCV";
 
 	// XML path
 	public static final String PLATFORM_XML_FILE = "xml/platformdata.xml";
