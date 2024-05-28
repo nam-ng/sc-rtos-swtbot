@@ -45,6 +45,7 @@ public class ProjectParameters {
 		public static final String FREERTOSKERNEL = "FreeRTOSKernel";
 		public static final String RI600v4 = "RI600V4";
 		public static final String FREERTOSIOTLTS = "IoTLTS";
+		public static final String NONE = "None";
 	}
 
 	public class RTOSDisplay {
@@ -53,9 +54,11 @@ public class ProjectParameters {
 		public static final String FREERTOSKERNEL = "FreeRTOS (kernel only)";
 		public static final String RI600v4 = "RI600V4";
 		public static final String FREERTOSIOTLTS = "FreeRTOS (with IoT libraries)";
+		public static final String NONE = "None";
 	}
 
 	public class RTOSVersion {
+		public static final String Azure_6_4_0 = "6.4.0_rel-rx-1.0.0";
 		public static final String Azure_6_2_1 = "6.2.1_rel-rx-2.0.0";
 		public static final String Azure_6_2_0 = "6.2.0_rel-rx-1.0.0";
 		public static final String Azure_6_1_6 = "6.1.6_rel-rx-1.0.6";
@@ -110,6 +113,10 @@ public class ProjectParameters {
 		public static final String IOT_LTS_FLEETPS_CELL = "fleetps_cell";
 	}
 
+	public class SCApplication {
+		public static final String SC_BLINKY = "blinky";
+	}
+
 	public class TargetBoard {
 		public static final String CUSTOM = "Custom";
 		public static final String BOARD_RSK_RX65N_2MB = "RSKRX65N-2MB";
@@ -122,6 +129,13 @@ public class ProjectParameters {
 		public static final String BOARD_RSK_RX231 = "RSKRX231";
 		public static final String BOARD_RSK_RX72N = "RSKRX72N";
 		public static final String DEVICE_R5F565NEHxLJ_DUAL = "R5F565NEHxLJ_DUAL";
+	
+		// RL78 board
+		public static final String RL78_BOARD_G23_128P_FPB = "RL78G23-128p_FastPrototypingBoard";
+		public static final String RL78_BOARD_G23_64P_FPB = "RL78G23-64p_FastPrototypingBoard";
+
+		// RISCV board
+		public static final String RISCV_BOARD_G021_FPB = "FPB-R9A02G021";
 	}
 
 	public class ToolchainType {
@@ -129,6 +143,11 @@ public class ProjectParameters {
 		public static final String GCCFORRENESASRX = "GCC For Renesas RX";
 		public static final String GCC_TOOLCHAIN = "GCC";
 		public static final String CCRX_TOOLCHAIN = "CCRX";
+	}
+
+	public class LanguageType {
+		public static final String C_LANGUAGE = "C";
+		public static final String CPP_LANGUAGE = "CPP";
 	}
 
 	public class ProjectKind {
@@ -193,6 +212,8 @@ public class ProjectParameters {
 		public static final String MENU_NEW = "New";
 		public static final String MENU_C_CPP_PROJECT = "Renesas C/C++ Project";
 		public static final String MENU_RENESAS_RX = "Renesas RX";
+		public static final String MENU_RENESAS_RL78 = "Renesas RL78";
+		public static final String MENU_RENESAS_RISCV = "Renesas RISC-V MCU";
 		public static final String MENU_CHANGE_VERSION= "Change version...";
 		public static final String CONTEXT_MENU_OPEN_PROJECT = "Open Project";
 		public static final String MENU_SAVE = "Save";
@@ -201,6 +222,8 @@ public class ProjectParameters {
 		public static final String CONTEXT_MENU_INCLUDE = "Include";
 		public static final String MEMU_IMPORT = "Import...";
 		public static final String MENU_PREFERENCES = "Preferences";
+		public static final String MENU_SWITCH_WORKSPACE = "Switch Workspace";
+		public static final String SHELL_E2S_LAUNCHER = "e² studio Launcher";
 	}
 	
 	public class FolderAndFile {
@@ -398,5 +421,7 @@ public class ProjectParameters {
 		public static final String TEST_FILTER_SCVERSION_CHANGE_VERSION="D:\\rtos_package\\SWTBot_scversion_package\\change_version"; 
 
 		public static final String TOOLCHAIN_RENESAS_CCRX_V3_05 = "D:\\Toolchain\\CC-RX\\3_5_0";
+		public static final String TOOLCHAIN_RENESAS_LLVM_RISCV_V17_0_2 = "D:\\Toolchain\\LLVM";
+		public static final String TOOLCHAIN_RENESAS_CCRL_RL78_V1_13 = "D:\\Toolchain\\CC-RL_V1.13.00";
 	}
 }

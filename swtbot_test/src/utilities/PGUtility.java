@@ -59,6 +59,14 @@ public class PGUtility extends Utility {
 		projNames.put("RSKRX66T", "rsk66t");
 		projNames.put("MCB-RX26T Type A", "mcb26tA");
 		projNames.put("MCB-RX26T Type B", "mcb26tB");
+		projNames.put("MCB-RX26T Type C", "mcb26tC");
+
+		// RL78 boards
+		projNames.put("RL78G23-128p_FastPrototypingBoard", "rl78g23_128p");
+		projNames.put("RL78G23-64p_FastPrototypingBoard", "rl78g23_64p");
+
+		// RISCV boards
+		projNames.put("FPB-R9A02G021", "riscvg021_fpb");
 	}
 
 	public static void createProject(String rtosType, String version, String appId) {
@@ -71,6 +79,14 @@ public class PGUtility extends Utility {
 
 	public static boolean createProject(String rtosType, String version, String appId, String toolchain, String board) {
 		ProjectModel model = prepareProjectModel(rtosType, version, appId, toolchain, board);
+		if (model == null) {
+			return false;
+		}
+		return internalCreateProject(model);
+	}
+
+	public static boolean createProject(String toolchain, String language, String rtosType, String version, String board, String appId) {
+		ProjectModel model = prepareProjectModel(toolchain, language, rtosType, version, board, appId);
 		if (model == null) {
 			return false;
 		}
@@ -220,6 +236,47 @@ public class PGUtility extends Utility {
 		return model;
 	}
 
+	public static ProjectModel prepareProjectModel(String toolchain, String language, String rtosType, String versionId,
+			String board, String appId) {
+		ProjectModel model = null;
+		RTOSVersion version = RTOSManager.getVersionById(rtosType, versionId);
+		if (version == null) {
+			return model;
+		}
+		Application app = RTOSManager.getApplication(rtosType, versionId, appId, toolchain, board);
+		if (app == null) {
+			return model;
+		}
+		model = new ProjectModel();
+		if (language != null && !language.isEmpty()
+				&& ("C".equalsIgnoreCase(language) || "CPP".equalsIgnoreCase(language))) {
+			model.setLanguage(language);
+		} else {
+			model.setLanguage(getLanguage(app.getLanguages(), toolchain, board));
+		}
+		model.setRtosType(Utility.convertRTOSTypeToDisplay(rtosType));
+		model.setRtosVersion(versionId);
+		model.setFamilyName(PlatformModel.getFamilyName(board));
+		model.setBoard(board);
+		model.setApplication(appId);
+		model.setApplicationOrder(app.getApplicationOrder());
+		model.setToolchain(toolchain);
+		model.setProjectName(
+				(toolchain + "_" + model.getLanguage().toLowerCase() + "_" + rtosType.substring(0, 2).toLowerCase() + "_" + getProjectNameByBoard(board))
+						.replaceAll("-", "_"));
+		model.setSkipApplication(version.isSkipAppSelection());
+		ProjectConfiguration filtered = getProjectConfiguration(app.getProjectConfiguration(), toolchain, board);
+		if (filtered == null) {
+			model.setBuildType(BuildType.HARDWARE, true);
+		} else {
+			for (Config config : filtered.getConfigs()) {
+				model.setBuildType(config.getId(), config.isActive());
+			}
+		}
+		model.setRXCLinkerFile(getRXCLinkerFile(app.getLinkerFiles(), toolchain, board));
+		return model;
+	}
+
 
 	public static Collection<ProjectModel> prepareProjectModel(TC tc) {
 		Collection<ProjectModel> results = new ArrayList<>();
@@ -296,6 +353,10 @@ public class PGUtility extends Utility {
 			bot.closeAllEditors();
 		} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RZ)) {
 			isThereCodeGenWarningPopUp = createRZProject(model);
+		} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RL78)) {
+			createRL78Project(model);
+		} else if (model.getFamilyName().equalsIgnoreCase(Constants.FAMILY_DEVICE_RISCV)) {
+			createRISCVProject(model);
 		}
 		return isThereCodeGenWarningPopUp;
 	}
@@ -326,8 +387,10 @@ public class PGUtility extends Utility {
 			bot.comboBoxWithLabel(LabelName.LABEL_TOOLCHAIN_VERSION).setSelection(0);
 		}
 	
-		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(model.getRtosType());
-		bot.comboBoxWithLabel(LabelName.LABEL_RTOS_VERSION).setSelection(model.getRtosVersion());
+		if (!"".equals(model.getRtosType())) {
+			bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(model.getRtosType());
+			bot.comboBoxWithLabel(LabelName.LABEL_RTOS_VERSION).setSelection(model.getRtosVersion());
+		}
 		if (PlatformModel.isTargetBoard(model.getBoard())) {
 			bot.comboBoxWithLabel(LabelName.LABEL_TARGET_BOARD).setSelection(model.getBoard());
 		}
@@ -364,6 +427,117 @@ public class PGUtility extends Utility {
 			isThereCodeGenWarningPopUp = loopForPGOther();
 		}
 		return isThereCodeGenWarningPopUp;
+	}
+
+	private static boolean createRL78Project(ProjectModel model) {
+		bot.sleep(3000);
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_NEW)
+				.menu(MenuName.MENU_C_CPP_PROJECT).menu(MenuName.MENU_RENESAS_RL78).click();
+		if (model.getToolchain().equals("LLVMRL78")) {
+			bot.table().select(2);
+		} else if (model.getToolchain().equals("CCRLRL78")) {
+			bot.table().select(4);
+		}
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.waitUntil(Conditions.waitForWidget(WidgetMatcherFactory.withText(LabelName.LABEL_PROJECT_NAME)), 10000);
+		bot.textWithLabel(LabelName.LABEL_PROJECT_NAME).setText(model.getProjectName());
+		bot.waitUntil(Conditions.widgetIsEnabled(bot.button(ButtonAction.BUTTON_NEXT)), 10000);
+
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		if (model.getLanguage().equals("C")) {
+			bot.radio(0).click();
+		} else {
+			bot.radio(1).click();
+		}
+		if (Arrays.asList(bot.comboBoxWithLabel(LabelName.LABEL_TOOLCHAIN_VERSION).items()).contains(model.getToolchainVersion())) {
+			bot.comboBoxWithLabel(LabelName.LABEL_TOOLCHAIN_VERSION).setSelection(model.getToolchainVersion());
+		} else {
+			bot.comboBoxWithLabel(LabelName.LABEL_TOOLCHAIN_VERSION).setSelection(0);
+		}
+		if (PlatformModel.isTargetBoard(model.getBoard())) {
+			bot.comboBoxWithLabel(LabelName.LABEL_TARGET_BOARD).setSelection(model.getBoard());
+		}
+		if (PlatformModel.isCustomBoard(model.getBoard())) {
+			bot.styledText().setText(model.getBoard());
+		}
+
+		// set Configurations
+		if (!model.isUseHardwareDebugConfiguration()) {
+			bot.checkBox(0).deselect();
+		} 
+		if (model.isUseDebugConfiguration()) {
+			bot.checkBox(1).click();
+		} else {
+			bot.checkBox(1).deselect();
+		}
+		if (model.isUseReleaseConfiguration()) {
+			bot.checkBox(2).click();
+		} else {
+			bot.checkBox(2).deselect();
+		}
+
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		if (!model.isSkipApplication()) {
+			bot.radio(model.getApplicationOrder()).click();
+		}
+		bot.button(ButtonAction.BUTTON_FINISH).click();
+		bot.sleep(3000);
+		loopForPGOther();
+		return true;
+	}
+
+	private static boolean createRISCVProject(ProjectModel model) {
+		bot.sleep(3000);
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_NEW)
+				.menu(MenuName.MENU_C_CPP_PROJECT).menu(MenuName.MENU_RENESAS_RISCV).click();
+		if (model.getToolchain().equals("LLVMRISCV")) {
+			bot.table().select(0);
+		} else {
+			return false;
+		}
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.waitUntil(Conditions.waitForWidget(WidgetMatcherFactory.withText(LabelName.LABEL_PROJECT_NAME)), 10000);
+		bot.textWithLabel(LabelName.LABEL_PROJECT_NAME).setText(model.getProjectName());
+		bot.waitUntil(Conditions.widgetIsEnabled(bot.button(ButtonAction.BUTTON_NEXT)), 10000);
+
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		if (model.getLanguage().equals("C")) {
+			bot.radio(0).click();
+		} else {
+			bot.radio(1).click();
+		}
+		if (Arrays.asList(bot.comboBoxWithLabel(LabelName.LABEL_TOOLCHAIN_VERSION).items()).contains(model.getToolchainVersion())) {
+			bot.comboBoxWithLabel(LabelName.LABEL_TOOLCHAIN_VERSION).setSelection(model.getToolchainVersion());
+		} else {
+			bot.comboBoxWithLabel(LabelName.LABEL_TOOLCHAIN_VERSION).setSelection(0);
+		}
+		if (PlatformModel.isTargetBoard(model.getBoard())) {
+			bot.comboBoxWithLabel(LabelName.LABEL_TARGET_BOARD).setSelection(model.getBoard());
+		}
+		if (PlatformModel.isCustomBoard(model.getBoard())) {
+			bot.styledText().setText(model.getBoard());
+		}
+
+		// set Configurations
+		if (!model.isUseHardwareDebugConfiguration()) {
+			bot.checkBox(0).deselect();
+		} 
+		if (model.isUseReleaseConfiguration()) {
+			bot.checkBox(1).click();
+		} else {
+			bot.checkBox(1).deselect();
+		}
+
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		if (!model.isSkipApplication()) {
+			bot.radio(model.getApplicationOrder()).click();
+		}
+		bot.button(ButtonAction.BUTTON_FINISH).click();
+		bot.sleep(3000);
+		loopForPGOther();
+		return true;
 	}
 	
 	public static boolean loopForPGAzureAndLTS() {

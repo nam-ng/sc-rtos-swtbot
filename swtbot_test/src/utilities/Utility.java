@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -1711,6 +1712,43 @@ public class Utility {
 		return false;
 	}
 
+	public static boolean checkContentOfFile(java.nio.file.Path file, List<String> dataKeys, boolean isParagrapth) {
+		// try to load the file content
+		try {
+			List<String> fileContent = new ArrayList<>(Files.readAllLines(file, StandardCharsets.UTF_8));
+			if (!isParagrapth) {
+				List<Boolean> result = new ArrayList<>();
+				for (int i = 0; i < fileContent.size() - 1; i++) {
+					String line = fileContent.get(i);
+					// check whether line contains dataKeys
+					for (String key : dataKeys) {
+						if (line.contains(key.strip())) {
+							result.add(Boolean.TRUE);
+						}
+					}
+
+				}
+				return result.size() == dataKeys.size();
+			} else {
+				String firstElement = dataKeys.get(0);
+				for (int i = 0; i < fileContent.size() - 1; i++) {
+					String line = fileContent.get(i);
+					if (line.strip().equals(firstElement.strip())) {
+						List<String> subContent = fileContent.subList(i, i + dataKeys.size());
+						List<String> strippedSubContent = subContent.stream().map(String::strip).collect(Collectors.toList());
+						List<String> strippedDataKeys = dataKeys.stream().map(String::strip).collect(Collectors.toList());
+						return strippedSubContent.equals(strippedDataKeys);
+					}
+				}
+				return false;
+			}
+
+		} catch (IOException e) {
+			LogUtil.logException(e);
+			return false;
+		}
+	}
+
 	public static void setToolchainManagement(Robot robot, String toolchainType, String toolchainLocation) {
 		reFocus(robot);
 		copyLocationToClipBoard(toolchainLocation);
@@ -1734,5 +1772,14 @@ public class Utility {
 			pressEnter(robot);
 		});
 		bot.button(ButtonAction.APPLY_AND_CLOSE).click();
+	}
+
+	public static String getWorkspaceLocation() {
+		bot.menu(ProjectParameters.MenuName.MENU_FILE).menu(ProjectParameters.MenuName.MENU_SWITCH_WORKSPACE)
+				.menu(ProjectParameters.MenuName.MENU_OTHER).click();
+		String workspace = bot.shell(ProjectParameters.MenuName.SHELL_E2S_LAUNCHER).bot().comboBox().getText();
+		bot.shell(ProjectParameters.MenuName.SHELL_E2S_LAUNCHER).bot()
+				.button(ProjectParameters.ButtonAction.BUTTON_CANCEL).click();
+		return workspace;
 	}
 }
