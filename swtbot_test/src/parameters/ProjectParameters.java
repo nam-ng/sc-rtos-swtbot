@@ -138,6 +138,11 @@ public class ProjectParameters {
 		public static final String RISCV_BOARD_G021_FPB = "FPB-R9A02G021";
 	}
 
+	public class BankMode {
+		public static final String SINGLE_MODE = "Single Bank";
+		public static final String DUAL_MODE = "Dual Bank";
+	}
+
 	public class ToolchainType {
 		public static final String CCRX = "Renesas CCRX";
 		public static final String GCCFORRENESASRX = "GCC For Renesas RX";
@@ -196,6 +201,7 @@ public class ProjectParameters {
 		public static final String LABEL_AVAILABLE_VERSION = "&Available versions:";
 		public static final String LABEL_CURRENT_VERSION = "&Current version:";
 		public static final String LABEL_VERSION = "Version:";
+		public static final String LABEL_BANK_MODE = "Bank Mode";
 	}
 
 	public class MenuName {

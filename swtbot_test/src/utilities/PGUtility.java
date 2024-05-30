@@ -179,11 +179,13 @@ public class PGUtility extends Utility {
 					model.setRtosVersion(versionId);
 					model.setFamilyName(PlatformModel.getFamilyName(board.getBoard()));
 					model.setBoard(board.getBoard());
+					model.setBankModel(board.isDualMode());
 					model.setApplication(appId);
 					model.setApplicationOrder(app.getApplicationOrder());
 					model.setToolchain(toolchain.getName());
 					model.setProjectName(
-							(appId + "_" + toolchain.getName() + "_" + getProjectNameByBoard(board.getBoard())).replaceAll("-", "_"));
+							(appId + "_" + toolchain.getName() + "_" + getProjectNameByBoard(board.getBoard()))
+									.replaceAll("-", "_") + "_" + model.getBankMode().toLowerCase().substring(0, 2));
 					model.setSkipApplication(version.isSkipAppSelection());
 					ProjectConfiguration filtered = getProjectConfiguration(app.getProjectConfiguration(), toolchain.getName(), board.getBoard());
 					if (filtered == null) {
@@ -396,6 +398,11 @@ public class PGUtility extends Utility {
 		}
 		if (PlatformModel.isCustomBoard(model.getBoard())) {
 			bot.styledText().setText(model.getBoard());
+		}
+
+		// set bank mode
+		if (model.getBankMode().equalsIgnoreCase(ProjectParameters.BankMode.DUAL_MODE)) {
+			bot.comboBoxWithLabel(LabelName.LABEL_BANK_MODE).setSelection(model.getBankMode());
 		}
 
 		// set Configurations

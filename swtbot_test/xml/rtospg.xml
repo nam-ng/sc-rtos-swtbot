@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rtospg>
 	<RTOS id="AzureRTOS">
-		<version id="6.2.1_rel-rx-2.0.0" skipapp="false">
+		<version id="6.4.0_rel-rx-1.0.0" skipapp="false">
 			<application id="bare" order="0">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
@@ -73,9 +73,9 @@
 			
 			<application id="ramdisk" order="2">
 				<projectconfiguration>
-					<config id="HardwareDebug"/>
+					<config id="HardwareDebug" active="true"/>
 					<config id="Debug"/>
-					<config id="Release" active="true"/>
+					<config id="Release"/>
 				</projectconfiguration>
 				<target>
 					<toolchain>GCC</toolchain>
@@ -147,8 +147,8 @@
 			</application>
 			<application id="iot_sdk_ewf" order="6">
 				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
 					<config id="Release"/>
 				</projectconfiguration>
 				<target>
@@ -157,36 +157,7 @@
 					<board>CK-RX65N</board>
 				</target>
 			</application>
-			<application id="iot_sdk_pnp" order="7">
-				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
-					<config id="Release"/>
-				</projectconfiguration>
-				<target>
-					<toolchain>GCC</toolchain>
-					<toolchain>CCRX</toolchain>
-					<board>RSKRX65N-2MB</board>
-					<board>RSKRX65N-2MB(TSIP)</board>
-					<board>CloudKitRX65N</board>
-					<board>CK-RX65N</board>
-					<board>RSKRX671</board>
-					<board>EnvisionKitRX72N</board>
-				</target>
-			</application>
-			<application id="iot_sdk_pnp_ewf" order="8">
-				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
-					<config id="Release"/>
-				</projectconfiguration>
-				<target>
-					<toolchain>GCC</toolchain>
-					<toolchain>CCRX</toolchain>
-					<board>CK-RX65N</board>
-				</target>
-			</application>
-			<application id="guix_8bpp" order="9">
+			<application id="guix_8bpp" order="7">
 				<projectconfiguration>
 					<config id="HardwareDebug" active="true"/>
 					<config id="Debug"/>
@@ -200,7 +171,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="guix_16bpp" order="10">
+			<application id="guix_16bpp" order="8">
 				<projectconfiguration>
 					<config id="HardwareDebug" active="true"/>
 					<config id="Debug"/>
@@ -214,7 +185,7 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="guix_16bpp_draw" order="11">
+			<application id="guix_16bpp_draw" order="9">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
 					<config id="Debug" active="true"/>
@@ -228,10 +199,10 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="usbx_cdc" order="12">
+			<application id="usbx_cdc" order="10">
 				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
 					<config id="Release"/>
 				</projectconfiguration>
 				<target>
@@ -243,10 +214,10 @@
 					<board>CK-RX65N</board>
 				</target>
 			</application>
-			<application id="usbx_hmsc" order="13">
+			<application id="usbx_hmsc" order="11">
 				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
 					<config id="Release"/>
 				</projectconfiguration>
 				<target>
@@ -259,10 +230,10 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="usbx_hcdc" order="14">
+			<application id="usbx_hcdc" order="12">
 				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
 					<config id="Release"/>
 				</projectconfiguration>
 				<target>
@@ -275,10 +246,10 @@
 					<board>EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="low_power" order="15">
+			<application id="low_power" order="13">
 				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
 					<config id="Release"/>
 				</projectconfiguration>
 				<target>
@@ -297,38 +268,36 @@
 					<board custom="true">R5F523E6NxFP</board>
 				</target>
 			</application>
-			<application id="iot_adu" order="16">
+			<application id="iot_adu" order="14">
 				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
 					<config id="Release"/>
 				</projectconfiguration>
 				<target>
 					<toolchain>GCC</toolchain>
 					<toolchain>CCRX</toolchain>
-					<board>RSKRX65N-2MB(DUAL)</board>
-					<board>RSKRX65N-2MB(TSIP)(DUAL)</board>
-					<board>CloudKitRX65N(DUAL)</board>
-					<board>CK-RX65N(DUAL)</board>
-					<board>RSKRX671(DUAL)</board>
-					<board>EnvisionKitRX72N(DUAL)</board>
+					<board isDual="true">RSKRX65N-2MB</board>
+					<board isDual="true">CloudKitRX65N</board>
+					<board isDual="true">CK-RX65N</board>
+					<board isDual="true">RSKRX671</board>
+					<board isDual="true">EnvisionKitRX72N</board>
 				</target>
 			</application>
-			<application id="bootloader" order="17">
+			<application id="bootloader" order="15">
 				<projectconfiguration>
-					<config id="HardwareDebug"/>
-					<config id="Debug" active="true"/>
+					<config id="HardwareDebug" active="true"/>
+					<config id="Debug"/>
 					<config id="Release"/>
 				</projectconfiguration>
 				<target>
 					<toolchain>GCC</toolchain>
 					<toolchain>CCRX</toolchain>
-					<board>RSKRX65N-2MB(DUAL)</board>
-					<board>RSKRX65N-2MB(TSIP)(DUAL)</board>
-					<board>CloudKitRX65N(DUAL)</board>
-					<board>CK-RX65N(DUAL)</board>
-					<board>RSKRX671(DUAL)</board>
-					<board>EnvisionKitRX72N(DUAL)</board>
+					<board isDual="true">RSKRX65N-2MB</board>
+					<board isDual="true">CloudKitRX65N</board>
+					<board isDual="true">CK-RX65N</board>
+					<board isDual="true">RSKRX671</board>
+					<board isDual="true">EnvisionKitRX72N</board>
 				</target>
 			</application>
 		</version>
