@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import parameters.ProjectParameters;
 import parameters.ProjectParameters.BuildType;
 
 public class ProjectModel {
@@ -13,6 +14,7 @@ public class ProjectModel {
 	private String toolchain;
 	private String toolchainVersion;
 	private String board;
+	private String bankMode = ProjectParameters.BankMode.SINGLE_MODE; // default single bank
 	private String rtosType;
 	private String rtosVersion;
 	private String rtosApplication;
@@ -103,6 +105,16 @@ public class ProjectModel {
 
 	public void setBoard(String board) {
 		this.board = board;
+	}
+
+	public String getBankMode() {
+		return bankMode;
+	}
+
+	public void setBankModel(boolean isDualMode) {
+		if (isDualMode) {
+			bankMode = ProjectParameters.BankMode.DUAL_MODE;
+		}
 	}
 
 	public String getRtosType() {
