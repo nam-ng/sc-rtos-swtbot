@@ -1,7 +1,5 @@
 package parameters;
 
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
-
 public class ProjectParameters {
 	public static final String OPEN_ASSOCIATED_PERSPECTIVE = "Open Associated Perspective?";
 	public static final String OPEN_PERSPECTIVE = "Open Perspective";
@@ -70,6 +68,7 @@ public class ProjectParameters {
 		public static final String IoTLTS_202210_1_0_0 = "202210.01-LTS-rx-1.0.0";
 		public static final String IoTLTS_202210_1_0_1 = "202210.01-LTS-rx-1.0.1";
 		public static final String IoTLTS_202210_1_1_3 = "202210.01-LTS-rx-1.1.3";
+		public static final String IoTLTS_202210_1_2_1 = "202210.01-LTS-rx-1.2.1";
 		public static final String IoTLTS_202210_1_1_3_with_v = "v202210.01-LTS-rx-1.1.3";
 		public static final String IoTLTS_202210_1_2_0_with_v = "v202210.01-LTS-rx-1.2.0";
 		public static final String IoTLTS_202210_rl78_1_0_0_with_v = "v202210.01-LTS-rl78-1.0.0";
@@ -125,6 +124,7 @@ public class ProjectParameters {
 		public static final String DEVICE_R5F565NCDxBG = "R5F565NCDxBG";
 		public static final String DEVICE_R5F572NDDxBG = "R5F572NDDxBG";
 		public static final String DEVICE_R5F572NDDxBD = "R5F572NDDxBD";
+		public static final String DEVICE_R5F565NEHxFC = "R5F565NEHxFC";
 		public static final String BOARD_RSK_RX130 = "RSKRX130";
 		public static final String BOARD_RSK_RX231 = "RSKRX231";
 		public static final String BOARD_RSK_RX72N = "RSKRX72N";
@@ -403,6 +403,7 @@ public class ProjectParameters {
 		public static final String FIT_MODULES_LOCATION = "D:\\RDP1.39";
 		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\e2_package\\FITModules";
 		public static final String KERNEL_RTOS_LOCATION = "D:\\rtos_package\\Kernel";
+		public static final String FreeRTOSIOT_RTOS_LOCATION_BANKMODE = "D:\\rtos_package\\freertoslts_bankmode";
 		public static final String AMAZON_RTOS_LOCATION = "D:\\rtos_package\\IoTLegacyNoChange";
 		public static final String EMPTY_RTOS_LOCATION = "D:\\rtos_package\\EmptyFolder";
 		public static final String KERNEL_OLD_RTOS_LOCATION = "D:\\rtos_package\\Kernel_For_Regression_Test";
