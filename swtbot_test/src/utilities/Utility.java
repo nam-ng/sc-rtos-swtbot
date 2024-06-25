@@ -9,6 +9,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +19,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -1781,5 +1784,65 @@ public class Utility {
 		bot.shell(ProjectParameters.MenuName.SHELL_E2S_LAUNCHER).bot()
 				.button(ProjectParameters.ButtonAction.BUTTON_CANCEL).click();
 		return workspace;
+	}
+	
+	public static void OpenDownloadDialogPG(String rtosDisplay) {
+		bot.sleep(3000);
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MENU_NEW)
+		.menu(MenuName.MENU_C_CPP_PROJECT).menu(MenuName.MENU_RENESAS_RX).click();
+		bot.table().select(2);
+		
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.waitUntil(Conditions.waitForWidget(WidgetMatcherFactory.withText(LabelName.LABEL_PROJECT_NAME)), 10000);
+		bot.textWithLabel(LabelName.LABEL_PROJECT_NAME).setText("Testing");
+		bot.waitUntil(Conditions.widgetIsEnabled(bot.button(ButtonAction.BUTTON_NEXT)), 10000);
+		
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.radio(0).click();
+		
+		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(rtosDisplay);
+		
+		bot.link("<a>Manage RTOS Versions...</a>").click();
+		bot.sleep(20000);
+	}
+
+	public static void OpenDownloadDialogImport(String rtosDisplayImport) {
+		bot.sleep(1000);
+		bot.menu(MenuName.MENU_FILE).menu(MenuName.MEMU_IMPORT).click();
+		bot.tree().getTreeItem(ProjectParameters.FolderAndFile.FOLDER_GENERAL).expand();
+		bot.tree().getTreeItem(ProjectParameters.FolderAndFile.FOLDER_GENERAL)
+		.getNode(ProjectParameters.FolderAndFile.RENESAS_GITHUB).select();
+		bot.button(ButtonAction.BUTTON_NEXT).click();
+		bot.link("<a>Manage RTOS Versions...</a>").click();
+		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(rtosDisplayImport);
+		bot.button(ButtonAction.BUTTON_OK).click();
+		bot.sleep(20000);
+	}
+	
+	public static boolean CheckLatestVersionDownloadDialog(Pattern REVISION_PATTERN_RC, String RC_SUFFIX, int numberOfWindowsToClose, boolean isRL78) {
+		boolean onlyOnePackageIsShown = bot.table().rowCount() == 1;
+		int indexOfRevColumn = bot.table().indexOfColumn("Rev.");
+		String revision = bot.table().getTableItem(0).getText(indexOfRevColumn);
+		int indexOfRC = revision.toLowerCase(Locale.ENGLISH).lastIndexOf(RC_SUFFIX);
+		boolean isPackageNotRC = (indexOfRC != -1 && !REVISION_PATTERN_RC
+				.matcher(revision.substring(indexOfRC == 0 ? indexOfRC : indexOfRC - 1, revision.length())).find())
+				|| indexOfRC == -1;
+		boolean isCheckBoxChecked = bot.checkBox(ButtonAction.BUTTON_SHOW_ONLY_LATEST_VERSION).isChecked();
+		
+		bot.checkBox(ButtonAction.BUTTON_SHOW_ONLY_LATEST_VERSION).click();
+		
+		boolean isCheckBoxUnChecked = !bot.checkBox(ButtonAction.BUTTON_SHOW_ONLY_LATEST_VERSION).isChecked();
+		boolean notOnlyOnePackageIsShown = true;
+		if (!isRL78) {
+			notOnlyOnePackageIsShown = bot.table().rowCount() != 1;
+		}
+		
+		for(int i=0; i< numberOfWindowsToClose; i++) {
+			bot.button(ButtonAction.BUTTON_CANCEL).click();
+		}
+		if (!onlyOnePackageIsShown || !isPackageNotRC || !isCheckBoxChecked || !isCheckBoxUnChecked || !notOnlyOnePackageIsShown) {
+			return false;
+		}
+		return true;
 	}
 }

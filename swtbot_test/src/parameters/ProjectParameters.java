@@ -54,6 +54,12 @@ public class ProjectParameters {
 		public static final String FREERTOSIOTLTS = "FreeRTOS (with IoT libraries)";
 		public static final String NONE = "None";
 	}
+	
+	public class RTOSDisplayImport {
+		public static final String RL78 = "FreeRTOS (with IoT libraries) for RL78";
+		public static final String RX = "FreeRTOS (with IoT libraries) for RX";
+		public static final String LEGACY = "FreeRTOS (with IoT libraries)(deprecated structure)";
+	}
 
 	public class RTOSVersion {
 		public static final String Azure_6_4_0 = "6.4.0_rel-rx-1.0.0";
@@ -188,6 +194,7 @@ public class ProjectParameters {
 		public static final String APPLY_AND_CLOSE = "Apply and Close";
 		public static final String BUTTON_BROWSE = "Browse...";
 		public static final String BUTTON_IMPORT_CONFIG = "Import Configuration";
+		public static final String BUTTON_SHOW_ONLY_LATEST_VERSION = "Show only latest version";
 	}
 
 	public class LabelName {
@@ -401,7 +408,7 @@ public class ProjectParameters {
 	public class FileLocation{
 		public static final String AZURE_RTOS_LOCATION = "D:\\rtos_package\\Azure_Final_NoChange";
 		public static final String FIT_MODULES_LOCATION = "D:\\RDP1.39";
-		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\e2_package\\FITModules";
+		public static final String NEWEST_FIT_MODULES_LOCATION = "D:\\RDP1.41";
 		public static final String KERNEL_RTOS_LOCATION = "D:\\rtos_package\\Kernel";
 		public static final String FreeRTOSIOT_RTOS_LOCATION_BANKMODE = "D:\\rtos_package\\freertoslts_bankmode";
 		public static final String AMAZON_RTOS_LOCATION = "D:\\rtos_package\\IoTLegacyNoChange";
