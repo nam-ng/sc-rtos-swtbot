@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rtospg>
 	<RTOS id="AzureRTOS">
-		<version id="6.4.0_rel-rx-1.0.0" skipapp="false">
+		<version id="6.2.1_rel-rx-2.0.0" skipapp="false">
 			<application id="bare" order="0">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>

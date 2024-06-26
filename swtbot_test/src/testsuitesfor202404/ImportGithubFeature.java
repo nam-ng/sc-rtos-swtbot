@@ -21,6 +21,7 @@ import parameters.ProjectParameters.ButtonAction;
 import parameters.ProjectParameters.LabelName;
 import parameters.ProjectParameters.MenuName;
 import parameters.ProjectParameters.RTOSApplication;
+import parameters.ProjectParameters.RTOSDisplayImport;
 import parameters.ProjectParameters.RTOSType;
 import parameters.ProjectParameters.RTOSVersion;
 import parameters.ProjectParameters.TargetBoard;
@@ -81,7 +82,7 @@ public class ImportGithubFeature {
 		.getNode(ProjectParameters.FolderAndFile.RENESAS_GITHUB).select();
 		bot.button(ButtonAction.BUTTON_NEXT).click();
 		bot.link("<a>Manage RTOS Versions...</a>").click();
-		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection("FreeRTOS (with IoT libraries) for RX");
+		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(RTOSDisplayImport.RX);
 		bot.button(ButtonAction.BUTTON_OK).click();
 		bot.sleep(20000);
 		bot.table().getTableItem(bot.table().indexOf(RTOSVersion.IoTLTS_202210_1_1_3_with_v, "Rev.")).check();
@@ -126,7 +127,7 @@ public class ImportGithubFeature {
 		.getNode(ProjectParameters.FolderAndFile.RENESAS_GITHUB).select();
 		bot.button(ButtonAction.BUTTON_NEXT).click();
 		bot.link("<a>Manage RTOS Versions...</a>").click();
-		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection("FreeRTOS (with IoT libraries) for RL78");
+		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(RTOSDisplayImport.RL78);
 		bot.button(ButtonAction.BUTTON_OK).click();
 		bot.sleep(20000);
 		bot.table().getTableItem(bot.table().indexOf(RTOSVersion.IoTLTS_202210_rl78_1_0_0_with_v, "Rev.")).check();
@@ -171,7 +172,7 @@ public class ImportGithubFeature {
 		.getNode(ProjectParameters.FolderAndFile.RENESAS_GITHUB).select();
 		bot.button(ButtonAction.BUTTON_NEXT).click();
 		bot.link("<a>Manage RTOS Versions...</a>").click();
-		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection("FreeRTOS (with IoT libraries)(deprecated structure)");
+		bot.comboBoxWithLabel(LabelName.LABEL_RTOS).setSelection(RTOSDisplayImport.LEGACY);
 		bot.button(ButtonAction.BUTTON_OK).click();
 		bot.sleep(20000);
 		bot.table().getTableItem(bot.table().indexOf(RTOSVersion.Amazon_202107_1_0_1, "Rev.")).check();
