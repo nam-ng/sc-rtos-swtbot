@@ -214,6 +214,32 @@ public class Utility {
 		scfgEditor.setFocus();
 		bot.cTabItem(tabOpen).activate();
 	}
+
+	public static void openSCFGEditorByProjectName(String projectName) {
+		SWTBotView prjExpView = Utility.getProjectExplorerView();
+		prjExpView.setFocus();
+
+		SWTBotTreeItem[] allItems = prjExpView.bot().tree().getAllItems();
+		SWTBotTreeItem itemPrj = null;
+		for (SWTBotTreeItem item : allItems) {
+			if (item.getText().contentEquals(projectName)
+					|| item.getText().contentEquals(projectName + " [HardwareDebug]")
+					|| item.getText().contentEquals(projectName + " [Debug]")
+					|| item.getText().contentEquals(projectName + " [Release]")) {
+				itemPrj = item;
+				break;
+			}
+		}
+		if (itemPrj == null) {
+			return;
+		}
+		itemPrj.expand();
+		itemPrj.getNode(projectName + ".scfg").doubleClick();
+		bot.sleep(3000);
+		if (bot.activeShell().getText().equals(ProjectParameters.WINDOW_OPEN_ASSOCIATED_PERSPECTIVE)) {
+			bot.button(ButtonAction.BUTTON_NO).click();
+		}
+	}
 	
 	public static void addComponent(String componentName) {
 		bot.toolbarButtonWithTooltip(ProjectParameters.ButtonAction.BUTTON_ADD_COMPONENT).click();
