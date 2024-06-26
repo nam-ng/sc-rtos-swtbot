@@ -1871,4 +1871,130 @@ public class Utility {
 		}
 		return true;
 	}
+	
+	public static boolean CheckAddRemoveLTSResourceAndSetting(ProjectModel projectModelSpecific, String buildType ,boolean isAdded) {
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName()).select();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]").expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC).expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_CONFIG).expand();
+		boolean isThereConfigFile = false;
+		SWTBotTreeItem[] items= bot.tree()
+				.getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FRTOS_CONFIG).getItems();
+		
+		for (SWTBotTreeItem item: items) {
+			if (item.getText().equals(ProjectParameters.FolderAndFile.FILE_FREERTOS_IP_CONFIG_H)) {
+				isThereConfigFile = true;
+			}
+		}
+
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]").expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_MIDDLEWARE).expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_MIDDLEWARE)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FREERTOS).expand();
+		boolean isThereResourceFilter = false;
+		List<String> freeRtosItems = bot.tree()
+				.getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_MIDDLEWARE)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FREERTOS).getNodes();
+		for (String item: freeRtosItems) {
+			if (item.equals(ProjectParameters.FolderAndFile.FOLDER_FREERTOS_PLUS_TCP)) {
+				isThereResourceFilter = true;
+			}
+		}
+		boolean isThereResourceFilter2 = true;
+		if (isThereResourceFilter) {
+			bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_MIDDLEWARE)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FREERTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FREERTOS_PLUS_TCP).expand();
+
+			List<String> freeRtosItems2 = bot.tree()
+				.getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_MIDDLEWARE)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FREERTOS)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_FREERTOS_PLUS_TCP).getNodes();
+			for (String item: freeRtosItems2) {
+				if (item.equals(ProjectParameters.FolderAndFile.FOLDER_TEST)) {
+					isThereResourceFilter2 = false;
+				}
+			}
+		}
+		
+		bot.tree()
+				.getTreeItem(projectModelSpecific.getProjectName() + " ["
+						+ projectModelSpecific.getActiveBuildConfiguration() + "]")
+				.contextMenu(ProjectParameters.ProjectSettings.C_CPLUSPLUS_PROJECT_SETTINGS).click();
+		
+		bot.tree(1).getTreeItem(ProjectParameters.ProjectSettings.COMPILER).getNode(ProjectParameters.ProjectSettings.SOURCE).select();
+		String[] includeDirs = bot.list(0).getItems();
+		
+		boolean isGenProjectSetting = false;
+		
+		for (String incdir: includeDirs) {
+			if(incdir.contains("Middleware/FreeRTOS/FreeRTOS-Plus-TCP/source/include")) {
+				isGenProjectSetting = true;
+			}
+		}
+		bot.button(ButtonAction.BUTTON_CANCEL).click();
+		if (isAdded) {
+			if(!isGenProjectSetting || !isThereResourceFilter || !isThereResourceFilter2 || !isThereConfigFile) {
+				return false;
+			}
+		} else {
+			if(isGenProjectSetting || isThereResourceFilter || !isThereResourceFilter2 || isThereConfigFile) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean checkAddRemoveLTSComponentSetting(ProjectModel projectModelSpecific, String buildType,
+			boolean isAdded) {
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName()).select();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]").expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_DEMOS).expand();
+		boolean isThereResourceFilter = true;
+		List<String> items1 = bot.tree()
+				.getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_DEMOS).getNodes();
+		for (String item : items1) {
+			if (item.equals(ProjectParameters.FolderAndFile.FOLDER_INCLUDE)) {
+				isThereResourceFilter = false;
+			}
+		}
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]").expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC).expand();
+		bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_APPLICATION_CODE).expand();
+		boolean isThereLinkDir = false;
+		List<String> items2 = bot.tree().getTreeItem(projectModelSpecific.getProjectName() + " [" + buildType + "]")
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_SRC)
+				.getNode(ProjectParameters.FolderAndFile.FOLDER_APPLICATION_CODE).getNodes();
+		for (String item : items2) {
+			if(item.equals(ProjectParameters.FolderAndFile.FOLDER_INCLUDE)) {
+				isThereLinkDir = true;
+			}
+		}
+
+		if (isAdded) {
+			if (!isThereResourceFilter || !isThereLinkDir) {
+				return false;
+			}
+		} else {
+			if (isThereResourceFilter || isThereLinkDir) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
