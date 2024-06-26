@@ -254,6 +254,7 @@ public class ProjectParameters {
 		public static final String FOLDER_SRC = "src";
 		public static final String FOLDER_FRTOS_CONFIG = "frtos_config";
 		public static final String FILE_FREERTOS_OBJECT_INIT_C = "freertos_object_init.c";
+		public static final String FILE_FREERTOS_IP_CONFIG_H = "FreeRTOSIPConfig.h";
 		public static final String FILE_BOOTLOADER_H = "boot_loader.h";
 		public static final String FOLDER_FRTOS_STARTUP = "frtos_startup";
 		public static final String FOLDER_FRTOS_SKELETON = "frtos_skeleton";
@@ -269,6 +270,12 @@ public class ProjectParameters {
 		public static final String FOLDER_RTOS_GENERIC = "RTOS Generic";
 		public static final String FOLDER_DRIVERS = "Drivers";
 		public static final String FOLDER_COMMUNICATIONS = "Communications";
+		public static final String FOLDER_MIDDLEWARE = "Middleware";
+		public static final String FOLDER_FREERTOS = "FreeRTOS";
+		public static final String FOLDER_FREERTOS_PLUS_TCP = "FreeRTOS-Plus-TCP";
+		public static final String FOLDER_TEST = "test";
+		public static final String FOLDER_DEMOS = "Demos";
+		public static final String FOLDER_INCLUDE = "include";
 		
 	}
 	
@@ -290,12 +297,14 @@ public class ProjectParameters {
 		public static final String AWS_TCP_IP = "AWS_tcp_ip";
 		public static final String FREERTOS_APPLICATION = "FreeRTOS_Application";
 		public static final String R_ETHER_RX = "r_ether_rx";
+		public static final String FREERTOS_IP = "FreeRTOS_IP";
 	}
 	
 	public class ProjectSettings {
 		public static final String ASSEMBLER = "Assembler";
 		public static final String SOURCE = "Source";
 		public static final String C_CPLUSPLUS_PROJECT_SETTINGS = "C/C++ Project Settings";
+		public static final String COMPILER = "Compiler";
 	}
 
 	public class KernelObject {
@@ -433,6 +442,7 @@ public class ProjectParameters {
 		public static final String TEST_FILTER_SCVERSION_OTHER="D:\\rtos_package\\SWTBot_scversion_package\\other";
 		public static final String TEST_FILTER_SCVERSION_PASS="D:\\rtos_package\\SWTBot_scversion_package\\pass";
 		public static final String TEST_FILTER_SCVERSION_CHANGE_VERSION="D:\\rtos_package\\SWTBot_scversion_package\\change_version"; 
+		public static final String TEST_ADD_REMOVE_LTS_COMPONENT="D:\\rtos_package\\AddRemoveTCPIP";
 
 		public static final String TOOLCHAIN_RENESAS_CCRX_V3_05 = "D:\\Toolchain\\CC-RX\\3_5_0";
 		public static final String TOOLCHAIN_RENESAS_LLVM_RISCV_V17_0_2 = "D:\\Toolchain\\LLVM";

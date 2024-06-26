@@ -415,7 +415,7 @@
 		</version>
 	</RTOS>
 	<RTOS id="IoTLTS">
-		<version id="202210.01-LTS-rx-1.1.3" skipapp="false">
+		<version id="202210.01-LTS-rx-1.2.1" skipapp="false">
 			<application id="bootloader" order="0">
 				<projectconfiguration>
 					<config id="HardwareDebug"/>
