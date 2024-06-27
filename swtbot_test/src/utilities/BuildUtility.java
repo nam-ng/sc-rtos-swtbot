@@ -2,6 +2,7 @@ package utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -102,8 +103,36 @@ public class BuildUtility extends Utility {
 		return isBuildSuccessful;
 	}
 
+	public static boolean buildProject(String projectName, boolean isDeleteProjectOnDisk) {
+		Utility.openProjectExplorer();
+		SWTBotTreeItem projectItem = Utility.getProjectItemOnProjectExplorer(projectName);
+		Optional.ofNullable(projectItem).ifPresent(SWTBotTreeItem::select);
+		Optional.ofNullable(projectItem).ifPresent(prj -> prj.contextMenu(MenuName.MENU_BUILD_PROJECT).click());
+
+		bot.sleep(10000);
+		SWTBotView consoleView = bot.viewById("org.eclipse.ui.console.ConsoleView");
+		boolean isBuildSuccessful = false;
+		while (true) {
+			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_SUCCESSFULLY)) {
+				isBuildSuccessful = true;
+				break;
+			}
+			if (consoleView.bot().styledText().getText().contains(ProjectParameters.BUILD_FAILED)) {
+				break;
+			}
+		}
+		if (isBuildSuccessful) {
+			deleteProject(projectName, isDeleteProjectOnDisk);
+		}
+		return isBuildSuccessful;
+	}
+
 	public static void deleteProject(ProjectModel model) {
 		Utility.deleteProject(model.getProjectName(), true);
+	}
+
+	public static void deleteProject(String projectName, boolean isDeleteProjectOnDisk) {
+		Utility.deleteProject(projectName, isDeleteProjectOnDisk);
 	}
 
 	public static void buildAll(SWTBotShell shell){
